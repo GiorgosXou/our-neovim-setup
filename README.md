@@ -1,5 +1,6 @@
 ## My neovim set-up
 <img src="./img.jpg"/>
+
 This is just another neovim set-up. Everything you need to know about this setup is located inside the `init.lua` file itself at the momment :P, pretty cool stuff not gonna lie lol.
 
 
