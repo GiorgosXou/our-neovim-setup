@@ -5,7 +5,7 @@ _G.PYTHON_PATH = _G.IS_WINDOWS and 'C:\\Users\\gxous\\AppData\\Local\\Programs\\
 local config = {
   updater    = {
     commit         = nil      , -- commit hash (NIGHTLY ONLY)
-    branch         = "main"   , -- branch name (NIGHTLY ONLY)
+    branch         = "nightly", -- branch name (NIGHTLY ONLY)
     remote         = "origin" , -- remote to use
     channel        = "nightly", -- "stable" or "nightly"
     version        = "latest" , -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
@@ -130,7 +130,7 @@ local config = {
       {"rcarriga/nvim-dap-ui"            , config = function() require("dapui"                ).setup()               end , requires = {"nvim-dap"}},
       {'iamcco/markdown-preview.nvim'    , run    = function() vim.fn["mkdp#util#install"]()                          end},
       {'Shatur/neovim-ayu'               , config = function() 
-        local utils = require "default_theme.utils"
+        -- local utils = require "default_theme.utils"
         require('ayu').setup({
         overrides                        = {                 -- :Telescope highlights https://github.com/Shatur/neovim-ayu#overrides-examples <------
           Type                           = {fg = '#FF5F00'},
@@ -152,10 +152,10 @@ local config = {
           LspReferenceText               = {bg = '#626A73'},
           LspReferenceWrite              = {bg = '#626A73'},
           LineNr                         = {fg = '#626A73'},
-          DiagnosticError =  utils.parse_diagnostic_style { fg = '#cc241d'},
-          DiagnosticWarn  =  utils.parse_diagnostic_style { fg = '#ff8f40'},
-          DiagnosticInfo  =  utils.parse_diagnostic_style { fg = '#39bae6'},
-          DiagnosticHint  =  utils.parse_diagnostic_style { fg = '#95e6cb'},
+          -- DiagnosticError =  utils.parse_diagnostic_style { fg = '#cc241d'},
+          -- DiagnosticWarn  =  utils.parse_diagnostic_style { fg = '#ff8f40'},
+          -- DiagnosticInfo  =  utils.parse_diagnostic_style { fg = '#39bae6'},
+          -- DiagnosticHint  =  utils.parse_diagnostic_style { fg = '#95e6cb'},
           -- #FFC26B #860000 #64BAAA #006B5D  #Maybe?
       }}) end                       },
     },
@@ -180,7 +180,7 @@ local config = {
     end,
 
     ["neo-tree"]                = {
-      window                    = { position = 'right' },
+      window                    = { position = 'left' },
       default_component_configs = {
         indent                  = {
           last_indent_marker    = '╰',
@@ -292,15 +292,17 @@ local config = {
     map.set('i', '<A-j>'   , '<C-o>:m+1<cr>'            )
     map.set('n', 'i'       , ':noh<cr>i'                )
     map.set('n', '<ESC>'   , ':noh<cr>'                 )
-    map.set('v', '/'       , "\"fy/\\V<C-R>f<CR>"       ) -- https://superuser.com/questions/41378/how-to-search-for-selected-text-in-vim#comment2699355_41400
+    map.set('v', '/'       , "\"fy/\\V<C-R>f<CR>N"      ) -- https://superuser.com/questions/41378/how-to-search-for-selected-text-in-vim#comment2699355_41400
+    map.set('n', 'x'       , '"_x'                      )
+    map.set('n', 'X'       , '"_X'                      )
 
     map.set('v', "<A-h>"    , '<gv')
     map.set('v', "<A-l>"    , '>gv')
     map.set('n', "<A-h>"    , '<<' )
     map.set('n', "<A-l>"    , '>>' )
 
-    map.set('n', '<Leader><S-h>' , ':BufferLineCycleNext<CR>')
-    map.set('n', '<Leader><S-l>' , ':BufferLineCyclePrev<CR>')
+    map.set('n', '<Leader>L' , ':BufferLineCycleNext<CR>')
+    map.set('n', '<Leader>H' , ':BufferLineCyclePrev<CR>')
 
     map.set('n', "yH"       , 'y^')
     map.set('n', "yL"       , 'y$')
@@ -405,6 +407,7 @@ return config
   * http://www.viemu.com/vi-vim-tutorial-1.gif
   * https://www.youtube.com/watch?v=qZO9A5F6BZs
   * https://stackoverflow.com/a/26920014/11465149
+  * nvim --startuptime output
   * :set background=light
   * :!git add *
   * :!git commit -m "whatever"
