@@ -1,5 +1,6 @@
-_G.IS_WINDOWS  = vim.loop.os_uname().sysname:find 'Windows' and true or false
-_G.PYTHON_PATH = _G.IS_WINDOWS and 'C:\\Users\\gxous\\AppData\\Local\\Programs\\Python\\Python39\\python.exe' or '/usr/local/bin/python3'
+_G.IS_WINDOWS   = vim.loop.os_uname().sysname:find 'Windows' and true or false
+_G.PYTHON_PATH  = _G.IS_WINDOWS and 'C:\\Users\\gxous\\AppData\\Local\\Programs\\Python\\Python39\\python.exe' or '/usr/sbin/python'--'/usr/local/bin/python3'
+_G.ZK_HONE_PATH = _G.IS_WINDOWS and 'C:\\Users\\gxous\\Desktop\\notes' or '~/Desktop/xou/notes'
 
 
 local config = {
@@ -20,9 +21,10 @@ local config = {
       relativenumber = true, -- sets vim.opt.relativenumber
     },
     g = {
-      mkdp_theme      = 'dark',
-      mapleader       = " "   , -- sets vim.g.mapleader
-      VM_maps         = {
+      mkdp_theme         = 'dark',
+      mapleader          = " "   , -- sets vim.g.mapleader
+      autoformat_enabled = false ,
+      VM_maps            = {
         ['Find Under']      = '<C-n>'  ,
         ["Add Cursor Down"] = '<C-A-j>',
         ["Add Cursor Up"]   = '<C-A-k>',
@@ -123,12 +125,13 @@ local config = {
         end}, -- python -m pip install debugpy
       {"Pocco81/DAPInstall.nvim"                },
       {"nvim-telescope/telescope-dap.nvim"      },
-      {'folke/twilight.nvim'             , config = function() require('twilight'             ).setup { context=50 }  end}, -- TODO: FIX
-      {'theHamsta/nvim-dap-virtual-text' , config = function() require("nvim-dap-virtual-text").setup()               end},
-      {"mfussenegger/nvim-dap-python"    , config = function() require('dap-python'           ).setup(_G.PYTHON_PATH) end},
-      {'petertriho/nvim-scrollbar'       , config = function() require("scrollbar"            ).setup()               end},
-      {"rcarriga/nvim-dap-ui"            , config = function() require("dapui"                ).setup()               end , requires = {"nvim-dap"}},
-      {'iamcco/markdown-preview.nvim'    , run    = function() vim.fn["mkdp#util#install"]()                          end},
+      {'renerocksai/telekasten.nvim'     , config = function() require('telekasten'           ).setup { home = _G.ZK_HONE_PATH } end},
+      {'folke/twilight.nvim'             , config = function() require('twilight'             ).setup { context=50 }             end}, -- TODO: FIX
+      {'theHamsta/nvim-dap-virtual-text' , config = function() require("nvim-dap-virtual-text").setup()                          end},
+      {"mfussenegger/nvim-dap-python"    , config = function() require('dap-python'           ).setup(_G.PYTHON_PATH)            end},
+      {'petertriho/nvim-scrollbar'       , config = function() require("scrollbar"            ).setup()                          end},
+      {"rcarriga/nvim-dap-ui"            , config = function() require("dapui"                ).setup()                          end , requires = {"nvim-dap"}},
+      {'iamcco/markdown-preview.nvim'    , run    = function() vim.fn["mkdp#util#install"]()                                     end},
       {'Shatur/neovim-ayu'               , config = function() 
         -- local utils = require "default_theme.utils"
         require('ayu').setup({
@@ -277,7 +280,7 @@ local config = {
     map.set('n', 'cm'      , '<Plug>Commentary'         )
     map.set('n', 'gtn'     , ':BufferLineCycleNext<cr>' )
     map.set('n', 'gtb'     , ':BufferLineCyclePrev<cr>' )
-    map.set('n', 'mm'      , 'm\''                      )
+    -- map.set('n', 'mm'      , 'm\''                      )
     map.set('v', '<A-k>'   , ":m '<-2<CR>gv=gv"         )
     map.set('v', '<A-j>'   , ":m '>+1<CR>gv=gv"         )
     map.set('n', '<a-k>'   , ':m-2<cr>=='               )
@@ -363,6 +366,8 @@ local config = {
     elseif ( vim.g.colors_name == 'sunbather' or vim.g.colors_name == 'nazgul') then
       if _G.IS_WINDOWS then
         vim.api.nvim_command('highlight Normal guibg=none')
+      else
+        vim.api.nvim_command('highlight Normal guibg=#000000')
       end
       vim.api.nvim_command('highlight LspReferenceRead  guibg=#626A73')
       vim.api.nvim_command('highlight LspReferenceWrite guibg=#626A73')
