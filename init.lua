@@ -1,6 +1,6 @@
 _G.IS_WINDOWS   = vim.loop.os_uname().sysname:find 'Windows' and true or false
 _G.PYTHON_PATH  = _G.IS_WINDOWS and 'C:\\Users\\gxous\\AppData\\Local\\Programs\\Python\\Python39\\python.exe' or '/usr/sbin/python'--'/usr/local/bin/python3'
-_G.ZK_HONE_PATH = _G.IS_WINDOWS and 'C:\\Users\\gxous\\Desktop\\notes' or '~/Desktop/xou/notes'
+-- _G.ZK_HONE_PATH = _G.IS_WINDOWS and 'C:\\Users\\gxous\\Desktop\\notes' or vim.fn.expand('~/Desktop/xou/notes')
 
 
 local config = {
@@ -125,7 +125,7 @@ local config = {
         end}, -- python -m pip install debugpy
       {"Pocco81/DAPInstall.nvim"                },
       {"nvim-telescope/telescope-dap.nvim"      },
-      {'renerocksai/telekasten.nvim'     , config = function() require('telekasten'           ).setup { home = _G.ZK_HONE_PATH } end},
+      -- {'renerocksai/telekasten.nvim'     , config = function() require('telekasten'           ).setup { home = _G.ZK_HONE_PATH } end},
       {'folke/twilight.nvim'             , config = function() require('twilight'             ).setup { context=50 }             end}, -- TODO: FIX
       {'theHamsta/nvim-dap-virtual-text' , config = function() require("nvim-dap-virtual-text").setup()                          end},
       {"mfussenegger/nvim-dap-python"    , config = function() require('dap-python'           ).setup(_G.PYTHON_PATH)            end},
