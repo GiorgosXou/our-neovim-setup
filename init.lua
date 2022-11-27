@@ -132,13 +132,13 @@ local config = {
       {'petertriho/nvim-scrollbar'       , config = function() require("scrollbar"            ).setup()                          end},
       {"rcarriga/nvim-dap-ui"            , config = function() require("dapui"                ).setup()                          end , requires = {"nvim-dap"}},
       {'iamcco/markdown-preview.nvim'    , run    = function() vim.fn["mkdp#util#install"]()                                     end},
-      {'Shatur/neovim-ayu'               , config = function() 
+      {'Shatur/neovim-ayu'               , config = function()
         -- local utils = require "default_theme.utils"
-        require('ayu').setup({
+        require('ayu').setup({                               -- don't forger :PackerCompile if it doesn't work
         overrides                        = {                 -- :Telescope highlights https://github.com/Shatur/neovim-ayu#overrides-examples <------
           Type                           = {fg = '#FF5F00'},
           Macro                          = {fg = '#FF5F00'},
-          Normal                         = {bg = '#0C0C0C'}, -- 'NONE'
+          Normal                         = {bg = '#000000'}, -- 'NONE'
           Repeat                         = {fg = '#FF5F00'},
           Method                         = {fg = '#FF5F00'},
           PreProc                        = {fg = '#FF5F00'},
@@ -275,6 +275,8 @@ local config = {
     local map  = vim.keymap
     local opts = { silent=true }
 
+    map.set('n', '<Leader>tt', 'a<C-R>=strftime("%Y-%m-%d %I:%M:%S %p")<CR><Esc>', { desc = 'print time'} )
+
     map.set('i', '<C-S>'   , '<C-o>:w<cr>'              )
     map.set('i', '<C-Q>'   , '<C-o>:q!<cr>'             )
     map.set('n', 'cm'      , '<Plug>Commentary'         )
@@ -360,9 +362,9 @@ local config = {
     -- map.set('n', 'N', '#') -- IF NOT ALREADY SLASH SEARCH (i think i can do this with lua and states)
     -- map.set('n', 'n', '*') -- IF NOT ALREADY SLASH SEARCH
     if ( vim.g.colors_name == 'ayu') then
-      vim.highlight.create('DapBreakpoint', { ctermbg=0, guifg='#FF5F00'}, false)
-      vim.highlight.create('DapLogPoint'  , { ctermbg=0, guifg='#61afef'}, false)
-      vim.highlight.create('DapStopped'   , { ctermbg=0, guifg='#98c379'}, false)
+      vim.api.nvim_set_hl(0, 'DapBreakpoint', { ctermbg=0, fg='#FF5F00'})
+      vim.api.nvim_set_hl(0, 'DapLogPoint'  , { ctermbg=0, fg='#61afef'})
+      vim.api.nvim_set_hl(0, 'DapStopped'   , { ctermbg=0, fg='#98c379'})
     elseif ( vim.g.colors_name == 'sunbather' or vim.g.colors_name == 'nazgul') then
       if _G.IS_WINDOWS then
         vim.api.nvim_command('highlight Normal guibg=none')
