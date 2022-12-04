@@ -18,6 +18,8 @@ local config = {
 
   options = { -- set vim options here (vim.<first_key>.<second_key> =  value)
     opt   = { -- clipboard = "",
+      shiftwidth     = 4   ,
+      tabstop        = 4   ,
       relativenumber = true, -- sets vim.opt.relativenumber
     },
     g = {
@@ -116,13 +118,13 @@ local config = {
       {'svermeulen/vim-subversive'              },
       {'folke/trouble.nvim'                     },
       {'godlygeek/tabular'                      }, -- ALIGN <leader>a | https://stackoverflow.com/questions/5436715/how-do-i-align-like-this-with-vims-tabular-plugin
-      {'mfussenegger/nvim-dap'           ,
-        config = function()
-          local dap, dapui = require("dap"), require("dapui")
-          dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open () end
-          dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
-          dap.listeners.before.event_exited    ["dapui_config"] = function() dapui.close() end
-        end}, -- python -m pip install debugpy
+      -- {'mfussenegger/nvim-dap'           ,
+      --   config = function()
+      --     local dap, dapui = require("dap"), require("dapui")
+      --     dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open () end
+      --     dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
+      --     dap.listeners.before.event_exited    ["dapui_config"] = function() dapui.close() end
+      --   end}, -- python -m pip install debugpy
       {"Pocco81/DAPInstall.nvim"                },
       {"nvim-telescope/telescope-dap.nvim"      },
       -- {'renerocksai/telekasten.nvim'     , config = function() require('telekasten'           ).setup { home = _G.ZK_HONE_PATH } end},
@@ -130,7 +132,7 @@ local config = {
       {'theHamsta/nvim-dap-virtual-text' , config = function() require("nvim-dap-virtual-text").setup()                          end},
       {"mfussenegger/nvim-dap-python"    , config = function() require('dap-python'           ).setup(_G.PYTHON_PATH)            end},
       {'petertriho/nvim-scrollbar'       , config = function() require("scrollbar"            ).setup()                          end},
-      {"rcarriga/nvim-dap-ui"            , config = function() require("dapui"                ).setup()                          end , requires = {"nvim-dap"}},
+      -- {"rcarriga/nvim-dap-ui"            , config = function() require("dapui"                ).setup()                          end , requires = {"nvim-dap"}},
       {'iamcco/markdown-preview.nvim'    , run    = function() vim.fn["mkdp#util#install"]()                                     end},
       {'Shatur/neovim-ayu'               , config = function()
         -- local utils = require "default_theme.utils"
@@ -276,6 +278,7 @@ local config = {
     local opts = { silent=true }
 
     map.set('n', '<Leader>tt', 'a<C-R>=strftime("%Y-%m-%d %I:%M:%S %p")<CR><Esc>', { desc = 'print time'} )
+    map.set('n', '";', '"_')
 
     map.set('i', '<C-S>'   , '<C-o>:w<cr>'              )
     map.set('i', '<C-Q>'   , '<C-o>:q!<cr>'             )
@@ -331,16 +334,16 @@ local config = {
     -- map.set('n', "<Tab>"   , ">>"              , bufopts)
     -- map.set('n', "<S-Tab>" , "<<"              , bufopts) -- windows issue
 
-    map.set("n", "<F5>"      , ":lua require('dap').continue()<cr>"         , opts)
-    map.set("n", "<F10>"     , ":lua require('dap').step_over()<cr>"        , opts)
-    map.set("n", "<F11>"     , ":lua require('dap').step_into()<cr>"        , opts)
-    map.set("n", "<F12>"     , ":lua require('dap').step_out()<cr>"         , opts)
+    -- map.set("n", "<F5>"      , ":lua require('dap').continue()<cr>"         , opts)
+    -- map.set("n", "<F10>"     , ":lua require('dap').step_over()<cr>"        , opts)
+    -- map.set("n", "<F11>"     , ":lua require('dap').step_into()<cr>"        , opts)
+    -- map.set("n", "<F12>"     , ":lua require('dap').step_out()<cr>"         , opts)
     map.set("n", "<leader>b" , ":lua require('dap').toggle_breakpoint()<cr>", { desc = 'Breakpoint Toggle'} )
-    map.set("n", "<leader>B" , ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>"      , { desc = 'Breakpoint Condition'} )
-    map.set("n", "<leader>lp", ":lua require('dap').set_breakpoint(nil, nil, vim.fn.input('Logpoint message: '))<cr>", opts)
-    map.set("n", "<leader>rp", ":lua require('dap').repl.open()<cr>"        , opts)
-    map.set("n", "<leader>RR", ":lua require('dap').run_last()<cr>"         , opts)
-    map.set("n", "<leader>XX", ":lua require('dap').terminate()<cr>"        , { desc = 'Terminate DAP'})
+    -- map.set("n", "<leader>B" , ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>"      , { desc = 'Breakpoint Condition'} )
+    -- map.set("n", "<leader>lp", ":lua require('dap').set_breakpoint(nil, nil, vim.fn.input('Logpoint message: '))<cr>", opts)
+    -- map.set("n", "<leader>rp", ":lua require('dap').repl.open()<cr>"        , opts)
+    -- map.set("n", "<leader>RR", ":lua require('dap').run_last()<cr>"         , opts)
+    -- map.set("n", "<leader>XX", ":lua require('dap').terminate()<cr>"        , { desc = 'Terminate DAP'})
 
 
     vim.api.nvim_command("nnoremap <expr> j v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'j' : 'gj'"                      )
@@ -354,7 +357,6 @@ local config = {
     -- Maybe also add  a paste with indentation? p= somehow
     --Tabularize /(.*)
     -- vim.api.nvim_command('xnoremap p "_dP' ) -- mehh
-  
 
     vim.api.nvim_command('set conceallevel=1')
 
@@ -374,6 +376,7 @@ local config = {
       vim.api.nvim_command('highlight LspReferenceRead  guibg=#626A73')
       vim.api.nvim_command('highlight LspReferenceWrite guibg=#626A73')
       vim.api.nvim_command('highlight LspReferenceText  guibg=#626A73')
+      vim.api.nvim_command('highlight MatchParen        guifg=#ffffff')
     end
     vim.fn.sign_define  ('DapBreakpoint', { text='●', texthl='DapBreakpoint', numhl='DapBreakpoint'})
 
