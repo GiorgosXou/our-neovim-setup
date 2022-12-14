@@ -154,7 +154,7 @@ local config = {
       {'svermeulen/vim-subversive'              },
       {'folke/trouble.nvim'                     },
       {'godlygeek/tabular'                      }, -- ALIGN <leader>a | https://stackoverflow.com/questions/5436715/how-do-i-align-like-this-with-vims-tabular-plugin
-      {"nvim-telescope/telescope-dap.nvim"      },
+      {"nvim-telescope/telescope-dap.nvim"      }, -- TODO: Maybe remove it?
       {'folke/twilight.nvim'             , config = function() require('twilight'             ).setup { context=50 }             end}, -- TODO: FIX
       {'petertriho/nvim-scrollbar'       , config = function() require("scrollbar"            ).setup()                          end},
       {'iamcco/markdown-preview.nvim'    , run    = function() vim.fn["mkdp#util#install"]()                                     end},
@@ -186,7 +186,30 @@ local config = {
           -- DiagnosticInfo  =  utils.parse_diagnostic_style { fg = '#39bae6'},
           -- DiagnosticHint  =  utils.parse_diagnostic_style { fg = '#95e6cb'},
           -- #FFC26B #860000 #64BAAA #006B5D  #Maybe?
-      }}) end                       },
+      }}) end                                   },
+      { "yioneko/nvim-yati"              , config = function () -- #2
+        require("nvim-treesitter.configs").setup {
+          yati = {
+            enable = true,
+            -- Disable by languages, see `Supported languages`
+            disable = { "python" },
+
+            -- Whether to enable lazy mode (recommend to enable this if bad indent happens frequently)
+            default_lazy = true,
+
+            -- Determine the fallback method used when we cannot calculate indent by tree-sitter
+            --   "auto": fallback to vim auto indent
+            --   "asis": use current indent as-is
+            --   "cindent": see `:h cindent()`
+            -- Or a custom function return the final indent result.
+            default_fallback = "auto"
+          },
+          indent = {
+            enable = false -- disable builtin indent module
+          }
+        }
+      end, 
+      tag = "*", requires = "nvim-treesitter/nvim-treesitter" },
     },
 
     cmp = function(config)
@@ -458,5 +481,13 @@ return config
   * https://github.com/kevinhwang91/nvim-hlslens
   * https://github.com/sindrets/diffview.nvim
 
+
+
+  =====================================================================
+                             REFERENCES
+  =====================================================================
+  - #2 fix python indent (example: open brackets in comment like "# ([)")
+  - - https://github.com/yioneko/nvim-yati
+  - - https://github.com/nvim-treesitter/nvim-treesitter/issues/1136#issuecomment-1127145770  
 ]]--
 
