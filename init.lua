@@ -139,6 +139,8 @@ local config = {
       {'owickstrom/vim-colors-paramount'        },
       {'navarasu/onedark.nvim'                  },
       {'fcpg/vim-orbital'                       },
+      {'stevearc/vim-arduino'                   }, -- sudo pacman -S arduino-cli (and arduino?) 
+      {'Shadowsith/vim-minify'                  },
       {'romainl/vim-malotru'                    },
       {'tpope/vim-sleuth'                       },
       {'tpope/vim-commentary'                   },
@@ -185,14 +187,14 @@ local config = {
           -- DiagnosticWarn  =  utils.parse_diagnostic_style { fg = '#ff8f40'},
           -- DiagnosticInfo  =  utils.parse_diagnostic_style { fg = '#39bae6'},
           -- DiagnosticHint  =  utils.parse_diagnostic_style { fg = '#95e6cb'},
-          -- #FFC26B #860000 #64BAAA #006B5D  #Maybe?
+          -- #FFC26B #860000 #64BAAA #006B5D #FF6A13 #FFB454 #FFF000 #Maybe?
       }}) end                                   },
       { "yioneko/nvim-yati"              , config = function () -- #2
         require("nvim-treesitter.configs").setup {
           yati = {
             enable = true,
             -- Disable by languages, see `Supported languages`
-            disable = { "python" },
+            disable = { "python", "markdown" },
 
             -- Whether to enable lazy mode (recommend to enable this if bad indent happens frequently)
             default_lazy = true,
@@ -306,6 +308,27 @@ local config = {
 
     -- Add overrides for LSP server settings, the keys are the name of the server
     ["server-settings"] = { 
+      arduino_language_server = { --  https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/arduino_language_server
+        on_new_config = function (config, root_dir)
+          local my_arduino_fqbn = {
+            ["/home/xou/Desktop/programming/hardware/arduino/nano"]  = "arduino:avr:nano", -- arduino-cli board listall
+            ["/home/xou/Desktop/programming/hardware/arduino/uno" ]  = "arduino:avr:uno" ,
+          }
+          local DEFAULT_FQBN = "arduino:avr:uno"
+          local fqbn = my_arduino_fqbn[root_dir]
+          if not fqbn then
+            -- vim.notify(("Could not find which FQBN to use in %q. Defaulting to %q."):format(root_dir, DEFAULT_FQBN))
+            fqbn = DEFAULT_FQBN
+          end
+          config.cmd = {         --  https://forum.arduino.cc/t/solved-errors-with-clangd-startup-for-arduino-language-server-in-nvim/1019977
+            "arduino-language-server",
+            "-cli-config" , "/home/xou/.arduino15/arduino-cli.yaml",
+            "-cli"        , "/usr/bin/arduino-cli",
+            "-clangd"     , "/usr/bin/clangd",
+            "-fqbn"       , fqbn
+          }
+        end
+      },
       pyright           = {
         settings        = {
           python        = {
@@ -319,8 +342,14 @@ local config = {
   },
 
 
-
   polish = function() -- This function is run last -- good place to configure mappings and vim options
+    -- local dap = require('dap') # TODO: https://github.com/rcarriga/nvim-dap-ui/issues/136
+    -- dap.defaults.fallback.force_external_terminal = true
+    -- dap.defaults.fallback.external_terminal = {
+    --   command = '/usr/bin/alacritty',
+    --   args = {'-e'},
+    -- }
+
     local map  = vim.keymap
     local opts = { silent=true }
 
@@ -347,18 +376,18 @@ local config = {
     map.set('n', 'x'       , '"_x'                      )
     map.set('n', 'X'       , '"_X'                      )
 
+    map.set('i', "<A-h>"    , '<ESC><<')
+    map.set('i', "<A-l>"    , '<ESC>>>')
     map.set('v', "<A-h>"    , '<gv')
     map.set('v', "<A-l>"    , '>gv')
     map.set('n', "<A-h>"    , '<<' )
     map.set('n', "<A-l>"    , '>>' )
 
+    map.set('n', "<Leader>h"    , '%' )
+
     map.set('n', '<Leader>L' , ':BufferLineCycleNext<CR>')
     map.set('n', '<Leader>H' , ':BufferLineCyclePrev<CR>')
 
-    map.set('n', "yH"       , 'y^')
-    map.set('n', "yL"       , 'y$')
-    map.set('n', "dH"       , 'd^')
-    map.set('n', "dL"       , 'd$')
     map.set('n', "<S-h>"    , '^' )
     map.set('n', "<S-l>"    , '$' )
     map.set('n', "<Home>"   , ":call smarthome#SmartHome('n')<cr>")
@@ -401,6 +430,13 @@ local config = {
     vim.api.nvim_command('set conceallevel=3') -- au FileType markdown setl conceallevel=0
     vim.api.nvim_command('au BufRead,BufNewFile *.md nnoremap <buffer> gf :call go_to_markdown_ref()<cr>') -- https://www.reddit.com/r/vim/comments/yu49m1/rundont_run_vim_command_based_on_current_file/
 
+    vim.api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>aa <cmd>ArduinoAttach<CR>')
+    vim.api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>am <cmd>ArduinoVerify<CR>')
+    vim.api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>au <cmd>ArduinoUpload<CR>')
+    vim.api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ad <cmd>ArduinoUploadAndSerial<CR>')
+    vim.api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ab <cmd>ArduinoChooseBoard<CR>')
+    vim.api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ap <cmd>ArduinoChooseProgrammer<CR>')
+
     -- vim.api.nvim_command("nnoremap <c-a> :if !switch#Switch({'reverse': 0}) <bar> exe 'normal! <c-a>' <bar> endif<cr>") -- https://github.com/AndrewRadev/switch.vim/pull/41
     -- vim.api.nvim_command("nnoremap <c-x> :if !switch#Switch({'reverse': 1}) <bar> exe 'normal! <c-x>' <bar> endif<cr>")
 
@@ -420,7 +456,8 @@ local config = {
       vim.api.nvim_command('highlight LspReferenceRead  guibg=#626A73')
       vim.api.nvim_command('highlight LspReferenceWrite guibg=#626A73')
       vim.api.nvim_command('highlight LspReferenceText  guibg=#626A73')
-      vim.api.nvim_command('highlight MatchParen        guifg=#ffffff')
+      vim.api.nvim_command('highlight MatchParen        guibg=#000000 guifg=#FFFFFF guisp=#000000 cterm=underline gui=underline')
+      vim.api.nvim_command('highlight IndentBlanklineContextChar  guifg=#FFFFFF')
     end
     vim.fn.sign_define  ('DapBreakpoint', { text='●', texthl='DapBreakpoint', numhl='DapBreakpoint'})
 
@@ -475,6 +512,7 @@ return config
   =====================================================================
                          POTENTIAL PLUGINS 
   =====================================================================
+  * https://github.com/phaazon/hop.nvim
   * nvim-telescope/telescope-media-files.nvim      MUST INSTALL
   * https://github.com/xiyaowong/nvim-transparent
   * https://github.com/sindrets/winshift.nvim
