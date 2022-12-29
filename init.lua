@@ -1,8 +1,9 @@
-_G.IS_WINDOWS   = vim.loop.os_uname().sysname:find 'Windows' and true or false
-_G.PYTHON_PATH  = _G.IS_WINDOWS and 'C:\\Users\\gxous\\AppData\\Local\\Programs\\Python\\Python39\\python.exe' or '/usr/sbin/python'--'/usr/local/bin/python3'
--- _G.ZK_HONE_PATH = _G.IS_WINDOWS and 'C:\\Users\\gxous\\Desktop\\notes' or vim.fn.expand('~/Desktop/xou/notes')
+--              AstroNvim Configuration Table
+-- All configuration changes should go inside of the table below
 
-
+-- You can think of a Lua "table" as a dictionary like data structure the
+-- normal format is "key = value". These also handle array like data structures
+-- where a value with no key simply has an implicit numeric key
 local config = {
   updater    = {
     commit         = nil      , -- commit hash (NIGHTLY ONLY)
@@ -16,18 +17,29 @@ local config = {
     skip_prompts   = false    , -- skip prompts about breaking changes
     show_changelog = true     , -- show the changelog after performing an update
   },
-  colorscheme = 'nazgul', -- Set colorscheme
+  colorscheme = 'nazgul', -- Set colorscheme to use
 
-  options = { -- set vim options here (vim.<first_key>.<second_key> =  value)
-    opt   = { -- clipboard = "",
-      shiftwidth     = 4   ,
-      tabstop        = 4   ,
-      relativenumber = true, -- sets vim.opt.relativenumber
+  options = {
+    opt   = {
+      relativenumber = true  , -- sets vim.opt.relativenumber
+      number         = true  , -- sets vim.opt.number
+      spell          = false , -- sets vim.opt.spell
+      signcolumn     = "auto", -- sets vim.opt.signcolumn to auto
+      wrap           = false , -- sets vim.opt.wrap
+      -- shiftwidth     = 4     ,
+      -- tabstop        = 4     ,
     },
     g = {
-      mkdp_theme         = 'dark',
-      mapleader          = " "   , -- sets vim.g.mapleader
-      autoformat_enabled = false ,
+      mkdp_theme                 = 'dark',
+      mapleader                  = " "   , -- sets vim.g.mapleader
+      autoformat_enabled         = false , -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
+      cmp_enabled                = true  , -- enable completion at start
+      autopairs_enabled          = true  , -- enable autopairs at start
+      diagnostics_enabled        = true  , -- enable diagnostics at start
+      status_diagnostics_enabled = true  , -- enable diagnostics in statusline
+      icons_enabled              = true  , -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
+      ui_notifications_enabled   = true  , -- disable notifications when toggling UI elements
+      heirline_bufferline        = false , -- enable new heirline based bufferline (requires :PackerSync after changing)
       VM_maps            = {
         ['Find Under']      = '<C-n>'  ,
         ["Add Cursor Down"] = '<C-A-j>',
@@ -86,17 +98,22 @@ local config = {
         '   L                                                          ]  ',
   },
 
-
   default_theme       = { -- Default theme configuration
     diagnostics_style = { italic = true },
-    colors            = { -- Modify the color table
-      fg              = "#abb2bf"        ,
+    colors            = { -- Modify the color palette for the default theme
+      fg = "#abb2bf",
+      bg = "#1e222a",
     },
 
-    highlights          = function(highlights) -- Modify the highlight groups
-      local C           = require "default_theme.colors"
-      highlights.Normal = { fg = C.fg, bg = C.bg }
-      return highlights
+    highlights  = function(hl) -- or a function that returns a new table of colors to set
+      local C   = require "default_theme.colors"
+      hl.Normal = { fg = C.fg, bg = C.bg }
+      -- New approach instead of diagnostic_style
+      hl.DiagnosticError.italic = true
+      hl.DiagnosticHint.italic  = true
+      hl.DiagnosticInfo.italic  = true
+      hl.DiagnosticWarn.italic  = true
+      return hl
     end,
 
     plugins = { -- enable or disable extra plugin highlighting
@@ -121,15 +138,74 @@ local config = {
       ["nvim-web-devicons"] = true ,
   },},
 
-
-  ui                 = { -- Disable AstroNvim ui features
-    nui_input        = true,
-    telescope_select = true,
+  diagnostics    = { -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
+    virtual_text = true,
+    underline    = true,
   },
 
+  -- Extend LSP configuration
+  lsp       = {
+    servers = { -- enable servers that you already have installed without mason
+    },
+    formatting       = {     -- control auto formatting on save
+      format_on_save = {
+        enabled = true,         -- enable or disable format on save globally
+        allow_filetypes  = {},
+        ignore_filetypes = {},
+      },
+      disabled   = {}  ,
+      timeout_ms = 1000, -- default format timeout
+    },
+    mappings = { -- easily add or disable built in mappings added during LSP attaching
+      n      = { -- ["<leader>lf"] = false -- disable formatting keymap
+    },},
+
+    ["server-settings"] = { -- Add overrides for LSP server settings, the keys are the name of the server
+      arduino_language_server = { --  https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/arduino_language_server
+        on_new_config = function (config, root_dir)
+          local my_arduino_fqbn = {
+            ["/home/xou/Desktop/programming/hardware/arduino/nano"]  = "arduino:avr:nano", -- arduino-cli board listall
+            ["/home/xou/Desktop/programming/hardware/arduino/uno" ]  = "arduino:avr:uno" ,
+          }
+          local DEFAULT_FQBN = "arduino:avr:uno"
+          local fqbn = my_arduino_fqbn[root_dir]
+          if not fqbn then
+            -- vim.notify(("Could not find which FQBN to use in %q. Defaulting to %q."):format(root_dir, DEFAULT_FQBN))
+            fqbn = DEFAULT_FQBN
+          end
+          config.cmd = {         --  https://forum.arduino.cc/t/solved-errors-with-clangd-startup-for-arduino-language-server-in-nvim/1019977
+            "arduino-language-server",
+            "-cli-config" , "/home/xou/.arduino15/arduino-cli.yaml",
+            "-cli"        , "/usr/bin/arduino-cli",
+            "-clangd"     , "/usr/bin/clangd",
+            "-fqbn"       , fqbn
+          }
+        end
+      },
+      pyright           = {
+        settings        = {
+          python        = {
+            analysis    = {
+              typeCheckingMode = "off",
+    },} },} },},
+
+  mappings = {
+    n = {
+      ["<leader>bb"] = { "<cmd>tabnew<cr>"              , desc = "New tab"       },
+      ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>" , desc = "Pick to close" },
+      ["<leader>bj"] = { "<cmd>BufferLinePick<cr>"      , desc = "Pick to jump"  },
+      ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs"  },
+      -- quick save
+      -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
+    },
+    t = {
+      -- setting a mapping to false will disable it
+      -- ["<esc>"] = false,
+    },
+  },
 
   plugins = { -- Configure plugins
-    init  = { -- Add plugins, the packer syntax without the "use"
+    init  = {
       {'mg979/vim-visual-multi'                 },
       {'folke/zen-mode.nvim'                    },
       {'m-pilia/vim-smarthome'                  },
@@ -156,7 +232,6 @@ local config = {
       {'svermeulen/vim-subversive'              },
       {'folke/trouble.nvim'                     },
       {'godlygeek/tabular'                      }, -- ALIGN <leader>a | https://stackoverflow.com/questions/5436715/how-do-i-align-like-this-with-vims-tabular-plugin
-      {"nvim-telescope/telescope-dap.nvim"      }, -- TODO: Maybe remove it?
       {'folke/twilight.nvim'             , config = function() require('twilight'             ).setup { context=50 }             end}, -- TODO: FIX
       {'petertriho/nvim-scrollbar'       , config = function() require("scrollbar"            ).setup()                          end},
       {'iamcco/markdown-preview.nvim'    , run    = function() vim.fn["mkdp#util#install"]()                                     end},
@@ -193,20 +268,11 @@ local config = {
         require("nvim-treesitter.configs").setup {
           yati = {
             enable = true,
-            -- Disable by languages, see `Supported languages`
-            disable = { "python", "markdown" },
-
-            -- Whether to enable lazy mode (recommend to enable this if bad indent happens frequently)
-            default_lazy = true,
-
-            -- Determine the fallback method used when we cannot calculate indent by tree-sitter
-            --   "auto": fallback to vim auto indent
-            --   "asis": use current indent as-is
-            --   "cindent": see `:h cindent()`
-            -- Or a custom function return the final indent result.
+            disable = {'python', 'markdown' }, -- Disable by languages, see `Supported languages`
+            default_lazy = true, -- Whether to enable lazy mode (recommend to enable this if bad indent happens frequently)
             default_fallback = "auto"
           },
-          indent = {
+          indent   = {
             enable = false -- disable builtin indent module
           }
         }
@@ -234,122 +300,87 @@ local config = {
     end,
 
     ["neo-tree"]                = {
-      window                    = { position = 'left' },
+      window                    = { position = 'right' },
       default_component_configs = {
         indent                  = {
           last_indent_marker    = '╰',
     },},},
 
-    -- All other entries override the setup() call for default plugins
-    ["null-ls"] = function(config)
-      local null_ls = require "null-ls"
-      -- Check supported formatters and linters
-      -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
-      -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
-      config.sources = {
-        null_ls.builtins.formatting.rufo    , -- Set a formatter
-        null_ls.builtins.diagnostics.rubocop, -- Set a linter
+    ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
+      config.sources = { -- Set a formatter
+        -- null_ls.builtins.formatting.stylua,
+        -- null_ls.builtins.formatting.prettier,
       }
-
-      config.on_attach = function(client)                        -- set up null-ls's on_attach function
-        if client.resolved_capabilities.document_formatting then -- NOTE: You can remove this on attach function to disable format on save
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            desc     = "Auto format before save"   ,
-            pattern  = "<buffer>"                  ,
-            callback = vim.lsp.buf.formatting_sync ,
-          })
-        end
-      end
       return config -- return final config table
     end,
-    treesitter             = { ensure_installed = { "lua"         } },
-    ["nvim-lsp-installer"] = { ensure_installed = { "sumneko_lua" } },
-    packer                 = {
-      compile_path         = vim.fn.stdpath "data" .. "/packer_compiled.lua",
+    treesitter          = { -- overrides `require("treesitter").setup(...)`
+      ensure_installed  = { "lua" },
+    },
+    ["mason-lspconfig"] = { -- use mason-lspconfig to configure LSP installations
+      ensure_installed  = { "sumneko_lua" },
+    },
+    ["mason-null-ls"]   = { -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
+      -- ensure_installed = { "prettier", "stylua" },
+    },
+    ["mason-nvim-dap"]  = { -- overrides `require("mason-nvim-dap").setup(...)`
+      ensure_installed  = { "python" },
+    },
+  },
+
+
+  luasnip           = { -- LuaSnip Options
+    filetype_extend = { -- Extend filetypes
+      -- javascript = { "javascriptreact" },
+    },
+    vscode  = { -- Configure luasnip loaders (vscode, lua, and/or snipmate)
+      paths = {}, -- Add paths for including more VS Code style snippets in luasnip
   },},
-
-
-  luasnip                = {   -- LuaSnip Options
-    vscode_snippet_paths = {}, -- Add paths for including more VS Code style snippets in luasnip
-    filetype_extend      = {
-      javascript         = { "javascriptreact" }
-  },}, -- Extend filetypes
-
-
-  ["which-key"]       = { -- Modify which-key registration
-    register_mappings = { -- Add bindings
-      n               = { -- first key is the mode, n == normal mode
-        ["<leader>"]  = { -- second key is the prefix, <leader> prefixes
-          -- which-key registration table for normal mode, leader prefix
-          -- ["N"] = { "<cmd>tabnew<cr>", "New Buffer" },
-  },},},},
 
 
   cmp               = {
     source_priority = {
-      nvim_lsp      = 1000 ,
-      luasnip       = 750  ,
-      buffer        = 500  ,
-      path          = 250  ,
+      nvim_lsp  = 1000,
+      luasnip   = 750 ,
+      buffer    = 500 ,
+      path      = 250 ,
   },},
 
 
-  lsp       = { -- Extend LSP configuration
-    servers = { -- enable servers that you already have installed without lsp-installer
-    },
-    -- add to the server on_attach function
-    -- on_attach = function(client, bufnr)
+  heirline = { -- Customize Heirline options
+    -- -- Customize different separators between sections
+    -- separators = {
+    --   tab = { "", "" },
+    -- },
+    -- -- Customize colors for each element each element has a `_fg` and a `_bg`
+    -- colors = function(colors)
+    --   colors.git_branch_fg = astronvim.get_hlgroup "Conditional"
+    --   return colors
     -- end,
-
-    -- override the lsp installer server-registration function
-    -- server_registration = function(server, opts)
-    --   require("lspconfig")[server].setup(opts)
-    -- end,
-
-    -- Add overrides for LSP server settings, the keys are the name of the server
-    ["server-settings"] = { 
-      arduino_language_server = { --  https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/arduino_language_server
-        on_new_config = function (config, root_dir)
-          local my_arduino_fqbn = {
-            ["/home/xou/Desktop/programming/hardware/arduino/nano"]  = "arduino:avr:nano", -- arduino-cli board listall
-            ["/home/xou/Desktop/programming/hardware/arduino/uno" ]  = "arduino:avr:uno" ,
-          }
-          local DEFAULT_FQBN = "arduino:avr:uno"
-          local fqbn = my_arduino_fqbn[root_dir]
-          if not fqbn then
-            -- vim.notify(("Could not find which FQBN to use in %q. Defaulting to %q."):format(root_dir, DEFAULT_FQBN))
-            fqbn = DEFAULT_FQBN
-          end
-          config.cmd = {         --  https://forum.arduino.cc/t/solved-errors-with-clangd-startup-for-arduino-language-server-in-nvim/1019977
-            "arduino-language-server",
-            "-cli-config" , "/home/xou/.arduino15/arduino-cli.yaml",
-            "-cli"        , "/usr/bin/arduino-cli",
-            "-clangd"     , "/usr/bin/clangd",
-            "-fqbn"       , fqbn
-          }
-        end
-      },
-      pyright           = {
-        settings        = {
-          python        = {
-            analysis    = {
-              typeCheckingMode = "off",
-    },} },} },},
-
-  diagnostics    = { -- Diagnostics configuration (for vim.diagnostics.config({}))
-    virtual_text = true,
-    underline    = true,
+    -- -- Customize attributes of highlighting in Heirline components
+    -- attributes = {
+    --   -- styling choices for each heirline element, check possible attributes with `:h attr-list`
+    --   git_branch = { bold = true }, -- bold the git branch statusline component
+    -- },
+    -- -- Customize if icons should be highlighted
+    -- icon_highlights = {
+    --   breadcrumbs = false, -- LSP symbols in the breadcrumbs
+    --   file_icon = {
+    --     winbar = false, -- Filetype icon in the winbar inactive windows
+    --     statusline = true, -- Filetype icon in the statusline
+    --   },
+    -- },
   },
 
 
-  polish = function() -- This function is run last -- good place to configure mappings and vim options
-    -- local dap = require('dap') # TODO: https://github.com/rcarriga/nvim-dap-ui/issues/136
-    -- dap.defaults.fallback.force_external_terminal = true
-    -- dap.defaults.fallback.external_terminal = {
-    --   command = '/usr/bin/alacritty',
-    --   args = {'-e'},
-    -- }
+  ["which-key"]       = { -- Modify which-key registration (Use this with mappings table in the above.)
+    register_mappings = { -- Add bindings which show up as group name
+      n               = { -- first key is the mode, n == normal mode
+        ["<leader>"]  = { -- second key is the prefix, <leader> prefixes
+          ["b"] = { name = "Buffer" },
+  },},},},
 
+
+  polish = function()
     local map  = vim.keymap
     local opts = { silent=true }
 
@@ -412,7 +443,7 @@ local config = {
     -- map.set('n', "<Tab>"   , ">>"              , bufopts)
     -- map.set('n', "<S-Tab>" , "<<"              , bufopts) -- windows issue
 
-    map.set("n", "<leader>b" , ":lua require('dap').toggle_breakpoint()<cr>", { desc = 'Breakpoint Toggle'} )
+    -- map.set("n", "<leader>b" , ":lua require('dap').toggle_breakpoint()<cr>", { desc = 'Breakpoint Toggle'} )
 
 
     vim.api.nvim_command("nnoremap <expr> j v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'j' : 'gj'"                      )
@@ -453,22 +484,13 @@ local config = {
       else
         vim.api.nvim_command('highlight Normal guibg=#000000')
       end
-      vim.api.nvim_command('highlight LspReferenceRead  guibg=#626A73')
-      vim.api.nvim_command('highlight LspReferenceWrite guibg=#626A73')
-      vim.api.nvim_command('highlight LspReferenceText  guibg=#626A73')
+      vim.api.nvim_command('highlight LspReferenceRead  guibg=#353535')
+      vim.api.nvim_command('highlight LspReferenceWrite guibg=#353535')
+      vim.api.nvim_command('highlight LspReferenceText  guibg=#353535')
       vim.api.nvim_command('highlight MatchParen        guibg=#000000 guifg=#FFFFFF guisp=#000000 cterm=underline gui=underline')
       vim.api.nvim_command('highlight IndentBlanklineContextChar  guifg=#FFFFFF')
     end
     vim.fn.sign_define  ('DapBreakpoint', { text='●', texthl='DapBreakpoint', numhl='DapBreakpoint'})
-
-
-    vim.api.nvim_create_augroup("packer_conf" , { clear = true }) -- Set autocommands
-    vim.api.nvim_create_autocmd("BufWritePost", {
-      desc    = "Sync packer after modifying plugins.lua",
-      group   = "packer_conf"                            ,
-      pattern = "plugins.lua"                            ,
-      command = "source <afile> | PackerSync"            ,
-    })
 
     -- vim.filetype.add { -- Set up custom filetypes
     --   extension    = { foo                   = "fooscript", },
@@ -479,7 +501,6 @@ local config = {
 }
 
 return config
-
 
 
 --[[
@@ -528,4 +549,3 @@ return config
   - - https://github.com/yioneko/nvim-yati
   - - https://github.com/nvim-treesitter/nvim-treesitter/issues/1136#issuecomment-1127145770  
 ]]--
-
