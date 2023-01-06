@@ -264,16 +264,17 @@ local config = {
           -- DiagnosticHint  =  utils.parse_diagnostic_style { fg = '#95e6cb'},
           -- #FFC26B #860000 #64BAAA #006B5D #FF6A13 #FFB454 #FFF000 #Maybe?
       }}) end                                   },
+      ["Darazaki/indent-o-matic"] = { disable = true },
       { "yioneko/nvim-yati"              , config = function () -- #2
         require("nvim-treesitter.configs").setup {
           yati = {
             enable = true,
-            disable = {'python', 'markdown' }, -- Disable by languages, see `Supported languages`
+            disable = {'python', 'markdown', 'lua', 'cpp' }, -- Disable by languages, see `Supported languages`
             default_lazy = true, -- Whether to enable lazy mode (recommend to enable this if bad indent happens frequently)
             default_fallback = "auto"
           },
           indent   = {
-            enable = false -- disable builtin indent module
+            enable = true -- disable builtin indent module
           }
         }
       end, 
@@ -449,7 +450,7 @@ local config = {
     vim.api.nvim_command("nnoremap <expr> j v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'j' : 'gj'"                      )
     vim.api.nvim_command("nnoremap <expr> k v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'k' : 'gk'"                      )
 
-    vim.api.nvim_command("let g:yoinkAutoFormatPaste='1'"                                                                      )
+    -- vim.api.nvim_command("let g:yoinkAutoFormatPaste='1'"                                                                      )
     vim.api.nvim_command("map <expr> p yoink#canSwap() ? '<plug>(YoinkPostPasteSwapBack)' : '<plug>(YoinkPaste_p)'"            )
     vim.api.nvim_command("map <expr> P yoink#canSwap() ? '<plug>(YoinkPostPasteSwapForward)' : '<plug>(YoinkPaste_P)'"         )
     vim.api.nvim_command('xmap p <plug>(SubversiveSubstitute)')
@@ -518,6 +519,7 @@ return config
   * :!git add *
   * :!git commit -m "whatever"
   * :!git push
+  * install lazygit
 
 
 
