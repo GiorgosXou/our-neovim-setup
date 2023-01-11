@@ -268,8 +268,7 @@ local config = {
       ["rcarriga/nvim-dap-ui"   ] = { commit  = 'b80227e',
         config = function()
           require "configs.dapui" -- run default astronvim dap config
-          local dap = require "dap"
-          dap.defaults.fallback.force_external_terminal = true
+          local dap = require "dap" -- dap.defaults.fallback.force_external_terminal = true
           dap.defaults.fallback.external_terminal = {
             command = "/usr/bin/alacritty",
             args    = { "-e" },
@@ -279,13 +278,22 @@ local config = {
               -- The first three options are required by nvim-dap
               type    = "python", -- the type here established the link to the adapter definition : `dap.adapters.python`
               request = "launch",
-              name    = "Launch file",
+              name    = "Launch file in external terminal",
+              -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
+              console    = "externalTerminal",
+              program    = "${file}", -- This configuration will launch the current file if used.
+              pythonPath = "/usr/bin/python"
+            },
+            {
+              -- The first three options are required by nvim-dap
+              type    = "python", -- the type here established the link to the adapter definition : `dap.adapters.python`
+              request = "launch",
+              name    = "Launch file in integrated terminal",
               -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
               console    = "integratedTerminal",
               program    = "${file}", -- This configuration will launch the current file if used.
               pythonPath = "/usr/bin/python"
-            },
-          }
+          },}
         end,
       },
       { "yioneko/nvim-yati"              , config = function () -- #2
