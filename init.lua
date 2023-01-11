@@ -5,18 +5,18 @@
 -- normal format is "key = value". These also handle array like data structures
 -- where a value with no key simply has an implicit numeric key
 local config = {
-  updater    = {
-    commit         = nil      , -- commit hash (NIGHTLY ONLY)
-    branch         = "nightly", -- branch name (NIGHTLY ONLY)
-    remote         = "origin" , -- remote to use
-    channel        = "nightly", -- "stable" or "nightly"
-    version        = "latest" , -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
-    auto_quit      = false    , -- automatically quit the current session after a successful update
-    pin_plugins    = nil      , -- nil, true, false (nil will pin plugins on stable only)
-    auto_reload    = false    , -- automatically reload and sync packer after a successful update
-    skip_prompts   = false    , -- skip prompts about breaking changes
-    show_changelog = true     , -- show the changelog after performing an update
-  },
+  -- updater    = {
+  --   commit         = nil      , -- commit hash (NIGHTLY ONLY)
+  --   branch         = "nightly", -- branch name (NIGHTLY ONLY)
+  --   remote         = "origin" , -- remote to use
+  --   channel        = "nightly", -- "stable" or "nightly"
+  --   version        = "latest" , -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
+  --   auto_quit      = false    , -- automatically quit the current session after a successful update
+  --   pin_plugins    = nil      , -- nil, true, false (nil will pin plugins on stable only)
+  --   auto_reload    = false    , -- automatically reload and sync packer after a successful update
+  --   skip_prompts   = false    , -- skip prompts about breaking changes
+  --   show_changelog = true     , -- show the changelog after performing an update
+  -- },
   colorscheme = 'nazgul', -- Set colorscheme to use
 
   options = {
