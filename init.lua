@@ -441,6 +441,7 @@ local config = {
     map.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>"             , {silent = true, noremap = true})
     map.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>"               , {silent = true, noremap = true})
 
+    map.set("n", "<leader>a", "<cmd>Tab /[=:|]/<cr>"                          , {desc = 'Align text'})
     -- map.set('n', "<Tab>"   , ">>"              , bufopts)
     -- map.set('n', "<S-Tab>" , "<<"              , bufopts) -- windows issue
 
