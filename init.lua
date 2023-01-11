@@ -265,7 +265,7 @@ local config = {
           -- #FFC26B #860000 #64BAAA #006B5D #FF6A13 #FFB454 #FFF000 #Maybe?
       }}) end                                   },
       ["Darazaki/indent-o-matic"] = { disable = true },
-      ["rcarriga/nvim-dap-ui"] = {
+      ["rcarriga/nvim-dap-ui"   ] = { commit  = 'b80227e',
         config = function()
           require "configs.dapui" -- run default astronvim dap config
           local dap = require "dap"
