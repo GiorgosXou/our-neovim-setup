@@ -525,6 +525,14 @@ return config
 
 
   =====================================================================
+                         FOR THING TO WORK 
+  =====================================================================
+  * CPP
+  * * install gdb for cpp in dap
+  * * compile with -g : g++ -g file.cpp -o file.o
+
+
+  =====================================================================
                            HELPFUL STUFF
   =====================================================================
   * https://alpha2phi.medium.com/neovim-for-beginners-debugging-using-dap-44626a767f57
