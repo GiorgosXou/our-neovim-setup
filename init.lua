@@ -265,6 +265,29 @@ local config = {
           -- #FFC26B #860000 #64BAAA #006B5D #FF6A13 #FFB454 #FFF000 #Maybe?
       }}) end                                   },
       ["Darazaki/indent-o-matic"] = { disable = true },
+      ["rcarriga/nvim-dap-ui"] = {
+        config = function()
+          require "configs.dapui" -- run default astronvim dap config
+          local dap = require "dap"
+          dap.defaults.fallback.force_external_terminal = true
+          dap.defaults.fallback.external_terminal = {
+            command = "/usr/bin/alacritty",
+            args    = { "-e" },
+          }
+          dap.configurations.python = {
+            {
+              -- The first three options are required by nvim-dap
+              type    = "python", -- the type here established the link to the adapter definition : `dap.adapters.python`
+              request = "launch",
+              name    = "Launch file",
+              -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
+              console    = "integratedTerminal",
+              program    = "${file}", -- This configuration will launch the current file if used.
+              pythonPath = "/usr/bin/python"
+            },
+          }
+        end,
+      },
       { "yioneko/nvim-yati"              , config = function () -- #2
         require("nvim-treesitter.configs").setup {
           yati = {
