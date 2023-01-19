@@ -227,7 +227,7 @@ local config = {
       {'kana/vim-textobj-user'                  },
       {'Mofiqul/vscode.nvim'                    },
       {'nvim-treesitter/nvim-treesitter-context'},
-      {'svermeulen/vim-yoink'                   },
+      {'svermeulen/vim-yoink'                   }, -- TERMUX https://github.com/GiorgosXou/our-neovim-setup/issues/2
       {'AndrewRadev/switch.vim'                 },
       {'svermeulen/vim-subversive'              },
       {'folke/trouble.nvim'                     },
@@ -274,8 +274,7 @@ local config = {
             args    = { "-e" },
           }
           dap.configurations.python = {
-            {
-              -- The first three options are required by nvim-dap
+            { -- The first three options are required by nvim-dap
               type    = "python", -- the type here established the link to the adapter definition : `dap.adapters.python`
               request = "launch",
               name    = "Launch file in external terminal",
@@ -284,8 +283,7 @@ local config = {
               program    = "${file}", -- This configuration will launch the current file if used.
               pythonPath = "/usr/bin/python"
             },
-            {
-              -- The first three options are required by nvim-dap
+            { -- The first three options are required by nvim-dap
               type    = "python", -- the type here established the link to the adapter definition : `dap.adapters.python`
               request = "launch",
               name    = "Launch file in integrated terminal",
@@ -472,7 +470,6 @@ local config = {
     map.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>"             , {silent = true, noremap = true})
     map.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>"               , {silent = true, noremap = true})
 
-    map.set("n", "<leader>a", "<cmd>Tab /[=:|]/<cr>"                          , {desc = 'Align text'})
     -- map.set('n', "<Tab>"   , ">>"              , bufopts)
     -- map.set('n', "<S-Tab>" , "<<"              , bufopts) -- windows issue
 
@@ -500,6 +497,8 @@ local config = {
     vim.api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ad <cmd>ArduinoUploadAndSerial<CR>')
     vim.api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ab <cmd>ArduinoChooseBoard<CR>')
     vim.api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ap <cmd>ArduinoChooseProgrammer<CR>')
+
+    map.set("n", "<leader>al", "<cmd>Tab /[=:|]/<cr>"                          , {desc = 'Align text'})
 
     -- vim.api.nvim_command("nnoremap <c-a> :if !switch#Switch({'reverse': 0}) <bar> exe 'normal! <c-a>' <bar> endif<cr>") -- https://github.com/AndrewRadev/switch.vim/pull/41
     -- vim.api.nvim_command("nnoremap <c-x> :if !switch#Switch({'reverse': 1}) <bar> exe 'normal! <c-x>' <bar> endif<cr>")
@@ -581,6 +580,8 @@ return config
   * https://github.com/sindrets/winshift.nvim
   * https://github.com/kevinhwang91/nvim-hlslens
   * https://github.com/sindrets/diffview.nvim
+  * https://github.com/glts/vim-radical
+  * https://github.com/terryma/vim-expand-region
 
 
 
