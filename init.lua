@@ -432,7 +432,7 @@ return {
   * :!git commit -m "whatever"
   * :!git push
   * install lazygit
-
+  * git config --global credential.helper store (and after the first push credentials get stored)
 
 
   =====================================================================
