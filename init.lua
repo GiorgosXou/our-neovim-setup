@@ -328,6 +328,8 @@ return {
     map.set('v', "<A-l>"     , '>gv'    )
     map.set('n', "<A-h>"     , '<<'     )
     map.set('n', "<A-l>"     , '>>'     )
+    map.set('v', "<S-h>"     , '^'    )
+    map.set('v', "<S-l>"     , '$'    )
 
     map.set('n', "<Leader>h"    , '%' )
 
@@ -423,6 +425,12 @@ return {
   =====================================================================
                             REMIND STUFF
   =====================================================================
+  * SmartHome SmartEnd but "smarter",  4 steps instead of 3 , a middle one where you were before taking the action
+
+
+  =====================================================================
+                            REMIND STUFF
+  =====================================================================
   * http://www.viemu.com/vi-vim-tutorial-1.gif
   * https://www.youtube.com/watch?v=qZO9A5F6BZs
   * https://stackoverflow.com/a/26920014/11465149
@@ -463,6 +471,8 @@ return {
   * https://github.com/sindrets/diffview.nvim
   * https://github.com/glts/vim-radical
   * https://github.com/terryma/vim-expand-region
+  * https://github.com/ThePrimeagen/harpoon
+  * https://github.com/fedepujol/move.nvim
 
 
   =====================================================================
