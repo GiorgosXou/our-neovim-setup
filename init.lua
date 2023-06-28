@@ -251,14 +251,15 @@ return {
     },},
 
     ["config"] = { -- Add overrides for LSP server settings, the keys are the name of the server
-      -- tst_lsp = {
-      --   cmd = {
-      --     'python',
-      --     'tst_lsp.py'
-      --   };
-      --   filetypes = {""};
-      --   root_dir = require("lspconfig.util").root_pattern("pdack.tst");
-      -- },
+      -- tst_lsp = function()
+      --   return {
+      --     cmd = {
+      --       'cmake-language-server'
+      --     };
+      --     -- filetypes = {"tst"};
+      --     root_dir = require("lspconfig.util").root_pattern("pdack.tst");
+      --   }
+      -- end,
       arduino_language_server = { --  https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/arduino_language_server
         on_new_config = function (config, root_dir)
           local my_arduino_fqbn = {
@@ -274,7 +275,7 @@ return {
           config.cmd = {         --  https://forum.arduino.cc/t/solved-errors-with-clangd-startup-for-arduino-language-server-in-nvim/1019977
             "arduino-language-server",
             "-cli-config" , "~/.arduino15/arduino-cli.yaml", -- just in case it was /home/xou/.arduino15/arduino-cli.yaml
-            "-cli"        , "/usr/bin/arduino-cli",
+            "-cli"        , "/usr/bin/arduino-cli", -- 2023-06-26 ERROR | "Runs" if I set a wrong path
             "-clangd"     , "/usr/bin/clangd",
             "-fqbn"       , fqbn
           }
