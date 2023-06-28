@@ -324,7 +324,7 @@ return {
     map.set('i', '<A-j>'     , '<C-o>:m+1<cr>'            )
     map.set('n', 'i'         , ':noh<cr>i'                )
     map.set('n', '<ESC>'     , ':noh<cr>'                 )
-    map.set('v', '/'         , "\"fy/\\V<C-R>f<CR>N"      ) -- https://superuser.com/questions/41378/how-to-search-for-selected-text-in-vim#comment2699355_41400
+    map.set('v', 's'         , "\"fy/\\V<C-R>f<CR>N"      ) -- https://vi.stackexchange.com/a/34743/42370 | https://superuser.com/questions/41378/how-to-search-for-selected-text-in-vim#comment2699355_41400
     map.set('n', 'x'         , '"_x'                      )
     map.set('n', 'X'         , '"_X'                      )
 
