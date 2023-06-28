@@ -231,6 +231,12 @@ return {
     servers = { -- enable servers that you already have installed without mason
       -- "tst_lsp"
     },
+    on_attach = function(client, bufnr)
+      -- print("test")
+      if client.name == "arduino_language_server" then
+        client.server_capabilities.semanticTokensProvider = false
+      end
+    end,
     formatting       = {     -- control auto formatting on save
       format_on_save = {
         enabled = true,         -- enable or disable format on save globally
