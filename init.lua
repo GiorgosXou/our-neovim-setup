@@ -456,6 +456,13 @@ return {
   * CPP
   * * install gdb for cpp in dap
   * * compile with -g : g++ -g file.cpp -o file.o
+  * Clean Install 
+  * * sudo -E rm -r ~/.local/share/nvim
+  * * sudo -E rm -r ~/.config/nvim
+  * * sudo -E rm -r /usr/share/nvim/
+  * * sudo -E rm -r /home/xou/.cache/nvim
+  * * sudo pacman -R neovim
+  * * sudo pacman -S neovim
 
 
   =====================================================================
