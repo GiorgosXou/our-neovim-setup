@@ -198,20 +198,21 @@ return {
         },}
       end,
     },
-    { "yioneko/nvim-yati"              , config = function () -- #2
-      require("nvim-treesitter.configs").setup {
-        yati = {
-          enable           = true,
-          disable          = {'python', 'markdown', 'lua', 'cpp' }, -- Disable by languages, see `Supported languages`
-          default_lazy     = true, -- Whether to enable lazy mode (recommend to enable this if bad indent happens frequently)
-          default_fallback = "auto"
-        },
-        indent   = {
-          enable = true -- disable builtin indent module
-        }
-      }
-    end, requires = "nvim-treesitter/nvim-treesitter" 
-    },
+    -- { "Darazaki/indent-o-matic" , disable = true },
+    -- { "yioneko/nvim-yati"              , config = function () -- #2
+    --   require("nvim-treesitter.configs").setup {
+    --     yati = {
+    --       enable           = true,
+    --       disable          = {'python', 'markdown', 'lua', 'cpp' }, -- Disable by languages, see `Supported languages`
+    --       default_lazy     = true, -- Whether to enable lazy mode (recommend to enable this if bad indent happens frequently)
+    --       default_fallback = "auto"
+    --     },
+    --     indent   = {
+    --       enable = true -- disable builtin indent module
+    --     }
+    --   }
+    -- end, requires = "nvim-treesitter/nvim-treesitter" 
+    -- },
     {"nvim-neo-tree/neo-tree.nvim" , opts = {
       window                    = { position = 'right' },
       default_component_configs = {
