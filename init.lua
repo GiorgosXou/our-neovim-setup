@@ -170,10 +170,7 @@ return {
         -- DiagnosticHint  =  utils.parse_diagnostic_style { fg = '#95e6cb'},
         -- #FFC26B #860000 #64BAAA #006B5D #FF6A13 #FFB454 #FFF000 #Maybe?
     }}) end                                   },
-    ["Darazaki/indent-o-matic"] = { disable = true },
-    ["rcarriga/nvim-dap-ui"   ] = {
-      config = function()
-        require "configs.dapui" -- run default astronvim dap config
+    { "mfussenegger/nvim-dap", config = function()
         local dap = require "dap" -- dap.defaults.fallback.force_external_terminal = true
         dap.defaults.fallback.external_terminal = {
           command = "/usr/bin/alacritty",
