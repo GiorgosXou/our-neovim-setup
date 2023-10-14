@@ -103,6 +103,7 @@ return {
     {"williamboman/mason-lspconfig.nvim", opts   = { ensure_installed = {'pyright', 'lua_ls', 'marksman', 'clangd'  , 'arduino_language_server' }}},
     {"nvim-treesitter/nvim-treesitter"  , opts   = { ensure_installed = {'python' , 'lua'   , 'markdown', 'markdown_inline', 'arduino'          }}},
     {"jay-babu/mason-nvim-dap.nvim"     , opts   = { ensure_installed = {'python' , 'lua'                                                       }}},
+    {"akinsho/flutter-tools.nvim"             }, -- add lsp plugin
     {"p00f/clangd_extensions.nvim",              -- install lsp plugin
       init = function()
         -- load clangd extensions when clangd attaches
@@ -255,10 +256,11 @@ return {
   lsp       = {
     servers = { -- enable servers that you already have installed without mason
       -- "tst_lsp"
+      "dartls",
     },
-    on_attach = function(client, bufnr)
-      -- print("test")
-      if client.name == "arduino_language_server" then
+    setup_handlers = { -- add custom handler
+      dartls = function(_, opts) require("flutter-tools").setup { lsp = opts } end,
+    },
         client.server_capabilities.semanticTokensProvider = false
       end
     end,
