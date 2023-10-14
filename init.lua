@@ -133,6 +133,7 @@ return {
 
     {'kiyoon/treesitter-indent-object.nvim'   },
     {'stevearc/vim-arduino'                   }, -- sudo pacman -S arduino-cli (and arduino?) 
+    {'hiphish/rainbow-delimiters.nvim'        , lazy = false},
     {'folke/zen-mode.nvim'                    , lazy = false },
     {'godlygeek/tabular'                      , lazy = false }, -- ALIGN <leader>a | https://stackoverflow.com/questions/5436715/how-do-i-align-like-this-with-vims-tabular-plugin
     {'folke/trouble.nvim'                     , lazy = false },
