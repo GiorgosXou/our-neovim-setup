@@ -172,6 +172,13 @@ return {
         -- DiagnosticHint  =  utils.parse_diagnostic_style { fg = '#95e6cb'},
         -- #FFC26B #860000 #64BAAA #006B5D #FF6A13 #FFB454 #FFF000 #Maybe?
     }}) end                                   },
+    {
+      "lewis6991/gitsigns.nvim",
+      config = function()
+        require('gitsigns').setup()
+        require("scrollbar.handlers.gitsigns").setup()
+      end
+    },
     { "mfussenegger/nvim-dap", config = function()
         local dap = require "dap" -- dap.defaults.fallback.force_external_terminal = true
         dap.defaults.fallback.external_terminal = {
