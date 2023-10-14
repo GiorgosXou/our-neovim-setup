@@ -55,7 +55,7 @@ return {
         end
       end,
 
-      go_to_markdown_ref = function ()
+      go_to_markdown_ref = function()
         local cursor = vim.api.nvim_win_get_cursor(0)
         local line   = vim.api.nvim_buf_get_lines (0, cursor[1]-1, cursor[1] , false)[1]
 
@@ -108,9 +108,9 @@ return {
     {'szorfein/darkest-space'                 },
     {'owickstrom/vim-colors-paramount'        },
     -- LSP - TS - DAP
-    {"williamboman/mason-lspconfig.nvim", opts   = { ensure_installed = {'pyright', 'lua_ls', 'marksman', 'clangd'  , 'arduino_language_server' }}},
-    {"nvim-treesitter/nvim-treesitter"  , opts   = { ensure_installed = {'python' , 'lua'   , 'markdown', 'markdown_inline', 'arduino'          }}},
-    {"jay-babu/mason-nvim-dap.nvim"     , opts   = { ensure_installed = {'python' , 'lua'                                                       }}},
+    {"williamboman/mason-lspconfig.nvim", opts   = { ensure_installed = {'pyright', 'lua_ls', 'marksman'}}}, -- 'arduino_language_server'
+    {"nvim-treesitter/nvim-treesitter"  , opts   = { ensure_installed = {'python' , 'lua'   , 'markdown', 'markdown_inline', 'arduino', 'cpp', 'c'}}},
+    {"jay-babu/mason-nvim-dap.nvim"     , opts   = { ensure_installed = {'python' , 'lua'}}},
     {"akinsho/flutter-tools.nvim"             }, -- add lsp plugin
     {"p00f/clangd_extensions.nvim",              -- install lsp plugin
       init = function()
@@ -134,6 +134,7 @@ return {
     {'kana/vim-textobj-entire'                },
 
     {'kiyoon/treesitter-indent-object.nvim'   },
+    {'nvim-treesitter/nvim-treesitter'        },
     {'stevearc/vim-arduino'                   }, -- sudo pacman -S arduino-cli (and arduino?) 
     {'hiphish/rainbow-delimiters.nvim'        , lazy = false},
     {'folke/zen-mode.nvim'                    , lazy = false },
@@ -146,7 +147,8 @@ return {
     {'nvim-treesitter/nvim-treesitter-context', lazy = false },
     {'vim-scripts/ReplaceWithRegister'        , lazy = false },
     {'iamcco/markdown-preview.nvim'           , lazy = false, config = function() vim.fn["mkdp#util#install"]() end},
-    {'nat-418/boole.nvim'                     , lazy = false, config = function() require('boole').setup({ -- https://www.reddit.com/r/neovim/comments/y2h9sq/new_plugin_boolenvim_toggle_booleans_cycle_days/
+    {'petertriho/nvim-scrollbar'              , lazy = false, config = function() require("scrollbar" ).setup() end},
+    {'nat-418/boole.nvim'                     , lazy = false, config = function() require('boole'     ).setup({ -- https://www.reddit.com/r/neovim/comments/y2h9sq/new_plugin_boolenvim_toggle_booleans_cycle_days/
       mappings = {
         increment = '<C-a>',
         decrement = '<C-x>'
@@ -160,7 +162,6 @@ return {
       }
     }) end},
     {'kylechui/nvim-surround'   , config = function() require("nvim-surround").setup() end, event = "VeryLazy", version = "*"},
-    {'petertriho/nvim-scrollbar', config = function() require("scrollbar"    ).setup() end},
     {'numToStr/Comment.nvim'    , config = function() require('Comment'      ).setup({
       toggler = {
           line  = 'cml', -- Line-comment toggle keymap
@@ -276,6 +277,9 @@ return {
     --     -- client.server_capabilities.semanticTokensProvider = false
     --   end
     -- end,
+    formatting       = {
+      format_on_save = { -- control auto formatting on save
+        enabled = true,  -- enable or disable format on save globally
         allow_filetypes  = {},
         ignore_filetypes = {},
       },
@@ -295,16 +299,16 @@ return {
           showTodos = true,
           completeFunctionCalls = true,
       },},
-      -- end,
-      arduino_language_server = { --  https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/arduino_language_server
-        on_new_config = function (config, root_dir)
-          local my_arduino_fqbn = {
-            ["/home/xou/Desktop/programming/hardware/arduino/nano"]  = "arduino:avr:nano", -- arduino-cli board listall
-            ["/home/xou/Desktop/programming/hardware/arduino/uno" ]  = "arduino:avr:uno" ,
-          }
-          local DEFAULT_FQBN = "arduino:avr:uno"
-          local fqbn = my_arduino_fqbn[root_dir]
-          if not fqbn then
+
+      tst_lsp = function()
+        return {
+          cmd = {
+            'cmake-language-server'
+          };
+          -- filetypes = {"tst"};
+          root_dir = require("lspconfig.util").root_pattern("pdack.tst");
+        }
+      end,
       -- arduino_language_server = { --  https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/arduino_language_server | https://discord.com/channels/939594913560031363/1078005571451621546/threads/1122910773270818887
       --   on_new_config = function (config, root_dir)
       --     local my_arduino_fqbn = {
@@ -346,13 +350,14 @@ return {
   -- anything that doesn't fit in the normal config locations above can go here
   polish = function()
     local map  = vim.keymap
-    local api  = vim.api 
+    local api  = vim.api
     local opts = { silent=true }
     local gs   = require('gitsigns')
 
     if _G.IS_ARCH then
       api.nvim_command('autocmd InsertLeave * call SetUsLayout()')
     end
+
 
     map.set('v', '<leader>gs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
 
@@ -401,7 +406,7 @@ return {
     map.set('n', "<S-l>"     , ":call smarthome#SmartEnd('n')<cr>" )
     map.set('n', "<Home>"    , ":call smarthome#SmartHome('n')<cr>")
     map.set('n', "<End>"     , ":call smarthome#SmartEnd('n')<cr>" )
-    map.set('i', "<Home>"    , "<C-r>=smarthome#SmartHome('i')<cr>") 
+    map.set('i', "<Home>"    , "<C-r>=smarthome#SmartHome('i')<cr>")
     map.set('i', "<End>"     , "<C-r>=smarthome#SmartEnd('i')<cr>" )
 
     map.set('n', '<Space>r'  , '<Plug>ReplaceWithRegisterOperator', { desc = "Replace with register"})
@@ -424,6 +429,8 @@ return {
     -- map.set('n', "<S-Tab>" , "<<"              ) -- windows issue
 
     -- map.set("n", "<leader>b" , ":lua require('dap').toggle_breakpoint()<cr>", { desc = 'Breakpoint Toggle'} )
+
+    api.nvim_command('set cursorcolumn')
 
     api.nvim_command("nnoremap <expr> j v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'j' : 'gj'")
     api.nvim_command("nnoremap <expr> k v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'k' : 'gk'")
