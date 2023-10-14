@@ -303,6 +303,9 @@ return {
     local map  = vim.keymap
     local api  = vim.api 
     local opts = { silent=true }
+    local gs   = require('gitsigns')
+
+    map.set('v', '<leader>gs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
 
     map.set('n', '<Leader>tt', 'a<C-R>=strftime("%Y-%m-%d %I:%M:%S %p")<CR><Esc>', { desc = 'print time'} )
     map.set('n', '<Leader>i' , 'a<C-R>=strftime("__%Y%m%d%I%M%S%p")<CR><Esc>'    , { desc = 'print time'} ) -- TODO: store it into register
