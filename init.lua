@@ -268,12 +268,12 @@ return {
     setup_handlers = { -- add custom handler
       dartls = function(_, opts) require("flutter-tools").setup { lsp = opts } end,
     },
-        client.server_capabilities.semanticTokensProvider = false
-      end
-    end,
-    formatting       = {     -- control auto formatting on save
-      format_on_save = {
-        enabled = true,         -- enable or disable format on save globally
+    -- on_attach = function(client, bufnr)
+    --   if client.name == "arduino_language_server" then
+    --     client.server_capabilities.semanticTokensProvider = nil
+    --     -- client.server_capabilities.semanticTokensProvider = false
+    --   end
+    -- end,
         allow_filetypes  = {},
         ignore_filetypes = {},
       },
@@ -303,18 +303,27 @@ return {
           local DEFAULT_FQBN = "arduino:avr:uno"
           local fqbn = my_arduino_fqbn[root_dir]
           if not fqbn then
-            -- vim.notify(("Could not find which FQBN to use in %q. Defaulting to %q."):format(root_dir, DEFAULT_FQBN))
-            fqbn = DEFAULT_FQBN
-          end
-          config.cmd = {         --  https://forum.arduino.cc/t/solved-errors-with-clangd-startup-for-arduino-language-server-in-nvim/1019977
-            "arduino-language-server",
-            "-cli-config" , "~/.arduino15/arduino-cli.yaml", -- just in case it was /home/xou/.arduino15/arduino-cli.yaml
-            "-cli"        , "/usr/bin/arduino-cli", -- 2023-06-26 ERROR | "Runs" if I set a wrong path
-            "-clangd"     , "/usr/bin/clangd",
-            "-fqbn"       , fqbn
-          }
-        end
-      },
+      -- arduino_language_server = { --  https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/arduino_language_server | https://discord.com/channels/939594913560031363/1078005571451621546/threads/1122910773270818887
+      --   on_new_config = function (config, root_dir)
+      --     local my_arduino_fqbn = {
+      --       ["/home/xou/Desktop/xou/programming/hardware/arduino/nano"]  = "arduino:avr:nano", -- arduino-cli board listall
+      --       ["/home/xou/Desktop/xou/programming/hardware/arduino/uno" ]  = "arduino:avr:uno" ,
+      --     }
+      --     local DEFAULT_FQBN = "arduino:avr:uno"
+      --     local fqbn = my_arduino_fqbn[root_dir]
+      --     if not fqbn then
+      --       -- vim.notify(("Could not find which FQBN to use in %q. Defaulting to %q."):format(root_dir, DEFAULT_FQBN))
+      --       fqbn = DEFAULT_FQBN
+      --     end
+      --     config.cmd = {         --  https://forum.arduino.cc/t/solved-errors-with-clangd-startup-for-arduino-language-server-in-nvim/1019977
+      --       "arduino-language-server",
+      --       "-cli-config" , "~/.arduino15/arduino-cli.yaml", -- just in case it was /home/xou/.arduino15/arduino-cli.yaml
+      --       "-cli"        , "/usr/bin/arduino-cli", -- 2023-06-26 ERROR | "Runs" if I set a wrong path
+      --       "-clangd"     , "/usr/bin/clangd",
+      --       "-fqbn"       , fqbn
+      --     }
+      --   end
+      -- },
       pyright        = {
         settings     = {
           python     = {
