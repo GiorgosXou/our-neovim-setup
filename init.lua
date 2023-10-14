@@ -287,14 +287,14 @@ return {
     },},
 
     ["config"] = { -- Add overrides for LSP server settings, the keys are the name of the server
-      -- tst_lsp = function()
-      --   return {
-      --     cmd = {
-      --       'cmake-language-server'
-      --     };
-      --     -- filetypes = {"tst"};
-      --     root_dir = require("lspconfig.util").root_pattern("pdack.tst");
-      --   }
+      dartls = {
+        color = {
+          enabled = true,
+        },
+        settings = {
+          showTodos = true,
+          completeFunctionCalls = true,
+      },},
       -- end,
       arduino_language_server = { --  https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/arduino_language_server
         on_new_config = function (config, root_dir)
