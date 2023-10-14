@@ -395,6 +395,8 @@ return {
 
     map.set('n', '<Space>r'  , '<Plug>ReplaceWithRegisterOperator', { desc = "Replace with register"})
 
+    map.set('n', '<Tab>'     ,function() require("astronvim.utils.buffer").nav_to(vim.v.count +  1) end, { desc ="Go to Buffer" })
+
     map.set('n', '<Leader>j' , ':call vm#commands#add_cursor_down(0,1)<CR>'      , { desc = 'Add cursor down'})
     map.set('n', '<Leader>k' , ':call vm#commands#add_cursor_up(0,1)<CR>'        , { desc = 'Add cursor down'})
     map.set('i', '<C-A-up>'  , '<ESC>:call vm#commands#add_cursor_up(0,1)<CR>'   )
