@@ -1,5 +1,7 @@
 -- install those packages:
 -- `sudo pacman -S ripgrep lazygit`
+_G.IS_ARCH     = vim.loop.os_uname().release:find 'arch'    and true or false
+
 return {
   -- updater = {                  -- Configure AstroNvim updates
   --   remote         = "origin", -- remote to use
@@ -35,6 +37,10 @@ return {
         ["Add Cursor Down"] = '<C-A-j>',
         ["Add Cursor Up"]   = '<C-A-k>',
       },
+
+      SetUsLayout = function()
+        vim.api.nvim_command('silent !xkb-switch -s us') -- yay -S xkb-switch
+      end,
 
       set_cursor_to_find = function(ref)
         local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
@@ -331,6 +337,10 @@ return {
     local api  = vim.api 
     local opts = { silent=true }
     local gs   = require('gitsigns')
+
+    if _G.IS_ARCH then
+      api.nvim_command('autocmd InsertLeave * call SetUsLayout()')
+    end
 
     map.set('v', '<leader>gs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
 
