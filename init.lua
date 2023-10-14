@@ -1,3 +1,5 @@
+-- install those packages:
+-- `sudo pacman -S ripgrep lazygit`
 return {
   -- updater = {                  -- Configure AstroNvim updates
   --   remote         = "origin", -- remote to use
@@ -444,7 +446,6 @@ return {
   * :!git add *
   * :!git commit -m "whatever"
   * :!git push
-  * install lazygit
   * git config --global credential.helper store (and after the first push credentials get stored)
 
 
