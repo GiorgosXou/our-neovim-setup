@@ -1,5 +1,7 @@
 -- install those packages:
 -- `sudo pacman -S ripgrep lazygit`
+
+_G.IS_WINDOWS  = vim.loop.os_uname().sysname:find 'Windows' and true or false
 _G.IS_ARCH     = vim.loop.os_uname().release:find 'arch'    and true or false
 
 return {
