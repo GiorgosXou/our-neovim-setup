@@ -358,7 +358,6 @@ return {
       api.nvim_command('autocmd InsertLeave * call SetUsLayout()')
     end
 
-
     map.set('v', '<leader>gs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
 
     map.set('n', '<Leader>tt', 'a<C-R>=strftime("%Y-%m-%d %I:%M:%S %p")<CR><Esc>', { desc = 'print time'} )
@@ -411,7 +410,7 @@ return {
 
     map.set('n', '<Space>r'  , '<Plug>ReplaceWithRegisterOperator', { desc = "Replace with register"})
 
-    map.set('n', '<Tab>'     ,function() require("astronvim.utils.buffer").nav_to(vim.v.count +  1) end, { desc ="Go to Buffer" })
+    -- map.set('n', '<Tab>'     ,function() require("astronvim.utils.buffer").nav_to(vim.v.count +  1) end, { desc ="Go to Buffer" }) -- TODO: Messes up with CTRL+I
 
     map.set('n', '<Leader>j' , ':call vm#commands#add_cursor_down(0,1)<CR>'      , { desc = 'Add cursor down'})
     map.set('n', '<Leader>k' , ':call vm#commands#add_cursor_up(0,1)<CR>'        , { desc = 'Add cursor down'})
