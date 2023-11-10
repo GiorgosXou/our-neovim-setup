@@ -108,7 +108,7 @@ return {
     {'szorfein/darkest-space'                 },
     {'owickstrom/vim-colors-paramount'        },
     -- LSP - TS - DAP
-    {"williamboman/mason-lspconfig.nvim", opts   = { ensure_installed = {'pyright', 'lua_ls', 'marksman'}}}, -- 'arduino_language_server'
+    {"williamboman/mason-lspconfig.nvim", opts   = { ensure_installed = {'pyright', 'lua_ls', 'marksman', 'clangd'}}}, -- 'arduino_language_server'
     {"nvim-treesitter/nvim-treesitter"  , opts   = { ensure_installed = {'python' , 'lua'   , 'markdown', 'markdown_inline', 'arduino', 'cpp', 'c'}}},
     {"jay-babu/mason-nvim-dap.nvim"     , opts   = { ensure_installed = {'python' , 'lua'}}},
     {"akinsho/flutter-tools.nvim"             }, -- add lsp plugin
@@ -129,7 +129,6 @@ return {
         })
       end,
     },
-    {"williamboman/mason-lspconfig.nvim", opts = { ensure_installed = { "clangd" },},},
 
     {'kana/vim-textobj-entire'                },
 
