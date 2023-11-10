@@ -146,7 +146,7 @@ return {
     {'mg979/vim-visual-multi'                 , lazy = false },
     {'nvim-treesitter/nvim-treesitter-context', lazy = false },
     {'vim-scripts/ReplaceWithRegister'        , lazy = false },
-    {'iamcco/markdown-preview.nvim'           , lazy = false, config = function() vim.fn["mkdp#util#install"]() end},
+    {'iamcco/markdown-preview.nvim'           ,               config = function() vim.fn["mkdp#util#install"]() end , ft = { "markdown" }},
     {'petertriho/nvim-scrollbar'              , lazy = false, config = function() require("scrollbar" ).setup() end},
     {'nat-418/boole.nvim'                     , lazy = false, config = function() require('boole'     ).setup({ -- https://www.reddit.com/r/neovim/comments/y2h9sq/new_plugin_boolenvim_toggle_booleans_cycle_days/
       mappings = {
