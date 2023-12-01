@@ -440,7 +440,7 @@ return {
     api.nvim_command('xmap P <plug>(SubversiveSubstitute)')
     --Tabularize /(.*)
 
-    api.nvim_command('set conceallevel=3') -- au FileType markdown setl conceallevel=0
+    api.nvim_command('set conceallevel=2') -- au FileType markdown setl conceallevel=0
     api.nvim_command('au BufRead,BufNewFile *.md nnoremap <buffer> gf :call go_to_markdown_ref()<cr>') -- https://www.reddit.com/r/vim/comments/yu49m1/rundont_run_vim_command_based_on_current_file/
 
     api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>aa <cmd>ArduinoAttach<CR>')
