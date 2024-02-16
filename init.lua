@@ -293,15 +293,16 @@ return {
           completeFunctionCalls = true,
       },},
 
-      tst_lsp = function()
-        return {
-          cmd = {
-            'cmake-language-server'
-          };
-          -- filetypes = {"tst"};
-          root_dir = require("lspconfig.util").root_pattern("pdack.tst");
-        }
-      end,
+      -- tst_lsp = function() -- pottential memmory leak from not closing the script in exit?
+      --   return {
+      --     cmd = {
+      --       'python',
+      --       '/home/xou/Desktop/xou/programming/python/trash/lsptst.py'
+      --     };
+      --     -- filetypes = {"tst"};
+      --     root_dir = require("lspconfig.util").root_pattern("test.tst");
+      --   }
+      -- end,
       arduino_language_server = { --  https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/arduino_language_server | https://discord.com/channels/939594913560031363/1078005571451621546/threads/1122910773270818887
         on_new_config = function (config, root_dir)
           local my_arduino_fqbn = { -- arduino-cli core install arduino:... 
