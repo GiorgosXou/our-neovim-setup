@@ -306,11 +306,7 @@ return {
                 "--synctex",
                 "--keep-logs",
                 "--keep-intermediates"
-              }
-            },
-          },
-        },
-      },
+      },},},},},
 
       -- tst_lsp = function() -- pottential memmory leak from not closing the script in exit?
       --   return {
