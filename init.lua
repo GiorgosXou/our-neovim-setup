@@ -108,7 +108,7 @@ return {
     {'szorfein/darkest-space'                 },
     {'owickstrom/vim-colors-paramount'        },
     -- LSP - TS - DAP
-    {"williamboman/mason-lspconfig.nvim", opts   = { ensure_installed = {'pyright', 'lua_ls', 'marksman', 'clangd'}}}, -- 'arduino_language_server'
+    {"williamboman/mason-lspconfig.nvim", opts   = { ensure_installed = {'pyright', 'lua_ls', 'marksman', 'clangd', 'arduino_language_server'}}}, -- 'arduino_language_server'
     {"nvim-treesitter/nvim-treesitter"  , opts   = { ensure_installed = {'python' , 'lua'   , 'markdown', 'markdown_inline', 'arduino', 'cpp', 'c'}}},
     {"jay-babu/mason-nvim-dap.nvim"     , opts   = { ensure_installed = {'python' , 'lua'}}},
     {"akinsho/flutter-tools.nvim"             }, -- add lsp plugin
@@ -134,8 +134,8 @@ return {
 
     {'kiyoon/treesitter-indent-object.nvim'   },
     {'nvim-treesitter/nvim-treesitter'        },
-    {'stevearc/vim-arduino'                   }, -- sudo pacman -S arduino-cli (and arduino?) | arduino-cli config init
-    {'hiphish/rainbow-delimiters.nvim'        , lazy = false},
+    {'stevearc/vim-arduino'                   , lazy = false }, -- sudo pacman -S screen arduino-cli (and arduino?) | arduino-cli config init
+    {'hiphish/rainbow-delimiters.nvim'        , lazy = false },
     {'folke/zen-mode.nvim'                    , lazy = false },
     {'godlygeek/tabular'                      , lazy = false }, -- ALIGN <leader>a | https://stackoverflow.com/questions/5436715/how-do-i-align-like-this-with-vims-tabular-plugin
     {'folke/trouble.nvim'                     , lazy = false },
@@ -306,8 +306,10 @@ return {
       arduino_language_server = { --  https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/arduino_language_server | https://discord.com/channels/939594913560031363/1078005571451621546/threads/1122910773270818887
         on_new_config = function (config, root_dir)
           local my_arduino_fqbn = { -- arduino-cli core install arduino:... 
-            ["/home/xou/Desktop/xou/programming/hardware/arduino/nano"]  = "arduino:avr:nano", -- arduino-cli board listall
-            ["/home/xou/Desktop/xou/programming/hardware/arduino/uno" ]  = "arduino:avr:uno" ,
+            ["/home/xou/Desktop/xou/programming/hardware/arduino/nano"              ]  = "arduino:avr:nano", -- arduino-cli board listall
+            ["/home/xou/Desktop/xou/programming/hardware/arduino/uno"               ]  = "arduino:avr:uno" ,
+            ["/home/xou/Desktop/xou/programming/hardware/esp32/AirM2M_CORE_ESP32C3" ]  = "esp32:esp32:AirM2M_CORE_ESP32C3" ,
+            ["/home/xou/Desktop/xou/programming/hardware/esp32/"                    ]  = "esp32:esp32:AirM2M_CORE_ESP32C3" ,
           }
           local DEFAULT_FQBN = "arduino:avr:uno"
           local fqbn = my_arduino_fqbn[root_dir]
@@ -440,12 +442,13 @@ return {
     api.nvim_command('set conceallevel=2') -- au FileType markdown setl conceallevel=0
     api.nvim_command('au BufRead,BufNewFile *.md nnoremap <buffer> gf :call go_to_markdown_ref()<cr>') -- https://www.reddit.com/r/vim/comments/yu49m1/rundont_run_vim_command_based_on_current_file/
 
-    api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>aa <cmd>ArduinoAttach<CR>')
-    api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>am <cmd>ArduinoVerify<CR>')
-    api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>au <cmd>ArduinoUpload<CR>')
-    api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ad <cmd>ArduinoUploadAndSerial<CR>')
-    api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ab <cmd>ArduinoChooseBoard<CR>')
-    api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ap <cmd>ArduinoChooseProgrammer<CR>')
+    api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>aa <cmd>call arduino#Attach()<CR>')
+    api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>as <cmd>call arduino#Serial()<CR>')
+    api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>am <cmd>call arduino#Verify()<CR>')
+    api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>au <cmd>call arduino#Upload()<CR>')
+    api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ad <cmd>call arduino#UploadAndSerial()<CR>')
+    api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ab <cmd>call arduino#ChooseBoard()<CR>')
+    api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ap <cmd>call arduino#ChooseProgrammer()<CR>')
 
     map.set("n", "<leader>al", "<cmd>Tab /[=:|]/<cr>"                          , {desc = 'Align text'})
 
