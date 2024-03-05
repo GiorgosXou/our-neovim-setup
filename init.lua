@@ -108,8 +108,8 @@ return {
     {'szorfein/darkest-space'                 },
     {'owickstrom/vim-colors-paramount'        },
     -- LSP - TS - DAP
-    {"williamboman/mason-lspconfig.nvim", opts   = { ensure_installed = {'pyright', 'lua_ls', 'marksman', 'clangd', 'arduino_language_server'}}}, -- 'arduino_language_server'
-    {"nvim-treesitter/nvim-treesitter"  , opts   = { ensure_installed = {'python' , 'lua'   , 'markdown', 'markdown_inline', 'arduino', 'cpp', 'c'}}},
+    {"williamboman/mason-lspconfig.nvim", opts   = { ensure_installed = {'pyright', 'lua_ls', 'marksman', 'clangd', 'arduino_language_server', 'texlab'}}}, -- 'arduino_language_server'
+    {"nvim-treesitter/nvim-treesitter"  , opts   = { ensure_installed = {'python' , 'lua'   , 'markdown', 'markdown_inline', 'arduino', 'cpp', 'c', 'latex'}}},
     {"jay-babu/mason-nvim-dap.nvim"     , opts   = { ensure_installed = {'python' , 'lua'}}},
     {"akinsho/flutter-tools.nvim"             }, -- add lsp plugin
     {"p00f/clangd_extensions.nvim",              -- install lsp plugin
@@ -292,6 +292,25 @@ return {
           showTodos = true,
           completeFunctionCalls = true,
       },},
+
+      texlab = { -- sudo pacman -S tectonic | yay -S sioyek-appimage
+        settings = {
+          texlab = {
+            build = {
+              onSave = true,
+              executable = "tectonic",
+              args = {
+                "-X",
+                "compile",
+                "%f",
+                "--synctex",
+                "--keep-logs",
+                "--keep-intermediates"
+              }
+            },
+          },
+        },
+      },
 
       -- tst_lsp = function() -- pottential memmory leak from not closing the script in exit?
       --   return {
