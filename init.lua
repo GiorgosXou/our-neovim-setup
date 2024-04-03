@@ -416,8 +416,6 @@ local polish = function()
 
   map.set('n', "<Leader>h"    , '%' )
 
-  map.set('n', 'gtn'       , ':bnext<cr>'    )
-  map.set('n', 'gtb'       , ':bprevious<cr>')
   map.set('n', '<Leader>L' , ':bnext<cr>'    )
   map.set('n', '<Leader>H' , ':bprevious<cr>')
 
