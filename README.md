@@ -18,3 +18,11 @@ curl -o ~/.config/nvim/init.lua https://raw.githubusercontent.com/GiorgosXou/our
 ```terminal
 curl.exe -o $env:userprofile\.config\nvim\init.lua https://raw.githubusercontent.com/GiorgosXou/our-neovim-setup/main/init.lua
 ```
+
+# 
+
+<sup>
+<sub>
+Or be me and clone like this: `cd ~/.config/nvim/ && git clone https://github.com/GiorgosXou/our-neovim-setup && mv ./our-neovim-setup/{*,.*} ./ && rm -r ./our-neovim-setup`
+</sub>
+</sup>
