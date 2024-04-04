@@ -39,7 +39,12 @@ local plugins = {
             ["Add Cursor Up"]   = '<C-A-k>',
           },
           SetUsLayout = function()
+            _G.KLANG = string.sub(vim.api.nvim_call_function('system', {'xkb-switch'}),1,-2)
             vim.api.nvim_command('silent !xkb-switch -s us') -- yay -S xkb-switch
+          end,
+
+          ResetLayout = function()
+            vim.api.nvim_command(('silent !xkb-switch -s %q'):format(_G.KLANG)) -- yay -S xkb-switch
           end,
 
           set_cursor_to_find = function(ref)
@@ -375,6 +380,7 @@ local polish = function()
 
   if _G.IS_ARCH then
     api.nvim_command('autocmd InsertLeave * call SetUsLayout()')
+    api.nvim_command('autocmd InsertEnter * call ResetLayout()')
   end
 
   map.set('v', '<leader>gs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
