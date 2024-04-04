@@ -8,7 +8,7 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 -- install those packages:
 -- `sudo pacman -S ripgrep lazygit`
 
-_G.IS_WINDOWS  = vim.loop.os_uname().sysname:find 'Windows' and true or false
+_G.IS_WINDOWS = vim.loop.os_uname().sysname:find 'Windows' and true or false
 _G.XKB_SWITCH = vim.fn.executable('xkb-switch') == 1
 
 local plugins = {
@@ -426,8 +426,8 @@ local polish = function()
   map.set('n', '<Leader>L' , ':bnext<cr>'    )
   map.set('n', '<Leader>H' , ':bprevious<cr>')
 
-  map.set('n', "<S-h>"     , ":call smarthome#SmartHome('n')<cr>")
-  map.set('n', "<S-l>"     , ":call smarthome#SmartEnd('n')<cr>" )
+  map.set('n', "H"         , ":call smarthome#SmartHome('n')<cr>")
+  map.set('n', "L"         , ":call smarthome#SmartEnd('n')<cr>" )
   map.set('n', "<Home>"    , ":call smarthome#SmartHome('n')<cr>")
   map.set('n', "<End>"     , ":call smarthome#SmartEnd('n')<cr>" )
   map.set('i', "<Home>"    , "<C-r>=smarthome#SmartHome('i')<cr>")
