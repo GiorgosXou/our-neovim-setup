@@ -407,7 +407,6 @@ local polish = function()
 
   map.set('i', '<C-S>'     , '<C-o>:w<cr>'         )
   map.set('i', '<C-Q>'     , '<C-o>:q!<cr>'        )
-  map.set('v', 'p'         , '"_dP'                )
   map.set('v', '<A-k>'     , ":m '<-2<CR>gv=gv"    )
   map.set('v', '<A-j>'     , ":m '>+1<CR>gv=gv"    )
   map.set('n', '<a-k>'     , ':m-2<cr>=='          )
@@ -468,6 +467,8 @@ local polish = function()
   api.nvim_command('xmap p <plug>(SubversiveSubstitute)')
   api.nvim_command('xmap P <plug>(SubversiveSubstitute)')
   --Tabularize /(.*)
+
+  map.set('v', 'p', '"_dP')
 
   api.nvim_command('set conceallevel=2') -- au FileType markdown setl conceallevel=0
   api.nvim_command('au BufRead,BufNewFile *.md nnoremap <buffer> gf :call go_to_markdown_ref()<cr>') -- https://www.reddit.com/r/vim/comments/yu49m1/rundont_run_vim_command_based_on_current_file/
