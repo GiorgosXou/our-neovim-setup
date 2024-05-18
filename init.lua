@@ -469,7 +469,8 @@ local polish = function()
 
   map.set('v', 'p', '"_dP')
 
-  api.nvim_command('set conceallevel=2') -- au FileType markdown setl conceallevel=0
+  api.nvim_command('autocmd FileType markdown set conceallevel=2') -- au FileType markdown setl conceallevel=0
+  api.nvim_command('autocmd FileType tex,markdown setlocal wrap')
   api.nvim_command('au BufRead,BufNewFile *.md nnoremap <buffer> gf :call go_to_markdown_ref()<cr>') -- https://www.reddit.com/r/vim/comments/yu49m1/rundont_run_vim_command_based_on_current_file/
 
   api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>aa <cmd>call arduino#Attach()<CR>')
