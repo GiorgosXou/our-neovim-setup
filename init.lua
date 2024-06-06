@@ -21,7 +21,7 @@ local plugins = {
         highlighturl     = true, -- highlight URLs at start
         autopairs        = true, -- enable autopairs at start
         cmp              = true, -- enable completion at start
-        large_buf        = {size= 1024 * 500, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
+        large_buf        = {size= 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       },
       diagnostics = { virtual_text = true, underline = true }, -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
       options = { -- vim options can be configured here
