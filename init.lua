@@ -344,9 +344,10 @@ local plugins = {
               ["/home/xou/Desktop/xou/programming/hardware/arduino/uno"               ]  = "arduino:avr:uno" ,
               ["/home/xou/Desktop/xou/programming/hardware/esp32/AirM2M_CORE_ESP32C3" ]  = "esp32:esp32:AirM2M_CORE_ESP32C3" ,
               ["/home/xou/Desktop/xou/programming/hardware/esp32/"                    ]  = "esp32:esp32:AirM2M_CORE_ESP32C3" ,
+              ["/home/xou/Desktop/xou/programming/hardware/attiny/85_Digispark"       ]  = "ATTinyCore:avr:attinyx5micr",
             }
             local DEFAULT_FQBN = "arduino:avr:uno"
-            local fqbn = my_arduino_fqbn[root_dir]
+            local fqbn = my_arduino_fqbn[root_dir:match(".*/"):sub(1, -2)]
             if not fqbn then
               -- vim.notify(("Could not find which FQBN to use in %q. Defaulting to %q."):format(root_dir, DEFAULT_FQBN))
               fqbn = DEFAULT_FQBN
