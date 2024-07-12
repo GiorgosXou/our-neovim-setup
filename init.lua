@@ -81,11 +81,15 @@ local plugins = {
 
   {"AstroNvim/astroui",
     opts = {
-      colorscheme = "nazgul", -- change colorscheme
+      colorscheme = "astrodark", -- change colorscheme
       icons = { -- Icons can be configured throughout the interface | configure the loading of the lsp in the status line
         LSPLoading1 = "⠋", LSPLoading2 = "⠙", LSPLoading3 = "⠹", LSPLoading4 = "⠸", LSPLoading5  = "⠼",
         LSPLoading6 = "⠴", LSPLoading7 = "⠦", LSPLoading8 = "⠧", LSPLoading9 = "⠇", LSPLoading10 = "⠏",
   },},},
+
+  {"AstroNvim/astrocommunity",
+    { import = "astrocommunity.color.transparent-nvim"},
+  },
 
   {"ray-x/lsp_signature.nvim", event = "BufRead", config = function() require("lsp_signature").setup(({hint_prefix='• '})) end,}, -- hints
   {"goolord/alpha-nvim",
