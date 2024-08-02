@@ -223,7 +223,7 @@ local plugins = {
   -- },
   {"lewis6991/gitsigns.nvim",
     config = function()
-      require('gitsigns').setup()
+      require('gitsigns').setup(require('astronvim.plugins.gitsigns').opts())
       require("scrollbar.handlers.gitsigns").setup()
     end
   },
