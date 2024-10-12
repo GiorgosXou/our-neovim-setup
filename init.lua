@@ -125,7 +125,7 @@ local plugins = {
   {'nocksock/nazgul-vim'    },
   {'fcpg/vim-orbital'       },
   -- LSP - TS - DAP
-  {"williamboman/mason-lspconfig.nvim", opts   = { ensure_installed = {'pyright', 'lua_ls', 'marksman', 'clangd', 'arduino_language_server', 'texlab'}}}, -- 'arduino_language_server'
+  {"williamboman/mason-lspconfig.nvim", opts   = { ensure_installed = {'basedpyright', 'lua_ls', 'marksman', 'clangd', 'arduino_language_server', 'texlab'}}}, -- 'arduino_language_server'
   {"nvim-treesitter/nvim-treesitter"  , opts   = { ensure_installed = {'python' , 'lua'   , 'markdown', 'markdown_inline', 'arduino', 'cpp', 'c'}}},
   {"jay-babu/mason-nvim-dap.nvim"     , opts   = { ensure_installed = {'python' , 'lua'}}},
   {"akinsho/flutter-tools.nvim"}, -- add lsp plugin
@@ -365,12 +365,27 @@ local plugins = {
             }
           end
         },
-        pyright        = {
-          settings     = {
-            python     = {
-              analysis = {
-                typeCheckingMode = "off",
-      },} },},},
+        basedpyright     = {
+          settings       = {
+            basedpyright = {
+              analysis   = {
+                typeCheckingMode      = "basic",
+                autoImportCompletions = true,
+                diagnosticSeverityOverrides = {
+                reportUnusedImport          = "information",
+                reportUnusedFunction        = "information",
+                reportUnusedVariable        = "information",
+                reportGeneralTypeIssues     = "none",
+                reportOptionalMemberAccess  = "none",
+                reportOptionalSubscript     = "none",
+                reportPrivateImportUsage    = "none",
+                reportAttributeAccessIssue  = "information",
+                reportArgumentType          = "none",
+                reportOptionalOperand       = "none",
+                reportIndexIssue            = "none",
+                reportCallIssue             = "none",
+                reportOperatorIssue         = "none"
+      },},} },},},
 
       -- mappings to be set up on attaching of a language server
       mappings = { n = { gl = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" },},},
