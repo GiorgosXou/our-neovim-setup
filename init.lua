@@ -89,6 +89,7 @@ local plugins = {
 
   {"AstroNvim/astrocommunity",
     { import = "astrocommunity.color.transparent-nvim"},
+    { import = "astrocommunity.pack.rust"},
     { import = "astrocommunity.pack.cpp"},
   },
 
