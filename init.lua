@@ -204,6 +204,7 @@ local plugins = {
       FuncBuiltin                = {fg = '#FF5F00'},
       TypeDefinition             = {fg = '#FF5F00'},
       KeywordFunction            = {fg = '#FF5F00'},
+      NotifyBackground           = {bg = '#000000'},
       IndentBlanklineContextChar = {fg = '#FF5F00'},
       LspReferenceRead           = {bg = '#626A73'},
       LspReferenceText           = {bg = '#626A73'},
