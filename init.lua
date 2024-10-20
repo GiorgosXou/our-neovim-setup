@@ -149,7 +149,6 @@ local plugins = {
   {'chrisgrieser/nvim-various-textobjs'     },
   {'nvim-treesitter/nvim-treesitter'        },
   {'stevearc/vim-arduino'                   , lazy = false }, -- sudo pacman -S screen arduino-cli (and arduino?) | arduino-cli config init
-  {'folke/zen-mode.nvim'                    , lazy = false },
   {'godlygeek/tabular'                      , lazy = false }, -- ALIGN <leader>a | https://stackoverflow.com/questions/5436715/how-do-i-align-like-this-with-vims-tabular-plugin
   {'folke/trouble.nvim'                     , lazy = false },
   {'svermeulen/vim-yoink'                   , lazy = false }, -- TERMUX https://github.com/GiorgosXou/our-neovim-setup/issues/2
