@@ -91,6 +91,7 @@ local plugins = {
     { import = "astrocommunity.color.transparent-nvim"},
     { import = "astrocommunity.pack.rust"},
     { import = "astrocommunity.pack.cpp"},
+    { import = "astrocommunity.diagnostics.trouble-nvim"}
   },
 
   {"ray-x/lsp_signature.nvim", event = "BufRead", config = function() require("lsp_signature").setup(({hint_prefix='• '})) end,}, -- hints
@@ -150,7 +151,6 @@ local plugins = {
   {'nvim-treesitter/nvim-treesitter'        },
   {'stevearc/vim-arduino'                   , lazy = false }, -- sudo pacman -S screen arduino-cli (and arduino?) | arduino-cli config init
   {'godlygeek/tabular'                      , lazy = false }, -- ALIGN <leader>a | https://stackoverflow.com/questions/5436715/how-do-i-align-like-this-with-vims-tabular-plugin
-  {'folke/trouble.nvim'                     , lazy = false },
   {'svermeulen/vim-yoink'                   , lazy = false }, -- TERMUX https://github.com/GiorgosXou/our-neovim-setup/issues/2
   {'Shadowsith/vim-minify'                  , lazy = false }, -- TODO: It needs to be Checked 2023-03-24 06:29:23 PM
   {'m-pilia/vim-smarthome'                  , lazy = false },
@@ -463,13 +463,6 @@ local polish = function()
   map.set('n', '<Leader>k' , ':call vm#commands#add_cursor_up(0,1)<CR>'        , { desc = 'Add cursor down'})
   map.set('i', '<C-A-up>'  , '<ESC>:call vm#commands#add_cursor_up(0,1)<CR>'   )
   map.set('i', '<C-A-down>', '<ESC>:call vm#commands#add_cursor_down(0,1)<CR>' )
-
-  map.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>"                      , {silent = true, noremap = true})
-  map.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", {silent = true, noremap = true})
-  map.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>" , {silent = true, noremap = true})
-  map.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>"              , {silent = true, noremap = true})
-  map.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>"             , {silent = true, noremap = true})
-  map.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>"               , {silent = true, noremap = true})
 
   api.nvim_command('set cursorcolumn')
 
