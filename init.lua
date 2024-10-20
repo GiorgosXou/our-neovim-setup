@@ -146,8 +146,7 @@ local plugins = {
       })
     end,
   },
-  -- {'kana/vim-textobj-entire'                }, -- TODO: ? https://github.com/chrisgrieser/nvim-various-textobjs
-  {'kiyoon/treesitter-indent-object.nvim'   },
+  {'chrisgrieser/nvim-various-textobjs'     },
   {'nvim-treesitter/nvim-treesitter'        },
   {'stevearc/vim-arduino'                   , lazy = false }, -- sudo pacman -S screen arduino-cli (and arduino?) | arduino-cli config init
   {'folke/zen-mode.nvim'                    , lazy = false },
@@ -421,11 +420,6 @@ local polish = function()
   map.set('n', '<Leader>i' , 'a<C-R>=strftime("__%Y%m%d%I%M%S%p")<CR><Esc>'    , { desc = 'print time'} ) -- TODO: store it into register
   map.set('n', '<Leader>I' , 'a<C-R>=strftime("__%Y%m%d%I%M%S%p")<CR><Esc>'    , { desc = 'print time'} )
   map.set('n', '";', '"_')
-
-  map.set({"x", "o"}, "ai" , "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer()<CR>"    ) -- select context-aware indent
-  map.set({"x", "o"}, "aI" , "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer(true)<CR>") -- ensure selecting entire line (or just use Vai)
-  map.set({"x", "o"}, "ii" , "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner()<CR>"    ) -- select inner block (only if block, only else block, etc.)
-  map.set({"x", "o"}, "iI" , "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner(true)<CR>") -- select entire inner range (including if, else, etc.)
 
   map.set('i', '<C-S>'     , '<C-o>:w<cr>'         )
   map.set('i', '<C-Q>'     , '<C-o>:q!<cr>'        )
