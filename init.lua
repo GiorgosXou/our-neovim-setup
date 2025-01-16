@@ -91,7 +91,8 @@ local plugins = {
     { import = "astrocommunity.color.transparent-nvim"},
     { import = "astrocommunity.pack.rust"},
     { import = "astrocommunity.pack.cpp"},
-    { import = "astrocommunity.diagnostics.trouble-nvim"}
+    { import = "astrocommunity.diagnostics.trouble-nvim"},
+    -- { import = "astrocommunity.color.modes-nvim"} -- interesting one
   },
 
   {"ray-x/lsp_signature.nvim", event = "BufRead", config = function() require("lsp_signature").setup(({hint_prefix='• '})) end,}, -- hints
