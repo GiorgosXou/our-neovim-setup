@@ -143,7 +143,17 @@ local plugins = {
   {'vim-scripts/ReplaceWithRegister'        , lazy = false },
   {'nvim-treesitter/nvim-treesitter-context', lazy = false }, -- top context-bar when scrolling
   {'iamcco/markdown-preview.nvim'           ,               config = function() vim.fn["mkdp#util#install"]() end , ft = { "markdown" }},
-  {'petertriho/nvim-scrollbar'              , lazy = false, config = function() require("scrollbar" ).setup() end},
+  {'petertriho/nvim-scrollbar'              , lazy = false, config = function() require("scrollbar" ).setup({
+    handle = {
+      color = '#343434',
+      blend = 20,
+    },
+    marks = {
+      Search = { text = { "-", "=", "Ξ" }, color = '#FF5F00' },
+      Error  = { text = { "=", "x" }, }, -- I don't know why but only captures x not =
+      Warn   = { text = { "▲", "=" }, }
+    }
+  }) end},
   {'nat-418/boole.nvim'                     , lazy = false, config = function() require('boole'     ).setup({ -- https://www.reddit.com/r/neovim/comments/y2h9sq/new_plugin_boolenvim_toggle_booleans_cycle_days/
     mappings = {
       increment = '<C-a>',
@@ -198,14 +208,14 @@ local plugins = {
       -- DiagnosticHint  =  utils.parse_diagnostic_style { fg = '#95e6cb'},
       -- #FFC26B #860000 #64BAAA #006B5D #FF6A13 #FFB454 #FFF000 #Maybe?
   }}) end                                   },
-  -- {"kevinhwang91/nvim-hlslens", -- https://github.com/petertriho/nvim-scrollbar/issues/83
-  --   config = function()
-  --     require("scrollbar.handlers.search").setup({
-  --       override_lens = function() end,
-  --       handlers = { search = true },
-  --     })
-  --   end,
-  -- },
+  {"kevinhwang91/nvim-hlslens", -- This one working but theme background kinda hides them https://github.com/petertriho/nvim-scrollbar/issues/83
+    config = function()
+      require("scrollbar.handlers.search").setup({
+        override_lens = function() end,
+        handlers = { search = true },
+      })
+    end,
+  },
   {"lewis6991/gitsigns.nvim",
     config = function()
       require('gitsigns').setup(require('astronvim.plugins.gitsigns').opts())
