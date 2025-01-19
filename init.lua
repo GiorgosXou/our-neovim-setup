@@ -81,7 +81,7 @@ local plugins = {
 
   {"AstroNvim/astroui",
     opts = {
-      colorscheme = "astrodark", -- change colorscheme
+      colorscheme = "ayu", -- change colorscheme
       icons = { -- Icons can be configured throughout the interface | configure the loading of the lsp in the status line
         LSPLoading1 = "⠋", LSPLoading2 = "⠙", LSPLoading3 = "⠹", LSPLoading4 = "⠸", LSPLoading5  = "⠼",
         LSPLoading6 = "⠴", LSPLoading7 = "⠦", LSPLoading8 = "⠧", LSPLoading9 = "⠇", LSPLoading10 = "⠏",
@@ -203,7 +203,9 @@ local plugins = {
       Method                     = {fg = '#FF5F00'},
       PreProc                    = {fg = '#FF5F00'},
       Include                    = {fg = '#FF5F00'},
-      Keyword                    = {fg = '#FF5F00'},
+      Keyword                    = {fg = '#FF5F00', bold = true},
+      -- String                     = {fg = '#71F7C5'},
+      ["@property"]              = {fg = '#64BAAA'},
       ["@markup.link"]           = {fg = '#39bae6' , underline = true},
       ["@markup.heading"]        = {fg = '#FFF000' , bold = true},
       RenderMarkdownBullet       = {fg = '#64BAAA'},
