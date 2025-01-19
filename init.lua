@@ -104,7 +104,7 @@ local plugins = {
       left_margin = 0,
     },
     bullet = {
-      icons = { '·', '•', '▪','*'},
+      icons = { '·', '•', '▪', '*', '⁕', '✦', '✺'},
     }
   }) end,},
 
