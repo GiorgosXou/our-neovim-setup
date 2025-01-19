@@ -92,8 +92,22 @@ local plugins = {
     { import = "astrocommunity.pack.rust"},
     { import = "astrocommunity.pack.cpp"},
     { import = "astrocommunity.diagnostics.trouble-nvim"},
+    { import = "astrocommunity.markdown-and-latex.render-markdown-nvim"},
     -- { import = "astrocommunity.color.modes-nvim"} -- interesting one
   },
+
+  {"render-markdown.nvim", config = function() require("render-markdown").setup({
+    heading = {
+      signs = { '░▒' },
+      icons = { '▓█▓▒░ 󰲡 ', '▓▒░ 󰲣 ', '░ 󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' }, -- icons = { '▓██▓▒░ 󰲡 ', '▓▓▒░ 󰲣 ', '▒▒░ 󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
+      left_pad = 0,
+      left_margin = 0,
+    },
+    bullet = {
+      icons = { '·', '•', '▪','*'},
+    }
+  }) end,},
+
 
   {"ray-x/lsp_signature.nvim", event = "BufRead", config = function() require("lsp_signature").setup(({hint_prefix='• '})) end,}, -- hints
   {"goolord/alpha-nvim",
@@ -190,6 +204,9 @@ local plugins = {
       PreProc                    = {fg = '#FF5F00'},
       Include                    = {fg = '#FF5F00'},
       Keyword                    = {fg = '#FF5F00'},
+      ["@markup.link"]           = {fg = '#39bae6' , underline = true},
+      ["@markup.heading"]        = {fg = '#FFF000' , bold = true},
+      RenderMarkdownBullet       = {fg = '#64BAAA'},
       Exception                  = {fg = '#FF5F00'},
       Statement                  = {fg = '#FF5F00'},
       Constructor                = {fg = '#FF5F00'},
@@ -202,11 +219,17 @@ local plugins = {
       LspReferenceText           = {bg = '#626A73'},
       LspReferenceWrite          = {bg = '#626A73'},
       LineNr                     = {fg = '#626A73'},
+      RenderMarkdownH1Bg         = {bg = '#3e2e2e'},
+      RenderMarkdownH2Bg         = {bg = '#2e1e1e'},
+      RenderMarkdownH3Bg         = {bg = '#1e0e0e'},
+      RenderMarkdownH4Bg         = {bg = '#0e0e0e'},
+      RenderMarkdownH5Bg         = {bg = '#0e0e0e'},
+      RenderMarkdownH6Bg         = {bg = '#0e0e0e'},
       -- DiagnosticError =  utils.parse_diagnostic_style { fg = '#cc241d'},
       -- DiagnosticWarn  =  utils.parse_diagnostic_style { fg = '#ff8f40'},
       -- DiagnosticInfo  =  utils.parse_diagnostic_style { fg = '#39bae6'},
       -- DiagnosticHint  =  utils.parse_diagnostic_style { fg = '#95e6cb'},
-      -- #FFC26B #860000 #64BAAA #006B5D #FF6A13 #FFB454 #FFF000 #Maybe?
+      -- #FFC26B #860000 #64BAAA #006B5D #FF6A13 #FFB454 #FFF000 #FFE0F0 #Maybe?
   }}) end                                   },
   {"kevinhwang91/nvim-hlslens", -- This one working but theme background kinda hides them https://github.com/petertriho/nvim-scrollbar/issues/83
     config = function()
@@ -472,7 +495,7 @@ local polish = function()
 
   map.set('v', 'p', '"_dP')
 
-  api.nvim_command('autocmd FileType markdown set conceallevel=2') -- au FileType markdown setl conceallevel=0
+  -- api.nvim_command('autocmd FileType markdown set conceallevel=2') -- au FileType markdown setl conceallevel=0
   api.nvim_command('autocmd FileType tex,markdown setlocal wrap')
   api.nvim_command('au BufRead,BufNewFile *.md nnoremap <buffer> gf :call go_to_markdown_ref()<cr>') -- https://www.reddit.com/r/vim/comments/yu49m1/rundont_run_vim_command_based_on_current_file/
 
