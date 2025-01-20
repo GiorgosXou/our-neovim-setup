@@ -462,7 +462,7 @@ local polish = function()
   map.set('v', "<S-h>"     , '^'    )
   map.set('v', "<S-l>"     , '$'    )
 
-  map.set('n', "<Leader>h"    , '%' )
+  map.set('n', "<A-;>"     , '%' )
 
   map.set('n', '<Leader>L' , ':bnext<cr>'    )
   map.set('n', '<Leader>H' , ':bprevious<cr>')
