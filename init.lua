@@ -165,7 +165,8 @@ local plugins = {
     marks = {
       Search = { text = { "-", "=", "Ξ" }, color = '#FF5F00' },
       Error  = { text = { "=", "x" }, }, -- I don't know why but only captures x not =
-      Warn   = { text = { "▲", "=" }, }
+      Warn   = { text = { "▲", "=" }, },
+      Hint   = { text = { "⋄", "=" }, }
     }
   }) end},
   {'nat-418/boole.nvim'                     , lazy = false, config = function() require('boole'     ).setup({ -- https://www.reddit.com/r/neovim/comments/y2h9sq/new_plugin_boolenvim_toggle_booleans_cycle_days/
