@@ -377,7 +377,7 @@ local plugins = {
             config.capabilities.workspace.semanticTokens = vim.NIL
             config.cmd = {         --  https://forum.arduino.cc/t/solved-errors-with-clangd-startup-for-arduino-language-server-in-nvim/1019977
               "arduino-language-server",
-              "-cli-config" , "~/arduino15/arduino-cli.yaml", -- just in case it was /home/xou/.arduino15/arduino-cli.yaml 
+              "-cli-config" , "~/.arduino15/arduino-cli.yaml", -- just in case it was /home/xou/.arduino15/arduino-cli.yaml 
               "-cli"        , "/usr/bin/arduino-cli", -- 2023-06-26 ERROR | "Runs" if I set a wrong path
               "-clangd"     , "/usr/bin/clangd",
               "-fqbn"       , fqbn
