@@ -193,7 +193,7 @@ local plugins = {
         block = 'gb', ---Block-comment keymap
     },
   }) end, lazy = false}, -- permanant solution until fix https://discord.com/channels/939594913560031363/1088835559012716584
-  {'Shatur/neovim-ayu'           , config = function()
+  {'Shatur/neovim-ayu'        , config = function()
     -- local utils = require "default_theme.utils"
     require('ayu').setup({                               -- don't forger :PackerCompile if it doesn't work
     overrides                    = {                 -- :Telescope highlights https://github.com/Shatur/neovim-ayu#overrides-examples <------
@@ -204,16 +204,18 @@ local plugins = {
       Method                     = {fg = '#FF5F00'},
       PreProc                    = {fg = '#FF5F00'},
       Include                    = {fg = '#FF5F00'},
-      Keyword                    = {fg = '#FF5F00', bold = true},
-      -- String                     = {fg = '#71F7C5'},
       ["@property"]              = {fg = '#64BAAA'},
       ["@markup.link"]           = {fg = '#39bae6' , underline = true},
-      ["@markup.heading"]        = {fg = '#FFF000' , bold = true},
+      ["@markup.heading"]        = {fg = '#FFF000' , bold      = true},
+      Keyword                    = {fg = '#FF5F00' , bold      = true},
       RenderMarkdownBullet       = {fg = '#64BAAA'},
       Exception                  = {fg = '#FF5F00'},
       Statement                  = {fg = '#FF5F00'},
       Constructor                = {fg = '#FF5F00'},
       FuncBuiltin                = {fg = '#FF5F00'},
+      DapBreakpoint              = {fg = '#FF5F00'},
+      DapLogPoint                = {fg = '#61afef'},
+      DapStopped                 = {fg = '#98c379'},
       TypeDefinition             = {fg = '#FF5F00'},
       KeywordFunction            = {fg = '#FF5F00'},
       NotifyBackground           = {bg = '#000000'},
@@ -520,11 +522,7 @@ local polish = function()
   -- api.nvim_command("let g:python3_host_prog = 'C:\\Users\\gxous\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'")
   -- map.set('n', 'N', '#') -- IF NOT ALREADY SLASH SEARCH (i think i can do this with lua and states)
   -- map.set('n', 'n', '*') -- IF NOT ALREADY SLASH SEARCH
-  if ( vim.g.colors_name == 'ayu') then
-    api.nvim_set_hl(0, 'DapBreakpoint', { ctermbg=0, fg='#FF5F00'})
-    api.nvim_set_hl(0, 'DapLogPoint'  , { ctermbg=0, fg='#61afef'})
-    api.nvim_set_hl(0, 'DapStopped'   , { ctermbg=0, fg='#98c379'})
-  elseif ( vim.g.colors_name == 'sunbather' or vim.g.colors_name == 'nazgul') then
+  if ( vim.g.colors_name == 'sunbather' or vim.g.colors_name == 'nazgul') then
     if _G.IS_WINDOWS then
       api.nvim_command('highlight Normal guibg=none')
     else
