@@ -134,12 +134,12 @@ local plugins = {
     end,
   },
   -- Colorschemes
-  {'szorfein/darkest-space' },
-  {'navarasu/onedark.nvim'  },
-  {'nikolvs/vim-sunbather'  },
-  {'Mofiqul/vscode.nvim'    },
-  {'nocksock/nazgul-vim'    },
-  {'fcpg/vim-orbital'       },
+  {'szorfein/darkest-space', lazy = true },
+  {'navarasu/onedark.nvim' , lazy = true },
+  {'nikolvs/vim-sunbather' , lazy = true },
+  {'Mofiqul/vscode.nvim'   , lazy = true },
+  {'nocksock/nazgul-vim'   , lazy = true },
+  {'fcpg/vim-orbital'      , lazy = true },
   -- LSP - TS - DAP
   {"williamboman/mason-lspconfig.nvim", opts   = { ensure_installed = {'basedpyright', 'lua_ls', 'marksman', 'clangd', 'arduino_language_server', 'texlab'}}}, -- 'arduino_language_server'
   {"nvim-treesitter/nvim-treesitter"  , opts   = { ensure_installed = {'python' , 'lua'   , 'markdown', 'markdown_inline', 'arduino', 'cpp', 'c'}}},
