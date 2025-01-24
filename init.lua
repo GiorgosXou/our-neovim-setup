@@ -423,10 +423,10 @@ local plugins = {
 -- augroups/autocommands and custom filetypes also this just pure lua so
 -- anything that doesn't fit in the normal config locations above can go here
 local polish = function()
-  local map  = vim.keymap
+  local mset = vim.keymap.set
   local api  = vim.api
-  local opts = { silent=true }
   local gs   = require('gitsigns')
+  -- local opts = { silent=true }
 
 
   -- if _G.XKB_SWITCH then
@@ -434,57 +434,57 @@ local polish = function()
   --   api.nvim_command('autocmd InsertEnter * call ResetLayout()')
   -- end
 
-  map.set('v', '<leader>gs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-  map.set('v', '<leader>gu', function() gs.undo_stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+  mset('v', '<leader>gs', function() gs.stage_hunk      {vim.fn.line('.'), vim.fn.line('v')} end)
+  mset('v', '<leader>gu', function() gs.undo_stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
 
-  map.set('n', '<Leader>tt', 'a<C-R>=strftime("%Y-%m-%d %I:%M:%S %p")<CR><Esc>', { desc = 'print time'} )
-  map.set('n', '<Leader>i' , 'a<C-R>=strftime("__%Y%m%d%I%M%S%p")<CR><Esc>'    , { desc = 'print time'} ) -- TODO: store it into register
-  map.set('n', '<Leader>I' , 'a<C-R>=strftime("__%Y%m%d%I%M%S%p")<CR><Esc>'    , { desc = 'print time'} )
-  map.set('n', '";', '"_')
+  mset('n', '<Leader>tt', 'a<C-R>=strftime("%Y-%m-%d %I:%M:%S %p")<CR><Esc>', { desc = 'print time'} )
+  mset('n', '<Leader>i' , 'a<C-R>=strftime("__%Y%m%d%I%M%S%p")<CR><Esc>'    , { desc = 'print time'} ) -- TODO: store it into register
+  mset('n', '<Leader>I' , 'a<C-R>=strftime("__%Y%m%d%I%M%S%p")<CR><Esc>'    , { desc = 'print time'} )
+  mset('n', '";', '"_')
 
-  map.set('i', '<C-S>'     , '<C-o>:w<cr>'         )
-  map.set('i', '<C-Q>'     , '<C-o>:q!<cr>'        )
-  map.set('v', '<A-k>'     , ":m '<-2<CR>gv=gv"    )
-  map.set('v', '<A-j>'     , ":m '>+1<CR>gv=gv"    )
-  map.set('n', '<a-k>'     , ':m-2<cr>=='          )
-  map.set('n', '<a-j>'     , ':m+1<cr>=='          )
-  map.set('i', '<A-k>'     , '<C-o>:m-2<cr>'       )
-  map.set('i', '<A-j>'     , '<C-o>:m+1<cr>'       )
-  map.set('n', 'i'         , ':noh<cr>i'           )
-  map.set('n', '<ESC>'     , ':noh<cr>'            )
-  map.set('v', 's'         , "\"fy/\\V<C-R>f<CR>N" ) -- https://vi.stackexchange.com/a/34743/42370 | https://superuser.com/questions/41378/how-to-search-for-selected-text-in-vim#comment2699355_41400 TODO: Fix when autocomplete ~if and then type s
-  map.set('n', 'x'         , '"_x'                 )
-  map.set('n', 'X'         , '"_X'                 )
+  mset('i', '<C-S>'     , '<C-o>:w<cr>'         )
+  mset('i', '<C-Q>'     , '<C-o>:q!<cr>'        )
+  mset('v', '<A-k>'     , ":m '<-2<CR>gv=gv"    )
+  mset('v', '<A-j>'     , ":m '>+1<CR>gv=gv"    )
+  mset('n', '<a-k>'     , ':m-2<cr>=='          )
+  mset('n', '<a-j>'     , ':m+1<cr>=='          )
+  mset('i', '<A-k>'     , '<C-o>:m-2<cr>'       )
+  mset('i', '<A-j>'     , '<C-o>:m+1<cr>'       )
+  mset('n', 'i'         , ':noh<cr>i'           )
+  mset('n', '<ESC>'     , ':noh<cr>'            )
+  mset('v', 's'         , "\"fy/\\V<C-R>f<CR>N" ) -- https://vi.stackexchange.com/a/34743/42370 | https://superuser.com/questions/41378/how-to-search-for-selected-text-in-vim#comment2699355_41400 TODO: Fix when autocomplete ~if and then type s
+  mset('n', 'x'         , '"_x'                 )
+  mset('n', 'X'         , '"_X'                 )
 
-  map.set('i', "<A-h>"     , '<ESC><<')
-  map.set('i', "<A-l>"     , '<ESC>>>')
-  map.set('v', "<A-h>"     , '<gv'    )
-  map.set('v', "<A-l>"     , '>gv'    )
-  map.set('n', "<A-h>"     , '<<'     )
-  map.set('n', "<A-l>"     , '>>'     )
-  map.set('v', "<S-h>"     , '^'    )
-  map.set('v', "<S-l>"     , '$'    )
+  mset('i', "<A-h>"     , '<ESC><<')
+  mset('i', "<A-l>"     , '<ESC>>>')
+  mset('v', "<A-h>"     , '<gv'    )
+  mset('v', "<A-l>"     , '>gv'    )
+  mset('n', "<A-h>"     , '<<'     )
+  mset('n', "<A-l>"     , '>>'     )
+  mset('v', "<S-h>"     , '^'    )
+  mset('v', "<S-l>"     , '$'    )
 
-  map.set('n', "<A-;>"     , '%' )
+  mset('n', "<A-;>"     , '%' )
 
-  map.set('n', '<Leader>L' , ':bnext<cr>'    )
-  map.set('n', '<Leader>H' , ':bprevious<cr>')
+  mset('n', '<Leader>L' , ':bnext<cr>'    )
+  mset('n', '<Leader>H' , ':bprevious<cr>')
 
-  map.set('n', "H"         , ":call smarthome#SmartHome('n')<cr>")
-  map.set('n', "L"         , ":call smarthome#SmartEnd('n')<cr>" )
-  map.set('n', "<Home>"    , ":call smarthome#SmartHome('n')<cr>")
-  map.set('n', "<End>"     , ":call smarthome#SmartEnd('n')<cr>" )
-  map.set('i', "<Home>"    , "<C-r>=smarthome#SmartHome('i')<cr>")
-  map.set('i', "<End>"     , "<C-r>=smarthome#SmartEnd('i')<cr>" )
+  mset('n', "H"         , ":call smarthome#SmartHome('n')<cr>")
+  mset('n', "L"         , ":call smarthome#SmartEnd('n')<cr>" )
+  mset('n', "<Home>"    , ":call smarthome#SmartHome('n')<cr>")
+  mset('n', "<End>"     , ":call smarthome#SmartEnd('n')<cr>" )
+  mset('i', "<Home>"    , "<C-r>=smarthome#SmartHome('i')<cr>")
+  mset('i', "<End>"     , "<C-r>=smarthome#SmartEnd('i')<cr>" )
 
-  map.set('n', '<Space>r'  , '<Plug>ReplaceWithRegisterOperator', { desc = "Replace with register"})
+  mset('n', '<Space>r'  , '<Plug>ReplaceWithRegisterOperator', { desc = "Replace with register"})
 
-  -- map.set('n', '<Tab>'     ,function() require("astronvim.utils.buffer").nav_to(vim.v.count +  1) end, { desc ="Go to Buffer" }) -- TODO: Messes up with CTRL+I
+  -- mset('n', '<Tab>'     ,function() require("astronvim.utils.buffer").nav_to(vim.v.count +  1) end, { desc ="Go to Buffer" }) -- TODO: Messes up with CTRL+I
 
-  map.set('n', '<Leader>j' , ':call vm#commands#add_cursor_down(0,1)<CR>'      , { desc = 'Add cursor down'})
-  map.set('n', '<Leader>k' , ':call vm#commands#add_cursor_up(0,1)<CR>'        , { desc = 'Add cursor down'})
-  map.set('i', '<C-A-up>'  , '<ESC>:call vm#commands#add_cursor_up(0,1)<CR>'   )
-  map.set('i', '<C-A-down>', '<ESC>:call vm#commands#add_cursor_down(0,1)<CR>' )
+  mset('n', '<Leader>j' , ':call vm#commands#add_cursor_down(0,1)<CR>'      , { desc = 'Add cursor down'})
+  mset('n', '<Leader>k' , ':call vm#commands#add_cursor_up(0,1)<CR>'        , { desc = 'Add cursor down'})
+  mset('i', '<C-A-up>'  , '<ESC>:call vm#commands#add_cursor_up(0,1)<CR>'   )
+  mset('i', '<C-A-down>', '<ESC>:call vm#commands#add_cursor_down(0,1)<CR>' )
 
   api.nvim_command('set cursorcolumn')
 
@@ -498,7 +498,7 @@ local polish = function()
   api.nvim_command('xmap P <plug>(SubversiveSubstitute)')
   --Tabularize /(.*)
 
-  map.set('v', 'p', '"_dP')
+  mset('v', 'p', '"_dP')
 
   -- api.nvim_command('autocmd FileType markdown set conceallevel=2') -- au FileType markdown setl conceallevel=0
   api.nvim_command('autocmd FileType tex,markdown setlocal wrap')
@@ -512,7 +512,7 @@ local polish = function()
   api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ab <cmd>call arduino#ChooseBoard()<CR>')
   api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ap <cmd>call arduino#ChooseProgrammer()<CR>')
 
-  map.set("n", "<leader>al", "<cmd>Tab /[=:|]/<cr>"                          , {desc = 'Align text'})
+  mset("n", "<leader>al", "<cmd>Tab /[=:|]/<cr>"                          , {desc = 'Align text'})
 
   api.nvim_command(':set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,QQ,ΡR,ΣS,ΤT,ΘU,ΩV,WW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz') --  https://github.com/neovim/neovim/issues/2420
 
@@ -520,8 +520,8 @@ local polish = function()
   -- api.nvim_command("nnoremap <c-x> :if !switch#Switch({'reverse': 1}) <bar> exe 'normal! <c-x>' <bar> endif<cr>")
 
   -- api.nvim_command("let g:python3_host_prog = 'C:\\Users\\gxous\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'")
-  -- map.set('n', 'N', '#') -- IF NOT ALREADY SLASH SEARCH (i think i can do this with lua and states)
-  -- map.set('n', 'n', '*') -- IF NOT ALREADY SLASH SEARCH
+  -- mset('n', 'N', '#') -- IF NOT ALREADY SLASH SEARCH (i think i can do this with lua and states)
+  -- mset('n', 'n', '*') -- IF NOT ALREADY SLASH SEARCH
   if ( vim.g.colors_name == 'sunbather' or vim.g.colors_name == 'nazgul') then
     if _G.IS_WINDOWS then
       api.nvim_command('highlight Normal guibg=none')
