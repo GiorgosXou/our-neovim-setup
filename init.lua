@@ -1,29 +1,33 @@
 -- This file simply bootstraps the installation of Lazy.nvim and then calls other files for execution
+-- This file doesn't necessarily need to be touched, BE CAUTIOUS editing this file and proceed at your own risk.
 local lazypath = vim.env.LAZY or vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 if not (vim.env.LAZY or (vim.uv or vim.loop).fs_stat(lazypath)) then
+  -- stylua: ignore
   vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
 end
-vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
+vim.opt.rtp:prepend(lazypath)
 
 -- install those packages:
 -- `sudo pacman -S ripgrep lazygit`
 
-_G.IS_WINDOWS = vim.loop.os_uname().sysname:find 'Windows' and true or false
-_G.XKB_SWITCH = vim.fn.executable('xkb-switch') == 1
+_G.IS_WINDOWS = vim.loop.os_uname().sysname:find "Windows" and true or false
+_G.XKB_SWITCH = vim.fn.executable "xkb-switch" == 1
 
 local plugins = {
-  {"AstroNvim/AstroNvim", version = "^4", import = "astronvim.plugins"},
+  {"AstroNvim/AstroNvim", version = "^5", import = "astronvim.plugins" },
   {"AstroNvim/astrocore",
     opts = { -- Configure core features of AstroNvim
       features = {
-        diagnostics_mode = 3,    -- diagnostic mode on start (0 = off, 1= no signs/virtual text, 2 = no virtual text, 3 = on)
+        diagnostics = { -- diagnostic mode
+          virtual_text   = true,
+          virtual_lines  = false
+        },
         notifications    = true, -- enable notifications at start
         highlighturl     = true, -- highlight URLs at start
         autopairs        = true, -- enable autopairs at start
         cmp              = true, -- enable completion at start
         large_buf        = {size= 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       },
-      diagnostics = { virtual_text = true, underline = true }, -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
       options = { -- vim options can be configured here
         opt = { -- vim.opt.<key>
           signcolumn     = "auto", -- sets vim.opt.signcolumn to auto
@@ -91,6 +95,7 @@ local plugins = {
     { import = "astrocommunity.color.transparent-nvim"},
     { import = "astrocommunity.pack.rust"},
     { import = "astrocommunity.pack.cpp"},
+    { import = "astrocommunity.pack.lua"},
     { import = "astrocommunity.diagnostics.trouble-nvim"},
     { import = "astrocommunity.markdown-and-latex.render-markdown-nvim"},
     -- { import = "astrocommunity.color.modes-nvim"} -- interesting one
@@ -110,52 +115,57 @@ local plugins = {
 
 
   {"ray-x/lsp_signature.nvim", event = "BufRead", config = function() require("lsp_signature").setup(({hint_prefix='• '})) end,}, -- hints
-  {"goolord/alpha-nvim",
-    opts = function(_, opts)
-      opts.section.header.val = { -- customize the dashboard header
-        '             \\                                      [            ',
-        '              @                 ⟡                  ╢             ',
-        '      /       ╣▒                                  ]▒       \\     ',
-        '     ╔       ]Ñ▒                                  ╟╣┐       ▓    ',
-        '    ╢╣       ╣▓            √          t            ▓╣       ▓╣   ',
-        '   ▓╣▒╖    ╓╫╜           ╥▓   ASTROν   ▓@           ╙▓╖    ╔╣╢║  ',
-        '   ▓▓▓▓  ,p▓,,,,,,      ╜╙▓▄╖,      ,╓╥╜╙╙    ,,,,,,,,▓▓,  ▀▓▓╣U ',
-        '   ▀▓Ö   ╙█▓▓▓▓▓▓╢╫╣▓▓▓▓▓╦, ▀▓▓╗  g╢▓╝ ,╓H╢╢╢╢╢╢▓▓▓▓▓▓▒▓╜   ]▓▓  ',
-        '    ▓▓▓╦╥╖ ╙╙╙╙`     `""▀▓▓@ ▐█▓L]▓╫╛ Æ▒╨╜"       ""╙╙` ╓╖∩▒▒▓   ',
-        ' ╒▓▒╜""╙▀▓▓                ▀  █▒Γ▐▓▓  ╩                ▓╢╜""╙▀█╫L',
-        ' ▐▌`      └╝                  ▓▒` █▓                  ╜       └█▓',
-        '▐▓                            ▓▒  █╢                           ▐▓',
-        ' ▐Γ                            ╛  ▐"                           ▐[',
-        ' ¬U                                                            jU',
-        '  C                                                            j ',
-        '   L                                                          ]  ',
-      }
-      return opts
-    end,
-  },
+  {"folke/snacks.nvim", opts = { dashboard = { preset = { header = table.concat({
+    "             \\                                      [            ",
+    "              @                 ⟡                  ╢             ",
+    "      /       ╣▒                                  ]▒       \\     ",
+    "     ╔       ]Ñ▒                                  ╟╣┐       ▓    ",
+    "    ╢╣       ╣▓            √          t            ▓╣       ▓╣   ",
+    "   ▓╣▒╖    ╓╫╜           ╥▓   ASTROν   ▓@           ╙▓╖    ╔╣╢║  ",
+    "   ▓▓▓▓  ,p▓,,,,,,      ╜╙▓▄╖,      ,╓╥╜╙╙    ,,,,,,,,▓▓,  ▀▓▓╣U ",
+    "   ▀▓Ö   ╙█▓▓▓▓▓▓╢╫╣▓▓▓▓▓╦, ▀▓▓╗  g╢▓╝ ,╓H╢╢╢╢╢╢▓▓▓▓▓▓▒▓╜   ]▓▓  ",
+    '    ▓▓▓╦╥╖ ╙╙╙╙`     `""▀▓▓@ ▐█▓L]▓╫╛ Æ▒╨╜"       ""╙╙` ╓╖∩▒▒▓   ',
+    ' ╒▓▒╜""╙▀▓▓                ▀  █▒Γ▐▓▓  ╩                ▓╢╜""╙▀█╫L',
+    " ▐▌`      └╝                  ▓▒` █▓                  ╜       └█▓",
+    "▐▓                            ▓▒  █╢                           ▐▓",
+    ' ▐Γ                            ╛  ▐"                           ▐[',
+    " ¬U                                                            jU",
+    "  C                                                            j ",
+    "   L                                                          ]  ",
+  },"\n"),},},},},
+
   -- Colorschemes
-  {'szorfein/darkest-space', lazy = true },
-  {'navarasu/onedark.nvim' , lazy = true },
-  {'nikolvs/vim-sunbather' , lazy = true },
-  {'Mofiqul/vscode.nvim'   , lazy = true },
-  {'nocksock/nazgul-vim'   , lazy = true },
-  {'fcpg/vim-orbital'      , lazy = true },
-  -- LSP - TS - DAP
-  {"williamboman/mason-lspconfig.nvim", opts   = { ensure_installed = {'basedpyright', 'lua_ls', 'marksman', 'clangd', 'arduino_language_server', 'texlab'}}}, -- 'arduino_language_server'
-  {"nvim-treesitter/nvim-treesitter"  , opts   = { ensure_installed = {'python' , 'lua'   , 'markdown', 'markdown_inline', 'arduino', 'cpp', 'c'}}},
-  {"jay-babu/mason-nvim-dap.nvim"     , opts   = { ensure_installed = {'python' , 'lua'}}},
-  {"akinsho/flutter-tools.nvim"}, -- add lsp plugin
-  {'chrisgrieser/nvim-various-textobjs'     },
-  {'nvim-treesitter/nvim-treesitter'        },
-  {'stevearc/vim-arduino'                   , lazy = false }, -- sudo pacman -S screen arduino-cli (and arduino?) | arduino-cli config init
-  {'godlygeek/tabular'                      , lazy = false }, -- ALIGN <leader>a | https://stackoverflow.com/questions/5436715/how-do-i-align-like-this-with-vims-tabular-plugin
-  {'svermeulen/vim-yoink'                   , lazy = false }, -- TERMUX https://github.com/GiorgosXou/our-neovim-setup/issues/2
-  {'Shadowsith/vim-minify'                  , lazy = false }, -- TODO: It needs to be Checked 2023-03-24 06:29:23 PM
-  {'m-pilia/vim-smarthome'                  , lazy = false },
-  {'mg979/vim-visual-multi'                 , lazy = false },
-  {'hiphish/rainbow-delimiters.nvim'        , lazy = false },
-  {'vim-scripts/ReplaceWithRegister'        , lazy = false },
-  {'nvim-treesitter/nvim-treesitter-context', lazy = false }, -- top context-bar when scrolling
+  {"szorfein/darkest-space", lazy = true },
+  {"navarasu/onedark.nvim" , lazy = true },
+  {"nikolvs/vim-sunbather" , lazy = true },
+  {"Mofiqul/vscode.nvim"   , lazy = true },
+  {"nocksock/nazgul-vim"   , lazy = true },
+  {"fcpg/vim-orbital"      , lazy = true },
+
+  -- LSP - DAP
+  {"WhoIsSethDaniel/mason-tool-installer.nvim",
+    opts = {
+      ensure_installed = {
+        -- install language servers
+        "basedpyright", "marksman", "clangd", "arduino-language-server", "texlab",
+        -- install debuggers
+        "codelldb", "debugpy",
+  },},},
+
+  -- TS
+  {"nvim-treesitter/nvim-treesitter", opts = { ensure_installed = { "python", "markdown", "markdown_inline", "arduino", "cpp", "c" }},},
+  {"nvim-treesitter/nvim-treesitter-context", lazy = false }, -- top context-bar when scrolling
+
+  {"akinsho/flutter-tools.nvim"             }, -- add lsp plugin
+  {"chrisgrieser/nvim-various-textobjs"     },
+  {"stevearc/vim-arduino"                   , lazy = false }, -- sudo pacman -S screen arduino-cli (and arduino?) | arduino-cli config init
+  {"godlygeek/tabular"                      , lazy = false }, -- ALIGN <leader>a | https://stackoverflow.com/questions/5436715/how-do-i-align-like-this-with-vims-tabular-plugin
+  {"svermeulen/vim-yoink"                   , lazy = false }, -- TERMUX https://github.com/GiorgosXou/our-neovim-setup/issues/2
+  {"Shadowsith/vim-minify"                  , lazy = false }, -- TODO: It needs to be Checked 2023-03-24 06:29:23 PM
+  {"m-pilia/vim-smarthome"                  , lazy = false },
+  {"mg979/vim-visual-multi"                 , lazy = false },
+  {"hiphish/rainbow-delimiters.nvim"        , lazy = false },
+  {"vim-scripts/ReplaceWithRegister"        , lazy = false, config = function() vim.keymap.set('n', '<Space>r', '<Plug>ReplaceWithRegisterOperator', { desc = "Replace with register"}) end},
   {'iamcco/markdown-preview.nvim'           ,               config = function() vim.fn["mkdp#util#install"]() end , ft = { "markdown" }},
   {'petertriho/nvim-scrollbar'              , lazy = false, config = function() require("scrollbar" ).setup({
     handle = {
@@ -182,21 +192,10 @@ local plugins = {
       {'enable', 'disable'}
     }
   }) end},
-  {'kylechui/nvim-surround'   , config = function() require("nvim-surround").setup() end, event = "VeryLazy", version = "*"},
-  {'numToStr/Comment.nvim'    , config = function() require('Comment'      ).setup({
-    toggler = {
-        line  = 'cml', -- Line-comment toggle keymap
-        block = 'gbc', -- Block-comment toggle keymap
-    },
-    opleader = {
-        line  = 'cm', ---Line-comment keymap
-        block = 'gb', ---Block-comment keymap
-    },
-  }) end, lazy = false}, -- permanant solution until fix https://discord.com/channels/939594913560031363/1088835559012716584
-  {'Shatur/neovim-ayu'        , config = function()
-    -- local utils = require "default_theme.utils"
+  -- {'kylechui/nvim-surround'   , config = function() require("nvim-surround").setup() end, event = "VeryLazy", version = "*"},
+  {'Shatur/neovim-ayu'        , config = function()  -- local utils = require "default_theme.utils"
     require('ayu').setup({                               -- don't forger :PackerCompile if it doesn't work
-    overrides                    = {                 -- :Telescope highlights https://github.com/Shatur/neovim-ayu#overrides-examples <------
+    overrides                    = {                 -- lua Snacks.picker.highlights()
       Type                       = {fg = '#FF5F00'},
       Macro                      = {fg = '#FF5F00'},
       Normal                     = {bg = '#000000'}, -- 'NONE'
@@ -218,7 +217,7 @@ local plugins = {
       DapStopped                 = {fg = '#98c379'},
       TypeDefinition             = {fg = '#FF5F00'},
       KeywordFunction            = {fg = '#FF5F00'},
-      NotifyBackground           = {bg = '#000000'},
+      NotifyBackground           = {bg = '#000000'}, -- TODO: may need to be changed to snacks.nvim something
       IndentBlanklineContextChar = {fg = '#FF5F00'},
       LspReferenceRead           = {bg = '#626A73'},
       LspReferenceText           = {bg = '#626A73'},
@@ -288,7 +287,7 @@ local plugins = {
   --       enable = true -- disable builtin indent module
   --     }
   --   }
-  -- end, requires = "nvim-treesitter/nvim-treesitter" 
+  -- end, requires = "nvim-treesitter/nvim-treesitter"
   -- },
   {"nvim-neo-tree/neo-tree.nvim" , opts = {
     window                    = { position = 'right' },
@@ -409,7 +408,22 @@ local plugins = {
       },},} },},},
 
       -- mappings to be set up on attaching of a language server
-      mappings = { n = { gl = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" },},},
+      mappings = {
+        n = {
+          -- a `cond` key can provided as the string of a server capability to be required to attach, or a function with `client` and `bufnr` parameters from the `on_attach` that returns a boolean
+          gD = {
+            function() vim.lsp.buf.declaration() end,
+            desc = "Declaration of current symbol",
+            cond = "textDocument/declaration",
+          },
+          ["<Leader>uY"] = {
+            function() require("astrolsp.toggles").buffer_semantic_tokens() end,
+            desc = "Toggle LSP semantic highlight (buffer)",
+            cond = function(client)
+              return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
+            end,
+      },},},
+
       on_attach = function(client, bufnr)
         -- this would disable semanticTokensProvider for all clients
         -- client.server_capabilities.semanticTokensProvider = nil
@@ -433,6 +447,10 @@ local polish = function()
   --   api.nvim_command('autocmd InsertLeave * call SetUsLayout()')
   --   api.nvim_command('autocmd InsertEnter * call ResetLayout()')
   -- end
+
+  mset('n', 'cml', '<Leader>/', { remap = true, desc = 'Toggle comment on current line' })
+  mset('n', 'cm', 'gc', { remap = true})
+  mset('v', 'cm', 'gc', { remap = true})
 
   mset('v', '<leader>gs', function() gs.stage_hunk      {vim.fn.line('.'), vim.fn.line('v')} end)
   mset('v', '<leader>gu', function() gs.undo_stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
@@ -476,8 +494,6 @@ local polish = function()
   mset('n', "<End>"     , ":call smarthome#SmartEnd('n')<cr>" )
   mset('i', "<Home>"    , "<C-r>=smarthome#SmartHome('i')<cr>")
   mset('i', "<End>"     , "<C-r>=smarthome#SmartEnd('i')<cr>" )
-
-  mset('n', '<Space>r'  , '<Plug>ReplaceWithRegisterOperator', { desc = "Replace with register"})
 
   -- mset('n', '<Tab>'     ,function() require("astronvim.utils.buffer").nav_to(vim.v.count +  1) end, { desc ="Go to Buffer" }) -- TODO: Messes up with CTRL+I
 
@@ -637,3 +653,4 @@ polish()
   - - https://github.com/yioneko/nvim-yati
   - - https://github.com/nvim-treesitter/nvim-treesitter/issues/1136#issuecomment-1127145770  
 ]]--
+
