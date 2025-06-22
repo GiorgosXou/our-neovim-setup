@@ -141,6 +141,7 @@ local plugins = {
   {"Mofiqul/vscode.nvim"   , lazy = true },
   {"nocksock/nazgul-vim"   , lazy = true },
   {"fcpg/vim-orbital"      , lazy = true },
+  {"Koalhack/darcubox-nvim", lazy = true },
 
   -- LSP - DAP
   {"WhoIsSethDaniel/mason-tool-installer.nvim",
