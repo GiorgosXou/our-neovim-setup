@@ -148,7 +148,7 @@ local plugins = {
     opts = {
       ensure_installed = {
         -- install language servers
-        "basedpyright", "marksman", "clangd", "arduino-language-server", "texlab",
+        "basedpyright", "marksman", "clangd", "texlab", --  "arduino-language-server"
         -- install debuggers
         "codelldb", "debugpy",
   },},},
@@ -361,32 +361,35 @@ local plugins = {
         --   }
         -- end,
 
-        arduino_language_server = { --  https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/arduino_language_server | https://discord.com/channels/939594913560031363/1078005571451621546/threads/1122910773270818887
-          on_new_config = function (config, root_dir)
-            local my_arduino_fqbn = { -- arduino-cli core install arduino:... 
-              ["/home/xou/Desktop/xou/programming/hardware/arduino/nano"              ]  = "arduino:avr:nano", -- arduino-cli board listall
-              ["/home/xou/Desktop/xou/programming/hardware/arduino/uno"               ]  = "arduino:avr:uno" ,
-              ["/home/xou/Desktop/xou/programming/hardware/esp32/AirM2M_CORE_ESP32C3" ]  = "esp32:esp32:AirM2M_CORE_ESP32C3" ,
-              ["/home/xou/Desktop/xou/programming/hardware/esp32/"                    ]  = "esp32:esp32:AirM2M_CORE_ESP32C3" ,
-              ["/home/xou/Desktop/xou/programming/hardware/attiny/85_Digispark"       ]  = "ATTinyCore:avr:attinyx5micr",
-            }
-            local DEFAULT_FQBN = "arduino:avr:uno"
-            local fqbn = my_arduino_fqbn[root_dir:match(".*/"):sub(1, -2)]
-            if not fqbn then
-              -- vim.notify(("Could not find which FQBN to use in %q. Defaulting to %q."):format(root_dir, DEFAULT_FQBN))
-              fqbn = DEFAULT_FQBN
-            end
-            config.capabilities.textDocument.semanticTokens = vim.NIL
-            config.capabilities.workspace.semanticTokens = vim.NIL
-            config.cmd = {         --  https://forum.arduino.cc/t/solved-errors-with-clangd-startup-for-arduino-language-server-in-nvim/1019977
-              "arduino-language-server",
-              "-cli-config" , "~/.arduino15/arduino-cli.yaml", -- just in case it was /home/xou/.arduino15/arduino-cli.yaml 
-              "-cli"        , "/usr/bin/arduino-cli", -- 2023-06-26 ERROR | "Runs" if I set a wrong path
-              "-clangd"     , "/usr/bin/clangd",
-              "-fqbn"       , fqbn
-            }
-          end
-        },
+        
+        -- arduino_language_server = { --  https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/arduino_language_server | https://discord.com/channels/939594913560031363/1078005571451621546/threads/1122910773270818887
+        --   on_new_config = function (config, root_dir)
+        --     local my_arduino_fqbn = { -- arduino-cli core install arduino:... 
+        --       ["/home/xou/Desktop/xou/programming/hardware/arduino/nano"              ]  = "arduino:avr:nano", -- arduino-cli board listall
+        --       ["/home/xou/Desktop/xou/programming/hardware/arduino/uno"               ]  = "arduino:avr:uno" ,
+        --       ["/home/xou/Desktop/xou/programming/hardware/esp32/AirM2M_CORE_ESP32C3" ]  = "esp32:esp32:AirM2M_CORE_ESP32C3" ,
+        --       ["/home/xou/Desktop/xou/programming/hardware/esp32/"                    ]  = "esp32:esp32:AirM2M_CORE_ESP32C3" ,
+        --       ["/home/xou/Desktop/xou/programming/hardware/attiny/85_Digispark"       ]  = "ATTinyCore:avr:attinyx5micr",
+        --     }
+        --     local DEFAULT_FQBN = "arduino:avr:uno"
+        --     local fqbn = my_arduino_fqbn[root_dir:match(".*/"):sub(1, -2)]
+        --     if not fqbn then
+        --       -- vim.notify(("Could not find which FQBN to use in %q. Defaulting to %q."):format(root_dir, DEFAULT_FQBN))
+        --       fqbn = DEFAULT_FQBN
+        --     end
+        --     config.capabilities.textDocument.semanticTokens = vim.NIL
+        --     config.capabilities.workspace.semanticTokens = vim.NIL
+        --     config.cmd = {         --  https://forum.arduino.cc/t/solved-errors-with-clangd-startup-for-arduino-language-server-in-nvim/1019977
+        --       "arduino-language-server",
+        --       "-cli-config" , "~/.arduino15/arduino-cli.yaml", -- just in case it was /home/xou/.arduino15/arduino-cli.yaml 
+        --       "-cli"        , "/usr/bin/arduino-cli", -- 2023-06-26 ERROR | "Runs" if I set a wrong path
+        --       "-clangd"     , "/usr/bin/clangd",
+        --       "-fqbn"       , fqbn
+        --     }
+        --   end
+        -- },
+
+
         basedpyright     = {
           settings       = {
             basedpyright = {
