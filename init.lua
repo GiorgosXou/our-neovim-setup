@@ -159,6 +159,7 @@ local plugins = {
 
   {"akinsho/flutter-tools.nvim"             }, -- add lsp plugin
   {"chrisgrieser/nvim-various-textobjs"     },
+  {"mcauley-penney/visual-whitespace.nvim"  , config = true},
   {"stevearc/vim-arduino"                   , lazy = false }, -- sudo pacman -S screen arduino-cli (and arduino?) | arduino-cli config init
   {"godlygeek/tabular"                      , lazy = false }, -- ALIGN <leader>a | https://stackoverflow.com/questions/5436715/how-do-i-align-like-this-with-vims-tabular-plugin
   {"svermeulen/vim-yoink"                   , lazy = false }, -- TERMUX https://github.com/GiorgosXou/our-neovim-setup/issues/2
