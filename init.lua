@@ -473,8 +473,6 @@ local polish = function()
   mset('n', '<a-j>'     , ':m+1<cr>=='          )
   mset('i', '<A-k>'     , '<C-o>:m-2<cr>'       )
   mset('i', '<A-j>'     , '<C-o>:m+1<cr>'       )
-  mset('n', 'i'         , ':noh<cr>i'           )
-  mset('n', '<ESC>'     , ':noh<cr>'            )
   mset('v', 's'         , "\"fy/\\V<C-R>f<CR>N" ) -- https://vi.stackexchange.com/a/34743/42370 | https://superuser.com/questions/41378/how-to-search-for-selected-text-in-vim#comment2699355_41400 TODO: Fix when autocomplete ~if and then type s
   mset('n', 'x'         , '"_x'                 )
   mset('n', 'X'         , '"_X'                 )
