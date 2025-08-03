@@ -200,7 +200,7 @@ local plugins = {
     overrides                    = {                 -- lua Snacks.picker.highlights()
       Type                       = {fg = '#FF5F00'},
       Macro                      = {fg = '#FF5F00'},
-      Normal                     = {bg = '#000000'}, -- 'NONE'
+      -- Normal                     = {bg = '#000000'}, -- 'NONE'
       Repeat                     = {fg = '#FF5F00'},
       Method                     = {fg = '#FF5F00'},
       PreProc                    = {fg = '#FF5F00'},
