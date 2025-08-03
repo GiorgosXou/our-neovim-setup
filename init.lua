@@ -194,7 +194,7 @@ local plugins = {
       {'enable', 'disable'}
     }
   }) end},
-  -- {'kylechui/nvim-surround'   , config = function() require("nvim-surround").setup() end, event = "VeryLazy", version = "*"},
+  {'kylechui/nvim-surround'   , config = function() require("nvim-surround").setup() end, event = "VeryLazy", version = "*"},
   {'Shatur/neovim-ayu'        , config = function()  -- local utils = require "default_theme.utils"
     require('ayu').setup({                               -- don't forger :PackerCompile if it doesn't work
     overrides                    = {                 -- lua Snacks.picker.highlights()
