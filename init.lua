@@ -206,7 +206,7 @@ local plugins = {
       PreProc                    = {fg = '#FF5F00'},
       Include                    = {fg = '#FF5F00'},
       ["@property"]              = {fg = '#64BAAA'},
-      ["@markup.link"]           = {fg = '#39bae6' , underline = true},
+      ["@markup.link"]           = {fg = '#39bae6' , underline = true, sp = '#004182'}, -- #0400d1
       ["@markup.heading"]        = {fg = '#FFF000' , bold      = true},
       Keyword                    = {fg = '#FF5F00' , bold      = true},
       RenderMarkdownBullet       = {fg = '#64BAAA'},
