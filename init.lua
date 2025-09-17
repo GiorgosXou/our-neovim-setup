@@ -169,18 +169,43 @@ local plugins = {
   {"hiphish/rainbow-delimiters.nvim"        , lazy = false },
   {"vim-scripts/ReplaceWithRegister"        , lazy = false, config = function() vim.keymap.set('n', '<Space>r', '<Plug>ReplaceWithRegisterOperator', { desc = "Replace with register"}) end},
   {'iamcco/markdown-preview.nvim'           ,               config = function() vim.fn["mkdp#util#install"]() end , ft = { "markdown" }},
-  {'petertriho/nvim-scrollbar'              , lazy = false, config = function() require("scrollbar" ).setup({
-    handle = {
-      color = '#343434',
-      blend = 20,
+  {'lewis6991/satellite.nvim'               ,               config = function() require("satellite" ).setup({
+    current_only = false,
+    winblend     = 40,
+    zindex       = 50,
+    width        = 2,
+    excluded_filetypes = {},
+    handlers = {
+      cursor = { enable  = true,
+        symbols = { '⎺', '⎻', '⎼', '⎽' }
+      },
+      search = { enable = true, },
+      diagnostic = {
+        enable = true,
+        signs  = {
+          error = { 'x', '=', 'Ξ' },
+          warn  = { '▲', '=', 'Ξ' },
+          info  = { 'ⓘ', '=', 'Ξ' },
+          hint  = { '⋄', '=', 'Ξ' },
+        },
+        min_severity = vim.diagnostic.severity.HINT,
+      },
+      gitsigns = { enable = true,
+        signs  = {
+          add    = "│",
+          change = "│",
+          delete = "┆",
+      },},
+      marks = {
+        enable        = true,
+        show_builtins = false, -- shows the builtin marks like [ ] < >
+        key           = 'm'
+      },
+      quickfix = {
+        signs = { '-', '=', 'Ξ' },
+      }
     },
-    marks = {
-      Search = { text = { "-", "=", "Ξ" }, color = '#FF5F00' },
-      Error  = { text = { "=", "x" }, }, -- I don't know why but only captures x not =
-      Warn   = { text = { "▲", "=" }, },
-      Hint   = { text = { "⋄", "=" }, }
-    }
-  }) end},
+  }) end, commit = '1febb77'},
   {'nat-418/boole.nvim'                     , lazy = false, config = function() require('boole'     ).setup({ -- https://www.reddit.com/r/neovim/comments/y2h9sq/new_plugin_boolenvim_toggle_booleans_cycle_days/
     mappings = {
       increment = '<C-a>',
@@ -231,20 +256,15 @@ local plugins = {
       RenderMarkdownH4Bg         = {bg = '#0e0e0e'},
       RenderMarkdownH5Bg         = {bg = '#0e0e0e'},
       RenderMarkdownH6Bg         = {bg = '#0e0e0e'},
+      SatelliteBar               = {bg = "#454545"},
+      SatelliteCursor            = {fg = "#626A73", default = true, },
+      SatelliteMark              = {fg = "#626A73", default = true, },
       -- DiagnosticError =  utils.parse_diagnostic_style { fg = '#cc241d'},
       -- DiagnosticWarn  =  utils.parse_diagnostic_style { fg = '#ff8f40'},
       -- DiagnosticInfo  =  utils.parse_diagnostic_style { fg = '#39bae6'},
       -- DiagnosticHint  =  utils.parse_diagnostic_style { fg = '#95e6cb'},
       -- #FFC26B #860000 #64BAAA #006B5D #FF6A13 #FFB454 #FFF000 #FFE0F0 #Maybe?
   }}) end                                   },
-  {"kevinhwang91/nvim-hlslens", -- This one working but theme background kinda hides them https://github.com/petertriho/nvim-scrollbar/issues/83
-    config = function()
-      require("scrollbar.handlers.search").setup({
-        override_lens = function() end,
-        handlers = { search = true },
-      })
-    end,
-  },
   {"lewis6991/gitsigns.nvim",
     config = function()
       -- require('gitsigns').setup(require('astronvim.plugins.gitsigns').opts())
