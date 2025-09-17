@@ -30,11 +30,11 @@ local plugins = {
       },
       options = { -- vim options can be configured here
         opt = { -- vim.opt.<key>
-          signcolumn     = "auto", -- sets vim.opt.signcolumn to auto
-          spell          = false , -- sets vim.opt.spell
-          wrap           = false , -- sets vim.opt.wrap
-          number         = true  , -- sets vim.opt.number
-          relativenumber = true  , -- sets vim.opt.relativenumber
+          signcolumn     = "auto:2", -- sets vim.opt.signcolumn to auto
+          spell          = false   , -- sets vim.opt.spell
+          wrap           = false   , -- sets vim.opt.wrap
+          number         = true    , -- sets vim.opt.number
+          relativenumber = true    , -- sets vim.opt.relativenumber
         },
         g = {
           VM_maps = {
@@ -247,8 +247,11 @@ local plugins = {
   },
   {"lewis6991/gitsigns.nvim",
     config = function()
-      require('gitsigns').setup(require('astronvim.plugins.gitsigns').opts())
-      require("scrollbar.handlers.gitsigns").setup()
+      -- require('gitsigns').setup(require('astronvim.plugins.gitsigns').opts())
+      local opts = require("astronvim.plugins.gitsigns").opts()
+      opts.sign_priority = 14
+      require("gitsigns").setup(opts)
+      -- require("scrollbar.handlers.gitsigns").setup()
     end
   },
   {"mfussenegger/nvim-dap", config = function()
