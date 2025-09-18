@@ -185,7 +185,7 @@ local plugins = {
         signs  = {
           error = { 'x', '=', 'Ξ' },
           warn  = { '▲', '=', 'Ξ' },
-          info  = { 'ⓘ', '=', 'Ξ' },
+          info  = { 'i', '=', 'Ξ' },
           hint  = { '⋄', '=', 'Ξ' },
         },
         min_severity = vim.diagnostic.severity.HINT,
