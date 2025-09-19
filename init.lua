@@ -205,7 +205,7 @@ local plugins = {
         signs = { '-', '=', 'Ξ' },
       }
     },
-  }) end, commit = '1febb77'},
+  }) end},
   {'nat-418/boole.nvim'                     , lazy = false, config = function() require('boole'     ).setup({ -- https://www.reddit.com/r/neovim/comments/y2h9sq/new_plugin_boolenvim_toggle_booleans_cycle_days/
     mappings = {
       increment = '<C-a>',
