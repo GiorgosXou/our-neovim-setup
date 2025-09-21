@@ -259,6 +259,7 @@ local plugins = {
       SatelliteBar               = {bg = "#454545"},
       SatelliteCursor            = {fg = "#626A73", default = true, },
       SatelliteMark              = {fg = "#626A73", default = true, },
+      SnacksPickerDir            = {fg = "#626A73", default = true, },
       -- DiagnosticError =  utils.parse_diagnostic_style { fg = '#cc241d'},
       -- DiagnosticWarn  =  utils.parse_diagnostic_style { fg = '#ff8f40'},
       -- DiagnosticInfo  =  utils.parse_diagnostic_style { fg = '#39bae6'},
