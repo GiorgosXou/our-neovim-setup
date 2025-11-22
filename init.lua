@@ -256,6 +256,7 @@ local plugins = {
       Repeat                     = {fg = '#FF5F00'},
       Method                     = {fg = '#FF5F00'},
       PreProc                    = {fg = '#FF5F00'},
+      IncSearch                  = {fg = '#FF8F40', bg = '#22354a'},
       Include                    = {fg = '#FF5F00'},
       ["@property"]              = {fg = '#64BAAA'},
       ["@markup.link"]           = {fg = '#39bae6' , underline = true, sp = '#004182'}, -- #0400d1
