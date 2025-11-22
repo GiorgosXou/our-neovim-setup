@@ -490,6 +490,70 @@ local plugins = {
 }
 
 
+
+local scroll_timer = nil -- Disable expensive features while scrolling (keyboard + mouse)
+local hl_timer     = nil -- Optimize horizontal movement (h/l)
+
+
+local function disable_expensive()
+  vim.schedule(function() vim.cmd("NoMatchParen"   )           end)
+  pcall       (function() vim.cmd("IlluminatePause")           end) -- Pause illuminate
+  -- pcall       (function() require("snacks.indent"  ).disable() end) -- Disable Snacks indent
+  vim.opt.cursorcolumn = false -- Disable cursorcolumn
+  vim.cmd("set lazyredraw")
+end
+
+
+local function enable_expensive()
+  vim.schedule(function() vim.cmd("DoMatchParen"    )          end)
+  pcall       (function() vim.cmd("IlluminateResume")          end) -- Resume illuminate
+  -- pcall       (function() require("snacks.indent"   ).enable() end) -- Re-enable Snacks indent
+  vim.opt.cursorcolumn = true -- Restore cursorcolumn
+  vim.cmd("set nolazyredraw")
+end
+
+
+local function throttled_disable()
+  disable_expensive()
+  -- Reset timer
+  if scroll_timer then
+    scroll_timer:stop ()
+    scroll_timer:close()
+  end
+  -- re-enable after 300ms of no scrolling
+  scroll_timer = vim.loop.new_timer()
+  scroll_timer:start(300, 0, vim.schedule_wrap(enable_expensive))
+end
+
+
+local function disable_hl_expensive()
+  vim.schedule(function() vim.cmd("NoMatchParen") end)
+  vim.cmd("set lazyredraw")
+  -- vim.opt.cursorcolumn = false -- Disable cursorcolumn
+end
+
+
+local function enable_hl_expensive()
+  vim.schedule(function() vim.cmd("DoMatchParen") end)
+  vim.cmd("set nolazyredraw")
+  -- vim.opt.cursorcolumn = true -- Restore cursorcolumn
+end
+
+
+local function throttled_hl()
+  disable_hl_expensive()
+  -- Reset timer if already running
+  if hl_timer then
+    hl_timer:stop ()
+    hl_timer:close()
+  end
+  -- Re-enable after 300ms of no horizontal movement
+  hl_timer = vim.loop.new_timer()
+  hl_timer:start(300, 0, vim.schedule_wrap(enable_hl_expensive))
+end
+
+
+
 -- This function is run last and is a good place to configuring
 -- augroups/autocommands and custom filetypes also this just pure lua so
 -- anything that doesn't fit in the normal config locations above can go here
@@ -604,6 +668,49 @@ local polish = function()
     api.nvim_command('highlight LspReferenceText  guibg=#353535')
     api.nvim_command('highlight MatchParen        guibg=#000000 guifg=#FFFFFF guisp=#000000 cterm=underline gui=underline')
     api.nvim_command('highlight IndentBlanklineContextChar  guifg=#FFFFFF')
+  end
+
+  -- Keys that count as scrolling
+  local scroll_keys = {
+    "j", "k", "gj", "gk",
+    "<C-d>", "<C-u>",
+    "<C-f>", "<C-b>",
+  }
+
+  for _, key in ipairs(scroll_keys) do
+    vim.keymap.set("n", key, function()
+      if vim.v.count == 0 then
+        throttled_disable()
+      end
+      return key
+    end, { expr = true, silent = true })
+  end
+
+  -- Mouse wheel events
+  local mouse_scroll = {
+    "<ScrollWheelUp>"    ,
+    "<ScrollWheelDown>"  ,
+    "<S-ScrollWheelUp>"  ,
+    "<S-ScrollWheelDown>",
+    "<C-ScrollWheelUp>"  ,
+    "<C-ScrollWheelDown>",
+  }
+
+  for _, key in ipairs(mouse_scroll) do
+    vim.keymap.set("", key, function()
+      throttled_disable()
+      return key
+    end, { expr = true, silent = true })
+  end
+
+  -- Horizontal keys: h, l, and wrapped ones: gh, gl
+  local hl_keys = { "h", "l", "gh", "gl" }
+
+  for _, key in ipairs(hl_keys) do
+    vim.keymap.set("n", key, function()
+      throttled_hl()
+      return key
+    end, { expr = true, silent = true })
   end
 
   -- vim.filetype.add { -- Set up custom filetypes
