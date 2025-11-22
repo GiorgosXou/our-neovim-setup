@@ -204,7 +204,7 @@ local plugins = {
     excluded_filetypes = {},
     handlers = {
       cursor = { enable  = true,
-        symbols = { '⎺', '⎻', '⎼', '⎽' }
+        symbols = { '⎺', '⎻', '─', '⎼', '⎽', '⎯'}
       },
       search = { enable = true, },
       diagnostic = {
