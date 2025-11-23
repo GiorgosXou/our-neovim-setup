@@ -85,7 +85,7 @@ local plugins = {
 
   {"AstroNvim/astroui",
     opts = {
-      colorscheme = "ayu", -- change colorscheme
+      colorscheme = "ayu-dark", -- change colorscheme
       icons = { -- Icons can be configured throughout the interface | configure the loading of the lsp in the status line
         LSPLoading1 = "⠋", LSPLoading2 = "⠙", LSPLoading3 = "⠹", LSPLoading4 = "⠸", LSPLoading5  = "⠼",
         LSPLoading6 = "⠴", LSPLoading7 = "⠦", LSPLoading8 = "⠧", LSPLoading9 = "⠇", LSPLoading10 = "⠏",
@@ -249,51 +249,107 @@ local plugins = {
   {'kylechui/nvim-surround'   , config = function() require("nvim-surround").setup() end, event = "VeryLazy", version = "*"},
   {'Shatur/neovim-ayu'        , config = function()  -- local utils = require "default_theme.utils"
     require('ayu').setup({                               -- don't forger :PackerCompile if it doesn't work
-    overrides                    = {                 -- lua Snacks.picker.highlights()
-      Type                       = {fg = '#FF5F00'},
-      Macro                      = {fg = '#FF5F00'},
-      -- Normal                     = {bg = '#000000'}, -- 'NONE'
-      Repeat                     = {fg = '#FF5F00'},
-      Method                     = {fg = '#FF5F00'},
-      PreProc                    = {fg = '#FF5F00'},
-      IncSearch                  = {fg = '#FF8F40', bg = '#22354a'},
-      Include                    = {fg = '#FF5F00'},
-      ["@property"]              = {fg = '#64BAAA'},
-      ["@markup.link"]           = {fg = '#39bae6' , underline = true, sp = '#004182'}, -- #0400d1
-      ["@markup.heading"]        = {fg = '#FFF000' , bold      = true},
-      Keyword                    = {fg = '#FF5F00' , bold      = true},
-      RenderMarkdownBullet       = {fg = '#64BAAA'},
-      Exception                  = {fg = '#FF5F00'},
-      Statement                  = {fg = '#FF5F00'},
-      Constructor                = {fg = '#FF5F00'},
-      FuncBuiltin                = {fg = '#FF5F00'},
-      DapBreakpoint              = {fg = '#FF5F00'},
-      DapLogPoint                = {fg = '#61afef'},
-      DapStopped                 = {fg = '#98c379'},
-      TypeDefinition             = {fg = '#FF5F00'},
-      KeywordFunction            = {fg = '#FF5F00'},
-      NotifyBackground           = {bg = '#000000'}, -- TODO: may need to be changed to snacks.nvim something
-      IndentBlanklineContextChar = {fg = '#FF5F00'},
-      LspReferenceRead           = {bg = '#626A73'},
-      LspReferenceText           = {bg = '#626A73'},
-      LspReferenceWrite          = {bg = '#626A73'},
-      LineNr                     = {fg = '#626A73'},
-      RenderMarkdownH1Bg         = {bg = '#3e2e2e'},
-      RenderMarkdownH2Bg         = {bg = '#2e1e1e'},
-      RenderMarkdownH3Bg         = {bg = '#1e0e0e'},
-      RenderMarkdownH4Bg         = {bg = '#0e0e0e'},
-      RenderMarkdownH5Bg         = {bg = '#0e0e0e'},
-      RenderMarkdownH6Bg         = {bg = '#0e0e0e'},
-      SatelliteBar               = {bg = "#454545"},
-      SatelliteCursor            = {fg = "#626A73", default = true, },
-      SatelliteMark              = {fg = "#626A73", default = true, },
-      SnacksPickerDir            = {fg = "#626A73", default = true, },
-      -- DiagnosticError =  utils.parse_diagnostic_style { fg = '#cc241d'},
-      -- DiagnosticWarn  =  utils.parse_diagnostic_style { fg = '#ff8f40'},
-      -- DiagnosticInfo  =  utils.parse_diagnostic_style { fg = '#39bae6'},
-      -- DiagnosticHint  =  utils.parse_diagnostic_style { fg = '#95e6cb'},
-      -- #FFC26B #860000 #64BAAA #006B5D #FF6A13 #FFB454 #FFF000 #FFE0F0 #Maybe?
-  }}) end                                   },
+    overrides =  function()
+      if vim.o.background == 'dark' then
+        return {                 -- lua Snacks.picker.highlights()
+          Type                       = {fg = '#FF5F00'},
+          Macro                      = {fg = '#FF5F00'},
+          Normal                     = {bg = '#000000'}, -- 'NONE'
+          Repeat                     = {fg = '#FF5F00'},
+          Method                     = {fg = '#FF5F00'},
+          PreProc                    = {fg = '#FF5F00'},
+          IncSearch                  = {fg = '#FF8F40', bg = '#22354a'},
+          Include                    = {fg = '#FF5F00'},
+          ["@property"]              = {fg = '#64BAAA'},
+          ["@markup.link"]           = {fg = '#39bae6' , underline = true, sp = '#004182'}, -- #0400d1
+          ["@markup.heading"]        = {fg = '#FFF000' , bold      = true},
+          Keyword                    = {fg = '#FF5F00' , bold      = true},
+          RenderMarkdownBullet       = {fg = '#64BAAA'},
+          Exception                  = {fg = '#FF5F00'},
+          Statement                  = {fg = '#FF5F00'},
+          Constructor                = {fg = '#FF5F00'},
+          FuncBuiltin                = {fg = '#FF5F00'},
+          DapBreakpoint              = {fg = '#FF5F00'},
+          DapLogPoint                = {fg = '#61afef'},
+          DapStopped                 = {fg = '#98c379'},
+          TypeDefinition             = {fg = '#FF5F00'},
+          KeywordFunction            = {fg = '#FF5F00'},
+          NotifyBackground           = {bg = '#000000'}, -- TODO: may need to be changed to snacks.nvim something
+          IndentBlanklineContextChar = {fg = '#FF5F00'},
+          LspReferenceRead           = {bg = '#626A73'},
+          LspReferenceText           = {bg = '#626A73'},
+          LspReferenceWrite          = {bg = '#626A73'},
+          LineNr                     = {fg = '#626A73'},
+          RenderMarkdownH1Bg         = {bg = '#3e2e2e'},
+          RenderMarkdownH2Bg         = {bg = '#2e1e1e'},
+          RenderMarkdownH3Bg         = {bg = '#1e0e0e'},
+          RenderMarkdownH4Bg         = {bg = '#0e0e0e'},
+          RenderMarkdownH5Bg         = {bg = '#0e0e0e'},
+          RenderMarkdownH6Bg         = {bg = '#0e0e0e'},
+          SatelliteBar               = {bg = "#454545"},
+          SatelliteCursor            = {fg = "#626A73", default = true, },
+          SatelliteMark              = {fg = "#626A73", default = true, },
+          SnacksPickerDir            = {fg = "#626A73", default = true, },
+          -- DiagnosticError =  utils.parse_diagnostic_style { fg = '#cc241d'},
+          -- DiagnosticWarn  =  utils.parse_diagnostic_style { fg = '#ff8f40'},
+          -- DiagnosticInfo  =  utils.parse_diagnostic_style { fg = '#39bae6'},
+          -- DiagnosticHint  =  utils.parse_diagnostic_style { fg = '#95e6cb'},
+          -- #FFC26B #860000 #64BAAA #006B5D #FF6A13 #FFB454 #FFF000 #FFE0F0 #Maybe?
+        }
+      else
+        return {                 -- lua Snacks.picker.highlights()
+          Type                       = {fg = '#FF5F00'},
+          Macro                      = {fg = '#FF5F00'},
+          Repeat                     = {fg = '#FF5F00'},
+          Method                     = {fg = '#FF5F00'},
+          PreProc                    = {fg = '#FF5F00'},
+          IncSearch                  = {fg = '#FF8F40', bg = '#22354a'},
+          Include                    = {fg = '#FF5F00'},
+          Special                    = {fg = '#FF8742'}, -- #FFF999 #A1F011
+          String                     = {fg = '#2cbf15'}, -- #FFF999 #A1F011
+          ["@Function"]              = {fg = '#bf5915'}, -- '#7d3200'},
+          ["@variable"]              = {fg = '#717272'}, -- '#39bae6'},
+          ["@property"]              = {fg = '#FF5F00'},
+          ["@lsp.type.parameter"]    = {fg = '#7d3200'}, -- #8a88e3 #FF9F90
+          SnacksIndent               = {fg = '#F4E6F9' },
+          ["@markup.link"]           = {fg = '#39bae6' , underline = true, sp = '#004182'}, -- #0400d1
+          ["@markup.heading"]        = {fg = '#FFF000' , bold      = true},
+          Keyword                    = {fg = '#FF5F00' , bold      = true},
+          RenderMarkdownBullet       = {fg = '#64BAAA'},
+          Exception                  = {fg = '#FF5F00'},
+          Statement                  = {fg = '#FF5F00'},
+          Constructor                = {fg = '#FF5F00'},
+          FuncBuiltin                = {fg = '#FF5F00'},
+          DapBreakpoint              = {fg = '#FF5F00'},
+          DapLogPoint                = {fg = '#61afef'},
+          DapStopped                 = {fg = '#98c379'},
+          TypeDefinition             = {fg = '#FF5F00'},
+          KeywordFunction            = {fg = '#FF5F00'},
+          NotifyBackground           = {bg = '#000000'}, -- TODO: may need to be changed to snacks.nvim something
+          IndentBlanklineContextChar = {fg = '#FF5F00'},
+          LspReferenceRead           = {bg = '#626A73'},
+          LspReferenceText           = {bg = '#626A73'},
+          LspReferenceWrite          = {bg = '#626A73'},
+          LineNr                     = {fg = '#626A73'},
+          RenderMarkdownH1Bg         = {bg = '#3e2e2e'},
+          RenderMarkdownH2Bg         = {bg = '#2e1e1e'},
+          RenderMarkdownH3Bg         = {bg = '#1e0e0e'},
+          RenderMarkdownH4Bg         = {bg = '#0e0e0e'},
+          RenderMarkdownH5Bg         = {bg = '#0e0e0e'},
+          RenderMarkdownH6Bg         = {bg = '#0e0e0e'},
+          SatelliteBar               = {bg = "#454545"},
+          SatelliteCursor            = {fg = "#626A73", default = true, },
+          SatelliteMark              = {fg = "#626A73", default = true, },
+          SnacksPickerDir            = {fg = "#626A73", default = true, },
+          -- DiagnosticError =  utils.parse_diagnostic_style { fg = '#cc241d'},
+          -- DiagnosticWarn  =  utils.parse_diagnostic_style { fg = '#ff8f40'},
+          -- DiagnosticInfo  =  utils.parse_diagnostic_style { fg = '#39bae6'},
+          -- DiagnosticHint  =  utils.parse_diagnostic_style { fg = '#95e6cb'},
+          -- #FFC26B #860000 #64BAAA #006B5D #FF6A13 #FFB454 #FFF000 #FFE0F0 #Maybe?
+        }
+      end
+    end
+    }) end                                   },
   {"lewis6991/gitsigns.nvim",
     config = function()
       -- require('gitsigns').setup(require('astronvim.plugins.gitsigns').opts())
