@@ -193,6 +193,9 @@ local plugins = {
         },},
         redo_mapping = "<c-r>",
       },
+    },
+    hijack_ft_disabled = {
+      "neo-tree"
     }})
     end, event = "VeryLazy", priority = 10, -- Low priority to catch other plugins' keybindings
   },
