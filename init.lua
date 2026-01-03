@@ -480,7 +480,7 @@ local plugins = {
         --   }
         -- end,
 
-        
+
         -- arduino_language_server = { --  https://github.com/williamboman/nvim-lsp-installer/tree/main/lua/nvim-lsp-installer/servers/arduino_language_server | https://discord.com/channels/939594913560031363/1078005571451621546/threads/1122910773270818887
         --   on_new_config = function (config, root_dir)
         --     local my_arduino_fqbn = { -- arduino-cli core install arduino:... 
@@ -548,10 +548,10 @@ local plugins = {
             end,
       },},},
 
-      on_attach = function(client, bufnr)
-        -- this would disable semanticTokensProvider for all clients
-        -- client.server_capabilities.semanticTokensProvider = nil
-      end,
+      -- on_attach = function(client, bufnr)
+      --   -- this would disable semanticTokensProvider for all clients
+      --   -- client.server_capabilities.semanticTokensProvider = nil
+      -- end,
     },
   },
 }
