@@ -17,6 +17,14 @@ local plugins = {
   {"AstroNvim/AstroNvim", version = "^5", import = "astronvim.plugins" },
   {"AstroNvim/astrocore",
     opts = { -- Configure core features of AstroNvim
+      on_keys = {
+        auto_hlsearch = {
+          function(char)
+              if vim.fn.mode() == "n" and vim.fn.keytrans(char) == "<Esc>" then
+                vim.cmd ":noh" -- Disable search highlights when 'Esc' is pressed in normal-mode
+            end
+          end,
+      },},
       features = {
         diagnostics = { -- diagnostic mode
           virtual_text   = true,
