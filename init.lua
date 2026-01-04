@@ -34,7 +34,9 @@ local plugins = {
         highlighturl     = true, -- highlight URLs at start
         autopairs        = true, -- enable autopairs at start
         cmp              = true, -- enable completion at start
-        large_buf        = {size= 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
+        size             = 1024 * 100, -- max file size (or false to disable check)
+        lines            = 10000, -- max number of lines (or false to disable check)
+        line_length      = 1000,
       },
       options = { -- vim options can be configured here
         opt = { -- vim.opt.<key>
