@@ -858,7 +858,7 @@ polish()
   =====================================================================
                          POTENTIAL PLUGINS 
   =====================================================================
-  * https://www.reddit.com/r/neovim/comments/1p5t0x0/i_built_vscodediffnvim_a_cpowered_plugin_to_bring/
+  * https://github.com/esmuellert/codediff.nvim
   * https://github.com/phaazon/hop.nvim
   * https://github.com/xiyaowong/nvim-transparent
   * https://github.com/sindrets/winshift.nvim
