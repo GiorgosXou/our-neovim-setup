@@ -566,18 +566,18 @@ local hl_timer     = nil -- Optimize horizontal movement (h/l)
 
 
 local function disable_expensive()
-  vim.schedule(function() vim.cmd("NoMatchParen"   )           end)
+  -- vim.schedule(function() vim.cmd("NoMatchParen"   )           end)                 -- BUG: NoMatchParen DoMatchParen auto-close popup windows (shift+k)
   pcall       (function() vim.cmd("IlluminatePause")           end) -- Pause illuminate
-  -- pcall       (function() require("snacks.indent"  ).disable() end) -- Disable Snacks indent
+  pcall       (function() require("snacks.indent"  ).disable() end) -- Disable Snacks indent
   vim.opt.cursorcolumn = false -- Disable cursorcolumn
   vim.cmd("set lazyredraw")
 end
 
 
 local function enable_expensive()
-  vim.schedule(function() vim.cmd("DoMatchParen"    )          end)
+  -- vim.schedule(function() vim.cmd("DoMatchParen"    )          end)
   pcall       (function() vim.cmd("IlluminateResume")          end) -- Resume illuminate
-  -- pcall       (function() require("snacks.indent"   ).enable() end) -- Re-enable Snacks indent
+  pcall       (function() require("snacks.indent"   ).enable() end) -- Re-enable Snacks indent
   vim.opt.cursorcolumn = true -- Restore cursorcolumn
   vim.cmd("set nolazyredraw")
 end
@@ -597,16 +597,16 @@ end
 
 
 local function disable_hl_expensive()
-  vim.schedule(function() vim.cmd("NoMatchParen") end)
-  vim.cmd("set lazyredraw")
+  -- vim.schedule(function() vim.cmd("NoMatchParen") end)
   -- vim.opt.cursorcolumn = false -- Disable cursorcolumn
+  vim.cmd("set lazyredraw")
 end
 
 
 local function enable_hl_expensive()
-  vim.schedule(function() vim.cmd("DoMatchParen") end)
-  vim.cmd("set nolazyredraw")
+  -- vim.schedule(function() vim.cmd("DoMatchParen") end)
   -- vim.opt.cursorcolumn = true -- Restore cursorcolumn
+  vim.cmd("set nolazyredraw")
 end
 
 
