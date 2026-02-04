@@ -633,6 +633,7 @@ local polish = function()
   local gs   = require('gitsigns')
   -- local opts = { silent=true }
 
+  vim.lsp.set_log_level("off") -- or "debug" when needed
 
   -- if _G.XKB_SWITCH then
   --   api.nvim_command('autocmd InsertLeave * call SetUsLayout()')
