@@ -179,36 +179,36 @@ local plugins = {
   {"hiphish/rainbow-delimiters.nvim"        , lazy = false },
   {"vim-scripts/ReplaceWithRegister"        , lazy = false, config = function() vim.keymap.set('n', '<Space>r', '<Plug>ReplaceWithRegisterOperator', { desc = "Replace with register"}) end},
   {'iamcco/markdown-preview.nvim'           ,               config = function() vim.fn["mkdp#util#install"]() end , ft = { "markdown" }},
-  {"rachartier/tiny-glimmer.nvim"           ,               config = function() require("tiny-glimmer").setup({
-    overwrite = {
-      paste = { enabled = false },
-      undo  = { enabled = true   ,
-        default_animation = {
-          name = "fade",
-          settings = {
-            from_color   = "DiffDelete",
-            max_duration = 1000,
-            min_duration = 1000,
-        },},
-        undo_mapping = "u",
-      },
-
-      redo = { enabled = true,
-        default_animation = {
-          name = "fade",
-          settings = {
-            from_color = "DiffAdd",
-            max_duration = 1000,
-            min_duration = 1000,
-        },},
-        redo_mapping = "<c-r>",
-      },
-    },
-    hijack_ft_disabled = {
-      "neo-tree"
-    }})
-    end, event = "VeryLazy", priority = 10, -- Low priority to catch other plugins' keybindings
-  },
+  -- {"rachartier/tiny-glimmer.nvim"           ,               config = function() require("tiny-glimmer").setup({
+  --   overwrite = {
+  --     paste = { enabled = false },
+  --     undo  = { enabled = true   ,
+  --       default_animation = {
+  --         name = "fade",
+  --         settings = {
+  --           from_color   = "DiffDelete",
+  --           max_duration = 1000,
+  --           min_duration = 1000,
+  --       },},
+  --       undo_mapping = "u",
+  --     },
+  --
+  --     redo = { enabled = true,
+  --       default_animation = {
+  --         name = "fade",
+  --         settings = {
+  --           from_color = "DiffAdd",
+  --           max_duration = 1000,
+  --           min_duration = 1000,
+  --       },},
+  --       redo_mapping = "<c-r>",
+  --     },
+  --   },
+  --   hijack_ft_disabled = {
+  --     "neo-tree"
+  --   }})
+  --   end, event = "VeryLazy", priority = 10, -- Low priority to catch other plugins' keybindings
+  -- },
   {'lewis6991/satellite.nvim'               ,               config = function() require("satellite" ).setup({
     current_only = false,
     winblend     = 40,
