@@ -767,10 +767,28 @@ local polish = function()
     "<C-f>", "<C-b>",
   }
 
+  local scroll_burst_count = 0
+  local scroll_burst_timer = nil
+  local SCROLL_BURST_TIMEOUT = 100 -- ms between scrolls to be considered "continuous"
+
   for _, key in ipairs(scroll_keys) do
     vim.keymap.set("n", key, function()
       if vim.v.count == 0 then
-        throttled_disable()
+        scroll_burst_count = scroll_burst_count + 1
+
+        if scroll_burst_timer then
+          scroll_burst_timer:stop()
+          scroll_burst_timer:close()
+        end
+
+        scroll_burst_timer = vim.loop.new_timer()
+        scroll_burst_timer:start(SCROLL_BURST_TIMEOUT, 0, vim.schedule_wrap(function()
+          scroll_burst_count = 0
+        end))
+
+        if scroll_burst_count >= 4 then
+          throttled_disable()
+        end
       end
       return key
     end, { expr = true, silent = true })
