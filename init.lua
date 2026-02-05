@@ -20,8 +20,8 @@ local plugins = {
       on_keys = {
         auto_hlsearch = {
           function(char)
-              if vim.fn.mode() == "n" and vim.fn.keytrans(char) == "<Esc>" then
-                vim.cmd ":noh" -- Disable search highlights when 'Esc' is pressed in normal-mode
+            if vim.fn.mode() == "n" and vim.fn.keytrans(char) == "<Esc>" then
+              vim.cmd ":noh" -- Disable search highlights when 'Esc' is pressed in normal-mode
             end
           end,
       },},
