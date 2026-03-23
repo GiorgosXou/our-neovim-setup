@@ -683,6 +683,8 @@ local polish = function()
   mset('n', 'x'         , '"_x'                 )
   mset('n', 'X'         , '"_X'                 )
 
+  mset('n', 'dJ'         , 'd}'                 , opts)
+
   mset('i', "<A-h>"     , '<ESC><<')
   mset('i', "<A-l>"     , '<ESC>>>')
   mset('v', "<A-h>"     , '<gv'    )
