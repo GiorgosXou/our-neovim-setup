@@ -650,7 +650,7 @@ local polish = function()
   local mset = vim.keymap.set
   local api  = vim.api
   local gs   = require('gitsigns')
-  -- local opts = { silent=true }
+  local opts = { silent=true }
 
   vim.lsp.set_log_level("off") -- or "debug" when needed
 
@@ -673,12 +673,12 @@ local polish = function()
 
   mset('i', '<C-S>'     , '<C-o>:w<cr>'         )
   mset('i', '<C-Q>'     , '<C-o>:q!<cr>'        )
-  mset('v', '<A-k>'     , ":m '<-2<CR>gv=gv"    )
-  mset('v', '<A-j>'     , ":m '>+1<CR>gv=gv"    )
-  mset('n', '<a-k>'     , ':m-2<cr>=='          )
-  mset('n', '<a-j>'     , ':m+1<cr>=='          )
-  mset('i', '<A-k>'     , '<C-o>:m-2<cr>'       )
-  mset('i', '<A-j>'     , '<C-o>:m+1<cr>'       )
+  mset('v', '<A-k>'     , ":m '<-2<CR>gv=gv"    , opts)
+  mset('v', '<A-j>'     , ":m '>+1<CR>gv=gv"    , opts)
+  mset('n', '<a-k>'     , ':m-2<cr>=='          , opts)
+  mset('n', '<a-j>'     , ':m+1<cr>=='          , opts)
+  mset('i', '<A-k>'     , '<C-o>:m-2<cr>'       , opts)
+  mset('i', '<A-j>'     , '<C-o>:m+1<cr>'       , opts)
   mset('v', 's'         , "\"fy/\\V<C-R>f<CR>N" ) -- https://vi.stackexchange.com/a/34743/42370 | https://superuser.com/questions/41378/how-to-search-for-selected-text-in-vim#comment2699355_41400 TODO: Fix when autocomplete ~if and then type s
   mset('n', 'x'         , '"_x'                 )
   mset('n', 'X'         , '"_X'                 )
@@ -699,12 +699,12 @@ local polish = function()
   mset('n', '<Leader>L' , ':bnext<cr>'    )
   mset('n', '<Leader>H' , ':bprevious<cr>')
 
-  mset('n', "H"         , ":call smarthome#SmartHome('n')<cr>")
-  mset('n', "L"         , ":call smarthome#SmartEnd('n')<cr>" )
-  mset('n', "<Home>"    , ":call smarthome#SmartHome('n')<cr>")
-  mset('n', "<End>"     , ":call smarthome#SmartEnd('n')<cr>" )
-  mset('i', "<Home>"    , "<C-r>=smarthome#SmartHome('i')<cr>")
-  mset('i', "<End>"     , "<C-r>=smarthome#SmartEnd('i')<cr>" )
+  mset('n', "H"         , ":call smarthome#SmartHome('n')<cr>", opts)
+  mset('n', "L"         , ":call smarthome#SmartEnd('n')<cr>" , opts)
+  mset('n', "<Home>"    , ":call smarthome#SmartHome('n')<cr>", opts)
+  mset('n', "<End>"     , ":call smarthome#SmartEnd('n')<cr>" , opts)
+  mset('i', "<Home>"    , "<C-r>=smarthome#SmartHome('i')<cr>", opts)
+  mset('i', "<End>"     , "<C-r>=smarthome#SmartEnd('i')<cr>" , opts)
 
   -- mset('n', '<Tab>'     ,function() require("astronvim.utils.buffer").nav_to(vim.v.count +  1) end, { desc ="Go to Buffer" }) -- TODO: Messes up with CTRL+I
 
