@@ -14,9 +14,11 @@ _G.IS_WINDOWS = vim.loop.os_uname().sysname:find "Windows" and true or false
 _G.XKB_SWITCH = vim.fn.executable "xkb-switch" == 1
 
 local plugins = {
-  {"AstroNvim/AstroNvim", version = "^5", import = "astronvim.plugins" },
+  {"AstroNvim/AstroNvim", version = "^6", import = "astronvim.plugins" },
   {"AstroNvim/astrocore",
     opts = { -- Configure core features of AstroNvim
+      ensure_installed = { "python", "markdown", "markdown_inline", "arduino", "cpp", "c" , "vim", "lua" },
+      highlight = true,
       on_keys = {
         auto_hlsearch = {
           function(char)
@@ -183,7 +185,6 @@ local plugins = {
   },},},
 
   -- TS
-  {"nvim-treesitter/nvim-treesitter", opts = { ensure_installed = { "python", "markdown", "markdown_inline", "arduino", "cpp", "c" }},},
   {"nvim-treesitter/nvim-treesitter-context", lazy = false }, -- top context-bar when scrolling
 
   {"akinsho/flutter-tools.nvim"             }, -- add lsp plugin
@@ -309,9 +310,9 @@ local plugins = {
           KeywordFunction                  = {fg = '#FF5F00'},
           NotifyBackground                 = {bg = '#000000'}, -- TODO: may need to be changed to snacks.nvim something
           IndentBlanklineContextChar       = {fg = '#FF5F00'},
-          LspReferenceRead                 = {bg = '#626A73'},
-          LspReferenceText                 = {bg = '#626A73'},
-          LspReferenceWrite                = {bg = '#626A73'},
+          LspReferenceRead                 = {bg = '#363636'},
+          LspReferenceText                 = {bg = '#363636'},
+          LspReferenceWrite                = {bg = '#363636'},
           LineNr                           = {fg = '#626A73'},
           RenderMarkdownH1Bg               = {bg = '#3e2e2e'},
           RenderMarkdownH2Bg               = {bg = '#2e1e1e'},
@@ -518,6 +519,7 @@ local plugins = {
         --       -- vim.notify(("Could not find which FQBN to use in %q. Defaulting to %q."):format(root_dir, DEFAULT_FQBN))
         --       fqbn = DEFAULT_FQBN
         --     end
+        --     config.filetypes = { "arduino" }
         --     config.capabilities.textDocument.semanticTokens = vim.NIL
         --     config.capabilities.workspace.semanticTokens = vim.NIL
         --     config.cmd = {         --  https://forum.arduino.cc/t/solved-errors-with-clangd-startup-for-arduino-language-server-in-nvim/1019977
@@ -586,7 +588,7 @@ local hl_timer     = nil -- Optimize horizontal movement (h/l)
 
 local function disable_expensive()
   -- vim.schedule(function() vim.cmd("NoMatchParen"   )           end)                 -- BUG: NoMatchParen DoMatchParen auto-close popup windows (shift+k)
-  pcall       (function() vim.cmd("IlluminatePause")           end) -- Pause illuminate
+  pcall       (function() require("snacks.words"   ).disable() end) -- Disable Snacks words
   pcall       (function() require("snacks.indent"  ).disable() end) -- Disable Snacks indent
   vim.opt.cursorcolumn = false -- Disable cursorcolumn
   vim.cmd("set lazyredraw")
@@ -595,8 +597,8 @@ end
 
 local function enable_expensive()
   -- vim.schedule(function() vim.cmd("DoMatchParen"    )          end)
-  pcall       (function() vim.cmd("IlluminateResume")          end) -- Resume illuminate
-  pcall       (function() require("snacks.indent"   ).enable() end) -- Re-enable Snacks indent
+  pcall       (function() require("snacks.words"    ).enable() end) -- Disable Snacks words
+  pcall       (function() require("snacks.indent"   ).enable() end) -- Re-enable Snacks indent 
   vim.opt.cursorcolumn = true -- Restore cursorcolumn
   vim.cmd("set nolazyredraw")
 end
@@ -652,7 +654,7 @@ local polish = function()
   local gs   = require('gitsigns')
   local opts = { silent=true }
 
-  vim.lsp.set_log_level("off") -- or "debug" when needed
+  vim.lsp.log.set_level("off") -- or "debug" when needed
 
   -- if _G.XKB_SWITCH then
   --   api.nvim_command('autocmd InsertLeave * call SetUsLayout()')
