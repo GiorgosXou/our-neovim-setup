@@ -189,7 +189,7 @@ local plugins = {
   {"akinsho/flutter-tools.nvim"             }, -- add lsp plugin
   {"chrisgrieser/nvim-various-textobjs"     },
   {"mcauley-penney/visual-whitespace.nvim"  , config = true},
-  {"stevearc/vim-arduino"                   , lazy = false }, -- sudo pacman -S screen arduino-cli (and arduino?) | arduino-cli config init
+  -- {"stevearc/vim-arduino"                   , lazy = false }, -- sudo pacman -S screen arduino-cli (and arduino?) | arduino-cli config init
   {"godlygeek/tabular"                      , lazy = false }, -- ALIGN <leader>a | https://stackoverflow.com/questions/5436715/how-do-i-align-like-this-with-vims-tabular-plugin
   {"svermeulen/vim-yoink"                   , lazy = false }, -- TERMUX https://github.com/GiorgosXou/our-neovim-setup/issues/2
   {"Shadowsith/vim-minify"                  , lazy = false }, -- TODO: It needs to be Checked 2023-03-24 06:29:23 PM
@@ -734,13 +734,13 @@ local polish = function()
   api.nvim_command('autocmd FileType tex,markdown setlocal wrap')
   api.nvim_command('au BufRead,BufNewFile *.md nnoremap <buffer> gf :call go_to_markdown_ref()<cr>') -- https://www.reddit.com/r/vim/comments/yu49m1/rundont_run_vim_command_based_on_current_file/
 
-  api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>aa <cmd>call arduino#Attach()<CR>')
-  api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>as <cmd>call arduino#Serial()<CR>')
-  api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>am <cmd>call arduino#Verify()<CR>')
-  api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>au <cmd>call arduino#Upload()<CR>')
-  api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ad <cmd>call arduino#UploadAndSerial()<CR>')
-  api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ab <cmd>call arduino#ChooseBoard()<CR>')
-  api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ap <cmd>call arduino#ChooseProgrammer()<CR>')
+  -- api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>aa <cmd>call arduino#Attach()<CR>')
+  -- api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>as <cmd>call arduino#Serial()<CR>')
+  -- api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>am <cmd>call arduino#Verify()<CR>')
+  -- api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>au <cmd>call arduino#Upload()<CR>')
+  -- api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ad <cmd>call arduino#UploadAndSerial()<CR>')
+  -- api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ab <cmd>call arduino#ChooseBoard()<CR>')
+  -- api.nvim_command('au BufRead,BufNewFile *.ino nnoremap <buffer> <leader>ap <cmd>call arduino#ChooseProgrammer()<CR>')
 
   mset("n", "<leader>al", "<cmd>Tab /[=:|]/<cr>"                          , {desc = 'Align text'})
 
@@ -901,6 +901,7 @@ polish()
   =====================================================================
                          POTENTIAL PLUGINS 
   =====================================================================
+  * https://github.com/anurag3301/nvim-platformio.lua
   * https://github.com/esmuellert/codediff.nvim
   * https://github.com/phaazon/hop.nvim
   * https://github.com/xiyaowong/nvim-transparent
