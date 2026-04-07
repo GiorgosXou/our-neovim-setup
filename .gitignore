@@ -3,4 +3,5 @@ neovim.yml
 selene.toml
 .neoconf.json
 .stylua.toml
+.luarc.json
 lua/
