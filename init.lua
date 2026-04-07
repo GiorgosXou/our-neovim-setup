@@ -443,10 +443,10 @@ local plugins = {
     ---@type AstroLSPOpts
     servers = { -- enable servers that you already have installed without mason
       -- "tst_lsp"
-      "dartls"
+      -- "dartls"
     },
     handlers = { -- customize how language servers are attached
-      dartls = function(_, opts) require("flutter-tools").setup { lsp = opts } end,
+      -- dartls = function(_, opts) require("flutter-tools").setup { lsp = opts } end,
     },
     opts = {
       features = {
@@ -467,14 +467,14 @@ local plugins = {
       -- customize language server configuration options passed to `lspconfig`
       ---@diagnostic disable: missing-fields
       config = {
-        dartls = {
-          color = {
-            enabled = true,
-          },
-          settings = {
-            showTodos = true,
-            completeFunctionCalls = true,
-        },},
+        -- dartls = {
+        --   color = {
+        --     enabled = true,
+        --   },
+        --   settings = {
+        --     showTodos = true,
+        --     completeFunctionCalls = true,
+        -- },},
 
         texlab = { -- sudo pacman -S tectonic | yay -S sioyek-appimage
           settings = {
