@@ -684,6 +684,9 @@ local polish = function()
   mset('n', 'X'         , '"_X'                 )
 
   mset('n', 'dJ'         , 'd}'                 , opts)
+  mset('n', 'dK'         , 'd{'                 , opts)
+  mset('n', 'cmJ'        , 'cm}'                , { remap = true})
+  mset('n', 'cmK'        , 'cm{'                , { remap = true})
 
   mset('i', "<A-h>"     , '<ESC><<')
   mset('i', "<A-l>"     , '<ESC>>>')
