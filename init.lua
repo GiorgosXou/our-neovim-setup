@@ -721,8 +721,8 @@ local polish = function()
 
   api.nvim_command('set cursorcolumn')
 
-  api.nvim_command("nnoremap <expr> j v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'j' : 'gj'")
-  api.nvim_command("nnoremap <expr> k v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'k' : 'gk'")
+  api.nvim_command("nnoremap <expr> j v:count ? (v:count > 1 ? \"m'\" . v:count : '') . 'j' : 'gj'")
+  api.nvim_command("nnoremap <expr> k v:count ? (v:count > 1 ? \"m'\" . v:count : '') . 'k' : 'gk'")
 
   -- api.nvim_command("let g:yoinkAutoFormatPaste='1'") -- Indent on paste
   api.nvim_command("map <expr> p yoink#canSwap() ? '<plug>(YoinkPostPasteSwapBack)'    : '<plug>(YoinkPaste_p)'")
