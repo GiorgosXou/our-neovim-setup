@@ -768,66 +768,97 @@ local polish = function()
     api.nvim_command('highlight IndentBlanklineContextChar  guifg=#FFFFFF')
   end
 
-  -- Keys that count as scrolling
+
+  -- =====================================
+  --   Movement anti-throttling system 
+  -- (I'll be honest, thanks to chat-gpt) 
+  -- =====================================
+
+  local SCROLL_BURST_TIMEOUT = 100 -- ms
+  local SCROLL_THRESHOLD = 4
+
+  local state = {
+    count = 0,
+    timer = nil,
+  }
+
+  -- Keys that count as scrolling (intent-level, not mapping-level)
   local scroll_keys = {
-    "j", "k", "gj", "gk",
-    "<C-d>", "<C-u>",
-    "<C-f>", "<C-b>",
+    ["j"] = true,
+    ["k"] = true,
+    ["<C-d>"] = true,
+    ["<C-u>"] = true,
+    ["<C-f>"] = true,
+    ["<C-b>"] = true,
   }
 
-  local scroll_burst_count = 0
-  local scroll_burst_timer = nil
-  local SCROLL_BURST_TIMEOUT = 100 -- ms between scrolls to be considered "continuous"
-
-  for _, key in ipairs(scroll_keys) do
-    vim.keymap.set("n", key, function()
-      if vim.v.count == 0 then
-        scroll_burst_count = scroll_burst_count + 1
-
-        if scroll_burst_timer then
-          scroll_burst_timer:stop()
-          scroll_burst_timer:close()
-        end
-
-        scroll_burst_timer = vim.loop.new_timer()
-        scroll_burst_timer:start(SCROLL_BURST_TIMEOUT, 0, vim.schedule_wrap(function()
-          scroll_burst_count = 0
-        end))
-
-        if scroll_burst_count >= 4 then
-          throttled_disable()
-        end
-      end
-      return key
-    end, { expr = true, silent = true })
-  end
-
-  -- Mouse wheel events
+  -- Mouse scroll events
   local mouse_scroll = {
-    "<ScrollWheelUp>"    ,
-    "<ScrollWheelDown>"  ,
-    "<S-ScrollWheelUp>"  ,
-    "<S-ScrollWheelDown>",
-    "<C-ScrollWheelUp>"  ,
-    "<C-ScrollWheelDown>",
+    ["<ScrollWheelUp>"] = true,
+    ["<ScrollWheelDown>"] = true,
+    ["<S-ScrollWheelUp>"] = true,
+    ["<S-ScrollWheelDown>"] = true,
+    ["<C-ScrollWheelUp>"] = true,
+    ["<C-ScrollWheelDown>"] = true,
   }
 
-  for _, key in ipairs(mouse_scroll) do
-    vim.keymap.set("", key, function()
+  -- Horizontal motion (special hook only)
+  local hl_keys = {
+    ["h"] = true,
+    ["l"] = true,
+    ["gh"] = true,
+    ["gl"] = true,
+  }
+
+  -- =========================
+  -- Timer reset helper
+  -- =========================
+  local function reset_timer()
+    if state.timer then
+      state.timer:stop()
+      state.timer:close()
+    end
+
+    state.timer = vim.uv.new_timer()
+    state.timer:start(SCROLL_BURST_TIMEOUT, 0, vim.schedule_wrap(function()
+      state.count = 0
+    end))
+  end
+
+  -- =========================
+  -- Key event listener
+  -- =========================
+  vim.on_key(function(_, typed)
+    if not typed or typed == "" then return end
+
+    -- Mouse scroll → immediate trigger
+    if mouse_scroll[typed] then
       throttled_disable()
-      return key
-    end, { expr = true, silent = true })
-  end
+      return
+    end
 
-  -- Horizontal keys: h, l, and wrapped ones: gh, gl
-  local hl_keys = { "h", "l", "gh", "gl" }
-
-  for _, key in ipairs(hl_keys) do
-    vim.keymap.set("n", key, function()
+    -- Horizontal movement hook
+    if hl_keys[typed] then
       throttled_hl()
-      return key
-    end, { expr = true, silent = true })
-  end
+    end
+
+    -- Only track "real scroll intent"
+    if not scroll_keys[typed] then
+      return
+    end
+
+    -- -- ignore counted motions like 5j, 10k
+    -- if vim.v.count > 0 then
+    --   return
+    -- end
+
+    state.count = state.count + 1
+    reset_timer()
+
+    if state.count >= SCROLL_THRESHOLD then
+      throttled_disable()
+    end
+  end)
 
   -- vim.filetype.add { -- Set up custom filetypes
   --   extension    = { foo                   = "fooscript", },
