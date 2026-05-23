@@ -19,6 +19,9 @@ local plugins = {
     opts = { -- Configure core features of AstroNvim
       ensure_installed = { "python", "markdown", "markdown_inline", "arduino", "cpp", "c" , "vim", "lua" },
       highlight = true,
+      treesitter = {
+        indent = false -- treesitter indentation feels a bit too wrong. especially with c\cpp
+      },
       on_keys = {
         auto_hlsearch = {
           function(char)
