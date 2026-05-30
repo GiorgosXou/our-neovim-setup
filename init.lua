@@ -111,6 +111,7 @@ local plugins = {
     { import = "astrocommunity.pack.rust"},
     { import = "astrocommunity.pack.cpp"},
     { import = "astrocommunity.pack.lua"},
+    { import = "astrocommunity.completion.cmp-spell"},
     { import = "astrocommunity.diagnostics.trouble-nvim"},
     { import = "astrocommunity.markdown-and-latex.render-markdown-nvim"},
     -- { import = "astrocommunity.color.modes-nvim"} -- interesting one
@@ -900,6 +901,7 @@ polish()
   =====================================================================
                             REMIND STUFF
   =====================================================================
+  * `<Leader>us` to switch spelling
   * http://www.viemu.com/vi-vim-tutorial-1.gif
   * https://www.youtube.com/watch?v=qZO9A5F6BZs
   * https://stackoverflow.com/a/26920014/11465149
