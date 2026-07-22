@@ -192,7 +192,7 @@ local plugins = {
   -- TS
   {"nvim-treesitter/nvim-treesitter-context", lazy = false }, -- top context-bar when scrolling
 
-  {"akinsho/flutter-tools.nvim"             }, -- add lsp plugin
+  -- {"akinsho/flutter-tools.nvim"             }, -- add lsp plugin
   {"chrisgrieser/nvim-various-textobjs"     },
   {"mcauley-penney/visual-whitespace.nvim"  , config = true},
   -- {"stevearc/vim-arduino"                   , lazy = false }, -- sudo pacman -S screen arduino-cli (and arduino?) | arduino-cli config init
