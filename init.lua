@@ -114,6 +114,7 @@ local plugins = {
     { import = "astrocommunity.completion.cmp-spell"},
     { import = "astrocommunity.diagnostics.trouble-nvim"},
     { import = "astrocommunity.markdown-and-latex.render-markdown-nvim"},
+    { import = "astrocommunity.editing-support.neogen"},
     -- { import = "astrocommunity.color.modes-nvim"} -- interesting one
   },
 
@@ -666,6 +667,7 @@ local polish = function()
   --   api.nvim_command('autocmd InsertEnter * call ResetLayout()')
   -- end
 
+  -- mset('n', 'cmc', function() require("neogen").generate { type = "any" } end)
   mset('n', 'cml', '<Leader>/', { remap = true, desc = 'Toggle comment on current line' })
   mset('n', 'cm', 'gc', { remap = true})
   mset('v', 'cm', 'gc', { remap = true})
