@@ -488,7 +488,7 @@ local plugins = {
             texlab = {
               build = {
                 onSave = true,
-                executable = "tectonic",
+                executable = "tectonic", -- pdftocairo -png -singlefile file.pdf output
                 args = {
                   "-X",
                   "compile",
