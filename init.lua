@@ -47,6 +47,7 @@ local plugins = {
         opt = { -- vim.opt.<key>
           signcolumn     = "auto:2", -- sets vim.opt.signcolumn to auto
           spell          = false   , -- sets vim.opt.spell
+          spelllang      = "en,el" , -- sets vim.opt.spelllang
           wrap           = false   , -- sets vim.opt.wrap
           number         = true    , -- sets vim.opt.number
           relativenumber = true    , -- sets vim.opt.relativenumber
